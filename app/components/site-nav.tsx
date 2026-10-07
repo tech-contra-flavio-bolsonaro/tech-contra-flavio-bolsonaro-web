@@ -1,12 +1,63 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { Menu, X } from "lucide-react";
 
 const links = [
   ["/manifesto", "Manifesto"],
   ["/ferramentas", "Ferramentas"],
   ["/conteudos", "Conteúdos"],
-  ["/enviar", "Enviar conteúdo"],
 ] as const;
 
 export function SiteNav() {
-  return <header><Link href="/">VIRA VOTO</Link><nav aria-label="Navegação principal">{links.map(([href, label]) => <Link href={href} key={href}>{label}</Link>)}</nav></header>;
+  const [isOpen, setIsOpen] = useState(false);
+  const header = useRef<HTMLElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      setIsOpen(false);
+      toggle.current?.focus();
+    }
+    function onPointerDown(event: PointerEvent) {
+      if (!header.current?.contains(event.target as Node)) setIsOpen(false);
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [isOpen]);
+
+  const close = () => setIsOpen(false);
+  const current = (href: string) => (pathname === href ? "page" : undefined);
+
+  return (
+    <header className="site-header" ref={header}>
+      <Link className="site-header-brand" href="/" onClick={close}>VIRA VOTO</Link>
+      <button
+        ref={toggle}
+        className="site-nav-toggle"
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls="site-nav-links"
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        {isOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        Menu
+      </button>
+      <nav id="site-nav-links" className="site-nav" aria-label="Navegação principal" data-open={isOpen}>
+        {links.map(([href, label]) => <Link href={href} key={href} aria-current={current(href)} onClick={close}>{label}</Link>)}
+        <Link className="site-nav-cta" href="/enviar" aria-current={current("/enviar")} onClick={close}>Enviar conteúdo</Link>
+      </nav>
+    </header>
+  );
 }
