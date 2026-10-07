@@ -19,3 +19,14 @@ it("keeps the submission panel above the editorial heading", () => {
   expect(styles).toContain(".submission-panel { position: relative; z-index: 1;");
   expect(styles).toContain(".submission-intro h1 { max-width: 7ch; color: #f8f7ff; font-size: clamp(3rem, 4.5vw, 4.75rem);");
 });
+
+it("isolates toast and dialog typography from editorial headings", () => {
+  expect(styles).toContain('[data-slot="toast-title"] {');
+  expect(styles).toContain('font-size: .95rem !important;');
+  expect(styles).toContain('[data-slot="dialog-title"] {');
+  expect(styles).toContain('font-size: 1.25rem !important;');
+});
+
+it("keeps the content-card share trigger legible on hover", () => {
+  expect(styles).toContain('.share-trigger:hover { background: var(--tech-yellow); color: var(--tech-blue); }');
+});

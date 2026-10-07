@@ -10,4 +10,7 @@ it("opens sharing actions in a dialog", async () => {
   expect(screen.getByRole("button", { name: "WhatsApp" })).toBeInTheDocument();
   expect(screen.getByRole("button", { name: "Abrir Instagram" })).toBeInTheDocument();
   expect(screen.getByRole("button", { name: "Copiar link" })).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "WhatsApp" })).toHaveClass("share-action-whatsapp");
+  expect(screen.getByRole("button", { name: "Abrir Instagram" })).toHaveClass("share-action-instagram");
+  expect(screen.getByRole("button", { name: "Copiar link" })).toHaveClass("share-action-copy");
 });
