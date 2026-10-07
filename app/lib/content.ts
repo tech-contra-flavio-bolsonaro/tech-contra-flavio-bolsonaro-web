@@ -1,13 +1,3 @@
-export type Tool = {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  accessMode: "embed" | "external";
-  url: string;
-  embedUrl?: string;
-};
-
 export type Content = {
   id: string;
   title: string;
@@ -19,35 +9,6 @@ export type Content = {
   url: string;
   embedUrl?: string;
 };
-
-export const tools: Tool[] = [
-  {
-    id: "mapa-de-acoes",
-    title: "Mapa de ações",
-    description: "Encontre territórios, trace caminhos e comece uma conversa perto de você.",
-    category: "Planejamento",
-    accessMode: "embed",
-    url: "https://www.openstreetmap.org/",
-    embedUrl:
-      "https://www.openstreetmap.org/export/embed.html?bbox=-48.1%2C-15.9%2C-47.7%2C-15.6&layer=mapnik",
-  },
-  {
-    id: "gerador-de-qr",
-    title: "Gerador de QR code",
-    description: "Transforme um link importante em um convite rápido para compartilhar.",
-    category: "Comunicação",
-    accessMode: "external",
-    url: "https://www.qrcode-monkey.com/",
-  },
-  {
-    id: "calendario",
-    title: "Calendário de mobilização",
-    description: "Organize encontros, datas importantes e tarefas coletivas.",
-    category: "Organização",
-    accessMode: "external",
-    url: "https://calendar.google.com/",
-  },
-];
 
 export const contents: Content[] = [
   {

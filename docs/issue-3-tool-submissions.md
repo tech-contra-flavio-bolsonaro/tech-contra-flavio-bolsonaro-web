@@ -21,9 +21,7 @@ Source: https://github.com/tech-contra-flavio-bolsonaro/tech-contra-flavio-bolso
 
 ## Upstream baseline
 
-Fetched and fast-forwarded to `6ca441e` during the interview. The six new commits add production Supabase migration deployment, a Vercel deploy hook, and an IPv4 pooler fix; they also rename the existing migration to `20261007165352_community_submissions.sql`. Tool implementation and hardcoded examples are unchanged.
-
-During implementation, fetched again and incorporated `8f167ba`, including architecture documentation, sharing feedback, and inline content-submission errors. Retained the upstream styles alongside the new tool-page rules; there were no upstream changes to tool behavior.
+Fetched `6ca441e` during the interview, then incorporated `8f167ba` during implementation. Before final validation, fetched and rebased onto `bed3ff2`. The current upstream includes production Supabase migration deployment, a Vercel deploy hook, an IPv4 pooler fix, architecture documentation, sharing feedback, inline content-submission errors, responsive navigation, section-heading semantics, and local Docker seed scenarios. The implementation retains those updates and adds tool-only fixtures to the local seed; the production migration does not seed example tools.
 
 ## Delivery constraints
 
@@ -36,10 +34,10 @@ The user confirmed shared understanding and authorized implementation on 2026-10
 1. Add the tool submission schema, stable unique slugs, approved embedding hosts, and deny-by-default public database access. Public reads must filter for approved records and omit reviewer metadata.
 2. Add a public `submit-tool` function with Turnstile protection and server-side field/HTTPS URL validation. It creates pending submissions; submitters cannot set publication status, slug, or embedding approval. Add the anonymous submission form at `/ferramentas/enviar`.
 3. Build approved-tool listing and detail reads, the paginated `/ferramentas` listing, and dedicated slug pages with visitor-initiated iframe loading and a persistent external link. Recheck domain approval when rendering an embed; missing or revoked approval uses external access.
-4. Replace homepage example tools with up to four approved records. Include empty, loading, failure, unpublished/not-found, and submission confirmation states. Keep user-facing copy in Portuguese and reuse existing visual conventions.
+4. Replace homepage example tools with up to four approved records. Include empty, loading, failure, unpublished/not-found, and submission confirmation states. Keep user-facing copy in Portuguese and reuse existing visual conventions. Local Docker fixtures exercise approved, pending, rejected, and approved-embed cases; no example records enter production through migrations.
 5. Extend production deployment for the new function after migrations and before Vercel. Document required deployment credentials and manual backend curation, including domain approval, review status, and reviewer metadata.
 
-Split implementation into coherent PRs by measured changed-line count: backend foundations, submission flow, dedicated browsing pages, then homepage/deployment integration as needed. Each intermediate PR must leave the project usable, and migration/deployment prerequisites must ship before dependent public UI.
+Split implementation into four coherent stacked PRs by measured changed-line count: schema and domain documentation, protected submission/read APIs plus deployment prerequisites, submission/detail pages, then catalog and homepage integration. Each intermediate PR must leave the project usable, and migration/deployment prerequisites ship before dependent public UI.
 
 ## Validation
 
