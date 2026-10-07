@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
+import { resolveServerSupabaseUrl } from "@/app/lib/supabase-url";
 
 const pageSize = 10;
 
@@ -13,7 +14,7 @@ type Submission = {
 };
 
 function supabase() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const url = resolveServerSupabaseUrl();
   const key = process.env.SUPABASE_SECRET_KEY;
   if (!url || !key) throw new Error("Supabase não está configurado.");
   return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });

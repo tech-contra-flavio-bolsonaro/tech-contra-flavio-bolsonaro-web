@@ -1,0 +1,46 @@
+name: tech-contra-flavio-test
+
+services:
+  supabase:
+    build:
+      context: .
+      dockerfile: Dockerfile.supabase
+    environment:
+      SUPABASE_SERVICES_HOSTNAME: host.docker.internal
+    working_dir: ${PWD}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ./supabase:${PWD}/supabase
+      - /var/run/docker.sock:/var/run/docker.sock
+      - supabase-runtime:/runtime
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /runtime/ready"]
+      interval: 5s
+      timeout: 3s
+      retries: 180
+      start_period: 30s
+    stop_grace_period: 2m
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: http://localhost:54321
+        NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: local
+        NEXT_PUBLIC_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
+    depends_on:
+      supabase:
+        condition: service_healthy
+    environment:
+      SUPABASE_RUNTIME_ENV_FILE: /runtime/supabase.env
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - supabase-runtime:/runtime:ro
+    ports:
+      - "${APP_PORT:-3000}:3000"
+
+volumes:
+  supabase-runtime:
