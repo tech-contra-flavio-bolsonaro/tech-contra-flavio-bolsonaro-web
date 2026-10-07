@@ -17,6 +17,7 @@ it("loads an embeddable tool only after the visitor requests it", () => {
     />,
   );
 
+  expect(screen.getByTestId("tool-card-icon")).toBeInTheDocument();
   expect(screen.queryByTitle("Mapa")).not.toBeInTheDocument();
 
   fireEvent.click(screen.getByRole("button", { name: "Abrir aqui" }));
