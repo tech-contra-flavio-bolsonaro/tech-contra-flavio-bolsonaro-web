@@ -11,7 +11,8 @@ values
   ('10000000-0000-4000-8000-000000000009', 'Checklist de evento acessível', 'Conteúdo fictício com lembretes para fazer encontros mais inclusivos.', 'Acesso Já', 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', 'approved', now() - interval '9 hours'),
   ('10000000-0000-4000-8000-000000000010', 'Rede de apoio entre coletivos', 'Exemplo fictício de chamada para conectar grupos que atuam no mesmo território.', 'Comum em Rede', 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', 'approved', now() - interval '10 hours'),
   ('10000000-0000-4000-8000-000000000011', 'Memória do encontro', 'Registro fictício de aprendizados compartilhados em uma plenária comunitária.', 'Vozes do Território', 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', 'approved', now() - interval '11 hours'),
-  ('10000000-0000-4000-8000-000000000012', 'Material aguardando curadoria', 'Item fictício propositalmente pendente para testar a moderação.', 'Fila de Curadoria', 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', 'pending', now())
+  ('10000000-0000-4000-8000-000000000012', 'Material aguardando curadoria', 'Item fictício propositalmente pendente para testar a moderação.', 'Fila de Curadoria', 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', 'pending', now()),
+  ('10000000-0000-4000-8000-000000000013', 'Material arquivado pela curadoria', 'Item fictício rejeitado para validar que conteúdos não aprovados ficam fora do feed público.', 'Fila de Curadoria', 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', 'rejected', now() - interval '30 minutes')
 on conflict (id) do update
 set title = excluded.title,
     description = excluded.description,
