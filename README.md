@@ -107,7 +107,8 @@ As migrations vivem em `supabase/migrations/` e são a fonte de verdade do schem
 
 1. pré-visualiza as migrations pendentes;
 2. aplica somente migrations que ainda não constam no histórico do banco;
-3. dispara o deploy de produção apenas se a aplicação terminar com sucesso.
+3. publica a função `submit-tool` após o sucesso das migrations;
+4. dispara o deploy de produção apenas se as etapas anteriores terminarem com sucesso.
 
 Esse encadeamento impede que uma versão da aplicação seja publicada antes de sua estrutura de banco necessária.
 
@@ -133,3 +134,5 @@ docker-compose.test.yml  # app + Supabase local + seed em um comando
 ## Operação da curadoria
 
 No painel administrativo do banco, revise os registros pendentes e altere o campo `status` para `approved` ou `rejected`. O feed público refletirá somente os itens aprovados.
+
+Ferramentas têm um [fluxo próprio de envio e curadoria](docs/tool-curation.md), com slugs estáveis e uma lista de domínios autorizados para incorporação. O formulário fica em `/ferramentas/enviar`; os campos iniciais estão abertos a discussão na PR. As credenciais adicionais do pipeline e os testes de banco estão documentados nesse guia.
