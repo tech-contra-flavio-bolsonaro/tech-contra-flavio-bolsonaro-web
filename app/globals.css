@@ -27,7 +27,10 @@ section { padding: clamp(3rem, 9vw, 8rem) 0; border-top: 1px solid color-mix(in 
 .hero-icon-cloud { width: clamp(3.5rem, 6vw, 5rem); right: 7%; top: 56%; }
 .hero-icon-sparkles { width: clamp(2.5rem, 4vw, 3.5rem); right: 42%; top: 27%; filter: brightness(0) saturate(100%) invert(86%) sepia(93%) saturate(518%) hue-rotate(358deg) brightness(105%) contrast(101%) drop-shadow(0 8px 16px rgb(0 0 0 / 22%)); }
 .hero-icon-paperclip { width: clamp(2.5rem, 3.5vw, 3.25rem); right: 38%; bottom: 18%; transform: rotate(-18deg); filter: brightness(0) saturate(100%) invert(76%) sepia(86%) saturate(3198%) hue-rotate(145deg) brightness(103%) contrast(104%) drop-shadow(0 8px 16px rgb(0 0 0 / 22%)); }
-section > p:first-child { margin: 0 0 1rem; font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+.section-heading { display: grid; gap: .85rem; }
+.page-intro > p:first-child, .section-eyebrow { margin: 0; font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+.section-eyebrow { color: var(--tech-yellow); }
+.section-heading h2 { max-width: 11ch; }
 h1, h2 { max-width: 10ch; margin: 0; font-weight: 900; letter-spacing: -.08em; line-height: .83; }
 h1 { font-size: clamp(4rem, 12vw, 10rem); }
 h1 span { color: var(--coral); }
@@ -103,7 +106,7 @@ section > p:not(:first-child) { max-width: 36rem; font-size: 1.2rem; line-height
   main { width: min(100% - 2rem, 1100px); }
   #inicio { min-height: calc(100svh - 80px); }
   .hero-copy { width: min(100%, 30rem); }
-  .hero-copy h1 { font-size: clamp(2.75rem, 14vw, 4.5rem); }
+  .hero-copy h1 { max-width: 9ch; font-size: clamp(2.5rem, 12vw, 4rem); overflow-wrap: normal; word-break: normal; }
   .hero-decoration { opacity: .22; }
   .hero-icon-computer { width: 8rem; right: -1rem; top: 1.5rem; }
   .hero-icon-keyboard, .hero-icon-mouse, .hero-icon-cloud, .hero-icon-paperclip { display: none; }
@@ -117,7 +120,7 @@ section > p:not(:first-child) { max-width: 36rem; font-size: 1.2rem; line-height
   .submission-form-footer > p { max-width: none; }
   .submission-form-footer [data-slot="button"] { width: 100%; }
   .card-grid { grid-template-columns: 1fr; }
-  h1 { font-size: clamp(2.75rem, 14vw, 4.5rem); overflow-wrap: anywhere; }
+  h1 { font-size: clamp(2.5rem, 12vw, 4rem); overflow-wrap: normal; word-break: normal; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
