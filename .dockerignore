@@ -1,0 +1,9 @@
+.git
+.github
+.maestri
+.next
+.worktrees
+node_modules
+.env
+.env.local
+supabase/functions/.env

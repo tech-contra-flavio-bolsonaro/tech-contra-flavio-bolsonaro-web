@@ -1,0 +1,11 @@
+FROM node:22-alpine
+
+RUN apk add --no-cache docker-cli libc6-compat \
+  && npm install --global supabase@2.120.0
+
+WORKDIR /workspace
+COPY supabase ./supabase
+COPY docker/supabase-entrypoint.sh /usr/local/bin/supabase-entrypoint
+RUN chmod +x /usr/local/bin/supabase-entrypoint
+
+ENTRYPOINT ["/usr/local/bin/supabase-entrypoint"]

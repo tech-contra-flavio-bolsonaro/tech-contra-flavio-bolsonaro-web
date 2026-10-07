@@ -55,6 +55,30 @@ cp .env.example .env.local
 bun dev
 ```
 
+### Ambiente local integrado
+
+Para testar a aplicação com uma instância local do Supabase e dados fictícios, basta executar um único comando com Docker em execução:
+
+```bash
+docker compose -f docker-compose.test.yml up --build
+```
+
+O Compose inicia o app, a stack local necessária do Supabase e, antes de liberar o app, recria o banco usando as migrations e o arquivo `supabase/seed.sql`. O seed inclui conteúdos aprovados para o feed e um item pendente para testar a curadoria. A aplicação fica disponível em `localhost:3000`.
+
+Se a porta `3000` já estiver em uso, escolha outra porta sem alterar o arquivo:
+
+```bash
+APP_PORT=3001 docker compose -f docker-compose.test.yml up --build
+```
+
+Para encerrar e remover os dados locais de teste:
+
+```bash
+docker compose -f docker-compose.test.yml down -v
+```
+
+Esse ambiente usa apenas credenciais locais efêmeras. Não lê nem altera o projeto remoto do Supabase.
+
 Validação obrigatória antes de uma PR:
 
 ```bash
@@ -101,6 +125,8 @@ components/ui/          # primitives de interface
 supabase/
   functions/            # recebimento de submissões
   migrations/           # schema e políticas versionados
+  seed.sql               # dados fictícios do ambiente local
+docker-compose.test.yml  # app + Supabase local + seed em um comando
 .github/workflows/      # migrations e release
 ```
 
