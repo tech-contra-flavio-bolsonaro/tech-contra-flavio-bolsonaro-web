@@ -1,11 +1,8 @@
-name: Deploy Supabase migrations
+name: Release production
 
 on:
   push:
     branches: [main]
-    paths:
-      - "supabase/migrations/**"
-      - "supabase/config.toml"
   workflow_dispatch:
 
 concurrency:
@@ -38,7 +35,14 @@ jobs:
         run: supabase link --project-ref "$SUPABASE_PROJECT_ID"
 
       - name: Preview pending migrations
-        run: supabase db push --dry-run
+        run: supabase db push --linked --dry-run
 
       - name: Apply pending migrations
-        run: supabase db push
+        run: supabase db push --linked
+
+      - name: Trigger Vercel production deploy
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          test -n "$VERCEL_DEPLOY_HOOK_URL"
+          curl --fail --silent --show-error --request POST "$VERCEL_DEPLOY_HOOK_URL"
