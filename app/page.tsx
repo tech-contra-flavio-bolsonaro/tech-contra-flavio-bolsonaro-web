@@ -25,8 +25,10 @@ export default function Home() {
       </section>
 
       <section aria-labelledby="tools-title">
-        <p>FERRAMENTAS</p>
-        <h2 id="tools-title">Ferramentas</h2>
+        <div className="section-heading">
+          <p className="section-eyebrow">HUB DE MOBILIZAÇÃO</p>
+          <h2 id="tools-title">Ferramentas</h2>
+        </div>
         <div className="card-grid">
           {tools.slice(0, 4).map((tool) => <ToolCard key={tool.id} tool={tool} />)}
         </div>
@@ -34,8 +36,10 @@ export default function Home() {
       </section>
 
       <section aria-labelledby="content-title">
-        <p>CONTEÚDOS</p>
-        <h2 id="content-title">Conteúdos</h2>
+        <div className="section-heading">
+          <p className="section-eyebrow">ACERVO COLETIVO</p>
+          <h2 id="content-title">Conteúdos</h2>
+        </div>
         <ContentFeed limit={4} />
         <a className="action-link" href="/conteudos">Ver todos os conteúdos</a>
       </section>

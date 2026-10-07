@@ -11,8 +11,15 @@ it("uses a dark, high-contrast surface for community cards", () => {
   expect(styles).toContain("color: var(--tech-card-foreground);");
 });
 
-it("reduces the hero heading scale on small screens", () => {
-  expect(styles).toContain(".hero-copy h1 { font-size: clamp(2.75rem, 14vw, 4.5rem); }");
+it("keeps the hero heading intact on small screens", () => {
+  expect(styles).toContain(".hero-copy h1 { max-width: 9ch; font-size: clamp(2.5rem, 12vw, 4rem); overflow-wrap: normal; word-break: normal; }");
+  expect(styles).not.toContain("overflow-wrap: anywhere;");
+});
+
+it("uses a vertically stacked contextual heading for homepage sections", () => {
+  expect(styles).toContain(".section-heading { display: grid; gap: .85rem; }");
+  expect(styles).toContain(".page-intro > p:first-child, .section-eyebrow { margin: 0;");
+  expect(styles).toContain(".section-eyebrow { color: var(--tech-yellow); }");
 });
 
 it("keeps the submission panel above the editorial heading", () => {
