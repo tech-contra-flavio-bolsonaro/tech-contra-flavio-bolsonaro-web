@@ -94,6 +94,7 @@ section > p:not(:first-child) { max-width: 36rem; font-size: 1.2rem; line-height
 .submission-field [data-slot="input"]::file-selector-button { margin-right: .8rem; color: var(--tech-blue); font-weight: 700; }
 .submission-field [data-slot="input"]::placeholder, .submission-field [data-slot="textarea"]::placeholder { color: #716d9c; }
 .submission-field > p { margin: 0; color: #514d7d; font-size: .78rem; line-height: 1.35; }
+.submission-field > .submission-field-error { color: #ba1a1a; font-size: .78rem; font-weight: 700; }
 .submission-media { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: end; }
 .submission-or { padding-bottom: 1.05rem; color: #514d7d; font-size: .8rem; font-weight: 700; }
 .turnstile-shell { display: flex; min-height: 65px; align-items: center; padding-top: .25rem; }
