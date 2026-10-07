@@ -38,7 +38,7 @@ jobs:
         run: supabase link --project-ref "$SUPABASE_PROJECT_ID"
 
       - name: Preview pending migrations
-        run: supabase db push --dry-run
+        run: supabase db push --linked --dry-run
 
       - name: Apply pending migrations
-        run: supabase db push
+        run: supabase db push --linked
