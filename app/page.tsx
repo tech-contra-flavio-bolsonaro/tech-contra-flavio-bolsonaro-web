@@ -15,12 +15,12 @@ export default function Home() {
           <a href="/ferramentas">Conhecer o hub ↓</a>
         </div>
         <div data-testid="hero-decoration" className="hero-decoration" aria-hidden="true">
-          <Image className="hero-icon hero-icon-computer" src="/brand-icons/retro-computer.svg" alt="" width={256} height={256} />
-          <Image className="hero-icon hero-icon-keyboard" src="/brand-icons/keyboard.svg" alt="" width={176} height={176} />
-          <Image className="hero-icon hero-icon-mouse" src="/brand-icons/mouse.svg" alt="" width={112} height={112} />
-          <Image className="hero-icon hero-icon-cloud" src="/brand-icons/upload-cloud.svg" alt="" width={112} height={112} />
-          <Image className="hero-icon hero-icon-sparkles" src="/brand-icons/pixel-sparkles.svg" alt="" width={88} height={88} />
-          <Image className="hero-icon hero-icon-paperclip" src="/brand-icons/paperclip.svg" alt="" width={80} height={80} />
+          <Image className="hero-icon hero-icon-computer" src="/icons/streamline-pixel/computers-devices-electronics/computers-devices-electronics-vintage-mac.svg" alt="" width={256} height={256} />
+          <Image className="hero-icon hero-icon-keyboard" src="/icons/streamline-pixel/computers-devices-electronics/computers-devices-electronics-keyboard.svg" alt="" width={176} height={176} />
+          <Image className="hero-icon hero-icon-mouse" src="/icons/streamline-pixel/computers-devices-electronics/computers-devices-electronics-mouse.svg" alt="" width={112} height={112} />
+          <Image className="hero-icon hero-icon-cloud" src="/icons/streamline-pixel/internet-network/internet-network-computer-upload.svg" alt="" width={112} height={112} />
+          <Image className="hero-icon hero-icon-sparkles" src="/icons/streamline-pixel/design/design-magic-wand.svg" alt="" width={88} height={88} />
+          <Image className="hero-icon hero-icon-paperclip" src="/icons/streamline-pixel/interface-essential/interface-essential-link.svg" alt="" width={80} height={80} />
         </div>
       </section>
 

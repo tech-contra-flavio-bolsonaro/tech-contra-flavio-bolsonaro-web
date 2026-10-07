@@ -23,14 +23,13 @@ section { padding: clamp(3rem, 9vw, 8rem) 0; border-top: 1px solid color-mix(in 
 .hero-copy h1 { max-width: 8.3ch; font-size: clamp(4.5rem, 9.7vw, 9.5rem); }
 .hero-copy a { margin-top: .25rem; }
 .hero-decoration { position: absolute; inset: 0; pointer-events: none; }
-.hero-decoration::before { position: absolute; top: 17%; right: 4%; bottom: 10%; left: 46%; border: 1px solid rgb(255 241 74 / 17%); border-left: 0; content: ""; }
-.hero-icon { position: absolute; display: block; filter: drop-shadow(0 8px 16px rgb(0 0 0 / 22%)); }
-.hero-icon-computer { width: clamp(8rem, 15vw, 13rem); right: 8%; top: 20%; }
-.hero-icon-keyboard { width: clamp(5rem, 10vw, 8rem); right: 4%; bottom: 9%; transform: rotate(-9deg); }
-.hero-icon-mouse { width: clamp(3.5rem, 6vw, 5rem); right: 32%; top: 13%; transform: rotate(12deg); }
-.hero-icon-cloud { width: clamp(3.75rem, 7vw, 5.5rem); right: 7%; top: 55%; }
-.hero-icon-sparkles { width: clamp(2.75rem, 4.5vw, 4rem); right: 43%; top: 23%; }
-.hero-icon-paperclip { width: clamp(2.75rem, 4vw, 3.5rem); right: 41%; bottom: 17%; transform: rotate(-18deg); }
+.hero-icon { position: absolute; display: block; filter: brightness(0) invert(1) drop-shadow(0 8px 16px rgb(0 0 0 / 22%)); image-rendering: pixelated; }
+.hero-icon-computer { width: clamp(9rem, 15vw, 13rem); right: 9%; top: 22%; }
+.hero-icon-keyboard { width: clamp(5rem, 9vw, 7.5rem); right: 5%; bottom: 12%; transform: rotate(-9deg); }
+.hero-icon-mouse { width: clamp(3rem, 5vw, 4.5rem); right: 31%; top: 15%; transform: rotate(12deg); }
+.hero-icon-cloud { width: clamp(3.5rem, 6vw, 5rem); right: 7%; top: 56%; }
+.hero-icon-sparkles { width: clamp(2.5rem, 4vw, 3.5rem); right: 42%; top: 27%; filter: brightness(0) saturate(100%) invert(86%) sepia(93%) saturate(518%) hue-rotate(358deg) brightness(105%) contrast(101%) drop-shadow(0 8px 16px rgb(0 0 0 / 22%)); }
+.hero-icon-paperclip { width: clamp(2.5rem, 3.5vw, 3.25rem); right: 38%; bottom: 18%; transform: rotate(-18deg); filter: brightness(0) saturate(100%) invert(76%) sepia(86%) saturate(3198%) hue-rotate(145deg) brightness(103%) contrast(104%) drop-shadow(0 8px 16px rgb(0 0 0 / 22%)); }
 section > p:first-child { margin: 0 0 1rem; font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
 h1, h2 { max-width: 10ch; margin: 0; font-weight: 900; letter-spacing: -.08em; line-height: .83; }
 h1 { font-size: clamp(4rem, 12vw, 10rem); }
@@ -78,7 +77,6 @@ section > p:not(:first-child) { max-width: 36rem; font-size: 1.2rem; line-height
   .hero-copy { width: min(100%, 30rem); }
   .hero-copy h1 { font-size: clamp(2.75rem, 14vw, 4.5rem); }
   .hero-decoration { opacity: .22; }
-  .hero-decoration::before { display: none; }
   .hero-icon-computer { width: 8rem; right: -1rem; top: 1.5rem; }
   .hero-icon-keyboard, .hero-icon-mouse, .hero-icon-cloud, .hero-icon-paperclip { display: none; }
   .hero-icon-sparkles { width: 3rem; left: auto; right: 5rem; top: 7rem; }
