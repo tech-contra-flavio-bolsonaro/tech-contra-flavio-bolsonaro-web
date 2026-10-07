@@ -1,0 +1,4 @@
+project_id = "zramjorycdtdcevuyzpu"
+
+[functions.submit-content]
+verify_jwt = false
