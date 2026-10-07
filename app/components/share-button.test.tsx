@@ -104,7 +104,7 @@ it("shares the actual image file with the source and title", async () => {
   await waitFor(() => expect(share).toHaveBeenCalledTimes(1));
   const shareData = share.mock.calls[0][0];
   expect(shareData.text).toBe(
-    "This is from https://techcontraflaviobolsonaro.dev/\n\nCard",
+    "Card\n\nhttps://techcontraflaviobolsonaro.dev/",
   );
   expect(shareData.files?.[0]).toMatchObject({
     name: "image.png",
@@ -122,7 +122,7 @@ it("shares the source, title, and URL when there is no image", async () => {
 
   const whatsappUrl = new URL(open.mock.calls[0][0] as string);
   expect(whatsappUrl.searchParams.get("text")).toBe(
-    "This is from https://techcontraflaviobolsonaro.dev/\n\nCard\nhttps://example.com/card",
+    "Card\nhttps://example.com/card\n\nhttps://techcontraflaviobolsonaro.dev/",
   );
 });
 
