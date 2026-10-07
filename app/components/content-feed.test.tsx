@@ -14,3 +14,15 @@ it("loads approved content in batches of ten", async () => {
   expect(await screen.findByRole("button", { name: "Carregar mais" })).toBeEnabled();
   expect(fetch).toHaveBeenCalledWith("/api/conteudos?page=0");
 });
+
+it("gives the empty content state a clear next action", async () => {
+  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({ items: [], hasMore: false }),
+  }));
+
+  render(<ContentFeed limit={4} />);
+
+  expect(await screen.findByText("Ainda não há conteúdos publicados.")).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Enviar o primeiro conteúdo" })).toHaveAttribute("href", "/enviar");
+});
