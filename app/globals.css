@@ -69,9 +69,9 @@ section > p:not(:first-child) { max-width: 36rem; font-size: 1.2rem; line-height
 .upload-form :disabled { cursor: not-allowed; opacity: .55; }
 .form-hint, .form-message { margin: .25rem 0; font-size: .85rem; line-height: 1.35; }
 .submission-page { display: grid; grid-template-columns: minmax(0, .9fr) minmax(28rem, 1.1fr); gap: clamp(3rem, 8vw, 8rem); align-items: start; min-height: calc(100svh - 80px); padding-block: clamp(4rem, 9vw, 8rem); border-top: 0; }
-.submission-intro { position: sticky; top: 2rem; max-width: 34rem; }
+.submission-intro { position: sticky; top: 2rem; min-width: 0; max-width: 34rem; }
 .submission-eyebrow, .submission-panel-heading > p { margin: 0 0 1rem; color: var(--tech-yellow); font-size: .72rem; font-weight: 800; letter-spacing: .14em; }
-.submission-intro h1 { max-width: 7ch; color: #f8f7ff; font-size: clamp(3.75rem, 7vw, 7rem); }
+.submission-intro h1 { max-width: 7ch; color: #f8f7ff; font-size: clamp(3rem, 4.5vw, 4.75rem); }
 .submission-intro h1 span { color: var(--tech-yellow); }
 .submission-lede { max-width: 31rem; margin: 2rem 0 0; color: var(--tech-card-muted); font-size: clamp(1.1rem, 1.4vw, 1.3rem); line-height: 1.5; }
 .submission-steps { display: grid; gap: 1.15rem; margin: 3rem 0 0; padding: 0; list-style: none; }
@@ -80,7 +80,7 @@ section > p:not(:first-child) { max-width: 36rem; font-size: 1.2rem; line-height
 .submission-steps div { display: grid; gap: .2rem; }
 .submission-steps strong { color: #f8f7ff; font-size: .95rem; }
 .submission-steps small { color: var(--tech-card-muted); font-size: .85rem; line-height: 1.35; }
-.submission-panel { padding: clamp(1.5rem, 4vw, 3rem); border: 2px solid var(--tech-yellow); border-radius: 1.25rem; background: #f8f7ff; box-shadow: 12px 12px 0 rgb(0 0 0 / 14%); color: var(--tech-blue); }
+.submission-panel { position: relative; z-index: 1; padding: clamp(1.5rem, 4vw, 3rem); border: 2px solid var(--tech-yellow); border-radius: 1.25rem; background: #f8f7ff; box-shadow: 12px 12px 0 rgb(0 0 0 / 14%); color: var(--tech-blue); }
 .submission-panel-heading { padding-bottom: 1.5rem; border-bottom: 1px solid rgb(24 0 216 / 18%); }
 .submission-panel-heading > p { color: var(--tech-blue); }
 .submission-panel-heading h2 { max-width: none; color: var(--tech-blue); font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.06em; line-height: .9; }
