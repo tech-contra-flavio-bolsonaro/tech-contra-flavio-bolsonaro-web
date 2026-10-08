@@ -20,7 +20,8 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: "Vira Voto — ideias em movimento",
-  description: "Um hub de ferramentas e conteúdos para colocar ideias em movimento.",
+  description:
+    "Um hub de ferramentas e conteúdos para colocar ideias em movimento.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -29,7 +30,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="pt-BR"
       className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}<Toaster /></body>
+      <head>
+        <meta name="apple-mobile-web-app-title" content="Vira Voto" />
+      </head>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }
