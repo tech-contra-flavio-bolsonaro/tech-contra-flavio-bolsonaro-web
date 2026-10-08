@@ -1,0 +1,83 @@
+name: Relatar bug
+description: Registrar uma falha reproduzível para triagem.
+title: "[Bug] "
+labels: [triagem]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Consulte o [roteiro de QA](https://github.com/tech-contra-flavio-bolsonaro/tech-contra-flavio-bolsonaro-web/blob/main/docs/qa/roteiro-exploratorio.md).
+        [Busque bugs e itens em triagem](https://github.com/tech-contra-flavio-bolsonaro/tech-contra-flavio-bolsonaro-web/issues?q=is%3Aissue%20is%3Aopen%20label%3Abug%2Ctriagem) e palavras do sintoma antes de abrir.
+        Feature ausente não é bug. Compartilhamento já é acompanhado na #9.
+        Não anexe dados pessoais, tokens, cookies ou credenciais.
+  - type: checkboxes
+    id: verificacao
+    attributes:
+      label: Verificação prévia
+      options:
+        - label: Busquei issues existentes e não encontrei duplicata.
+          required: true
+        - label: Reproduzi duas vezes na main atual, com passos escritos.
+          required: true
+        - label: Removi dados pessoais e segredos das evidências.
+          required: true
+  - type: textarea
+    id: ambiente
+    attributes:
+      label: Ambiente e versão
+      description: Informe URL, local/produção/preview, SHA ou SHA/data do deploy, sistema, navegador/versão, dispositivo, viewport e real/emulado. Inclua leitor de tela/versão quando usado.
+    validations:
+      required: true
+  - type: textarea
+    id: reproducao
+    attributes:
+      label: Passos e duas reproduções
+      description: Informe pré-requisitos, dados fictícios, ID do caso de QA se houver, passos numerados e resultado de cada reprodução. Produção permite só leitura.
+      placeholder: |
+        Pré-requisitos e caso:
+        1. Abra...
+        2. Acione...
+        Reprodução 1 (data e resultado):
+        Reprodução 2 (data e resultado):
+    validations:
+      required: true
+  - type: textarea
+    id: observado
+    attributes:
+      label: Resultado observado
+      description: Descreva o que aconteceu e quem foi afetado.
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: Resultado esperado e referência
+      description: Cite critério de issue fechada, spec aprovada ou requisito WCAG aplicável. Design pendente não é referência aprovada.
+    validations:
+      required: true
+  - type: dropdown
+    id: impacto
+    attributes:
+      label: Impacto
+      description: Explique o impacto nas evidências. Não aplica label de prioridade.
+      options:
+        - Crítico
+        - Alto
+        - Médio
+        - Baixo
+    validations:
+      required: true
+  - type: textarea
+    id: evidencia
+    attributes:
+      label: Evidências e efeito no fluxo
+      description: Anexe print/vídeo e console relevante (ou ausência de erros); inclua transcrição dos anúncios para leitor de tela. Informe alternativa disponível ou bloqueio.
+    validations:
+      required: true
+  - type: textarea
+    id: aceite
+    attributes:
+      label: Critério de aceite da correção
+      description: Qual resultado verificável, no ambiente informado, confirma a correção?
+    validations:
+      required: true
