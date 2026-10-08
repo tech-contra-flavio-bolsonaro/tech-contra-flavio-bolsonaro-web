@@ -13,7 +13,8 @@ it("uses a dark, high-contrast surface for community cards", () => {
 
 it("keeps the hero heading intact on small screens", () => {
   expect(styles).toContain(".hero-copy h1 { max-width: 9ch; font-size: clamp(2.5rem, 12vw, 4rem); overflow-wrap: normal; word-break: normal; }");
-  expect(styles).not.toContain("overflow-wrap: anywhere;");
+  const heroHeadingStyles = styles.match(/\.hero-copy h1 \{[^}]*\}/)?.[0] ?? "";
+  expect(heroHeadingStyles).not.toContain("overflow-wrap: anywhere;");
 });
 
 it("uses a vertically stacked contextual heading for homepage sections", () => {

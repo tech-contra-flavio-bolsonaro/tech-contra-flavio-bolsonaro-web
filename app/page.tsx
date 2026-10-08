@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SiteNav } from "@/app/components/site-nav";
-import { ToolCard } from "@/app/components/tool-card";
-import { tools } from "@/app/lib/content";
+import { ToolFeed } from "@/app/components/tool-feed";
 import { ContentFeed } from "@/app/components/content-feed";
 
 export default function Home() {
@@ -30,9 +29,7 @@ export default function Home() {
           <p className="section-eyebrow">HUB DE MOBILIZAÇÃO</p>
           <h2 id="tools-title">Ferramentas</h2>
         </div>
-        <div className="card-grid">
-          {tools.slice(0, 4).map((tool) => <ToolCard key={tool.id} tool={tool} />)}
-        </div>
+        <ToolFeed limit={4} />
         <Link className="action-link" href="/ferramentas">Ver todas as ferramentas</Link>
       </section>
 
