@@ -44,3 +44,13 @@ Split implementation into four coherent stacked PRs by measured changed-line cou
 Cover pending submissions, rejected invalid fields/URLs, failed spam verification, and submission confirmation/errors. Verify that pending/rejected tools never appear in public listings or slug pages, slugs remain stable across title changes, and collisions cannot overwrite an existing tool. Verify that unapproved/revoked embedding hosts cannot mount an iframe, approved embeds load only on visitor action, and external links remain available. Check pagination, homepage limits, and empty/error states through existing test seams.
 
 Run the relevant tests, lint, build, and `git diff --check`, then obtain Maestri QA GO and check each PR's size before opening it. Initial fields remain provisional and should be identified as a discussion point in the PR description; no GitHub issue comments have been posted.
+
+## Validation record (2026-10-08)
+
+- `npx bun@1.3.10 run test` — 14 files and 77 tests passed.
+- `npx bun@1.3.10 run lint` — passed.
+- `npx bun@1.3.10 run build` — passed.
+- Docker/Postgres 16 SQL harness `supabase/tests/tool-submissions.sh` — passed in a throwaway container. The Windows checkout uses CRLF, so the script was streamed with CRLF removed without changing the tracked file.
+- `git diff --check` — passed after this record was added.
+- `scripts/check-pr-size.py` results at each committed stage head: schema 262 lines, backend 413, pages 303, catalog/homepage 298 (500-line maximum). This validation record is an uncommitted addition to the final stage.
+- Maestri's first read-only review returned NO-GO only for missing recorded validation and size evidence. The follow-up review returned GO with no findings.
