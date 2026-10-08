@@ -1,19 +1,20 @@
 import { SiteNav } from "@/app/components/site-nav";
+import Link from "next/link";
+import { ToolFeed } from "@/app/components/tool-feed";
 
 export default function FerramentasPage() {
   return (
     <main>
       <SiteNav />
-      <section className="page-intro" aria-labelledby="tools-title">
-        <p>FERRAMENTAS</p>
+      <section className="tools-list" aria-labelledby="tools-title">
         <h1 id="tools-title">O QUE AJUDA A AGIR.</h1>
         <div className="page-copy">
           <p>
-            Em breve, este espaço vai concentrar as ferramentas da comunidade:
-            calculadoras, guias, formulários e acessos diretos para a ação.
+            Recursos da comunidade para planejar, criar e colocar ideias em movimento.
           </p>
-          <a className="action-link" href="/enviar">Sugerir uma ferramenta ↓</a>
+          <Link className="action-link" href="/ferramentas/enviar">Sugerir uma ferramenta</Link>
         </div>
+        <ToolFeed />
       </section>
     </main>
   );
