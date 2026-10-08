@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteNav } from "@/app/components/site-nav";
@@ -5,6 +6,37 @@ import { ToolAccess } from "@/app/components/tool-access";
 import { findTool, findToolEmbed } from "@/app/lib/tools-server";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const tool = await findTool(slug);
+
+  if (!tool) {
+    return {
+      title: "Ferramenta não encontrada",
+      description: "A ferramenta solicitada não foi encontrada no Vira Voto.",
+    };
+  }
+
+  return {
+    title: tool.title,
+    description: tool.description,
+    alternates: {
+      canonical: `/ferramentas/${slug}`,
+    },
+    openGraph: {
+      title: tool.title,
+      description: tool.description,
+      type: "article",
+      url: `/ferramentas/${slug}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: tool.title,
+      description: tool.description,
+    },
+  };
+}
 
 export default async function ToolPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

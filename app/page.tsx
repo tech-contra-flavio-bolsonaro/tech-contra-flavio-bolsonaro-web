@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { SiteNav } from "@/app/components/site-nav";
 import { ToolFeed } from "@/app/components/tool-feed";
 import { ContentFeed } from "@/app/components/content-feed";
+
+export const metadata: Metadata = {
+  title: "Início",
+  description:
+    "Vira Voto reúne ferramentas, conteúdos e referências para transformar ideias em ação coletiva.",
+};
 
 export default function Home() {
   return (

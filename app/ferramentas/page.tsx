@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { SiteNav } from "@/app/components/site-nav";
 import Link from "next/link";
 import { ToolFeed } from "@/app/components/tool-feed";
+
+export const metadata: Metadata = {
+  title: "Ferramentas",
+  description:
+    "Explore ferramentas e recursos para planejar, comunicar e transformar ideias em ação.",
+};
 
 export default function FerramentasPage() {
   return (
