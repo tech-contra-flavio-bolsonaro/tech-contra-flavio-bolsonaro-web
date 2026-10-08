@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { SiteNav } from "@/app/components/site-nav";
 import { ToolCard } from "@/app/components/tool-card";
 import { tools } from "@/app/lib/content";
@@ -12,7 +13,7 @@ export default function Home() {
         <div className="hero-copy">
           <p>UM HUB PARA QUEM QUER VIRAR O JOGO</p>
           <h1 id="hero-title">IDEIAS GANHAM <span>MOVIMENTO.</span></h1>
-          <a href="/ferramentas">Conhecer o hub ↓</a>
+          <Link href="/ferramentas">Conhecer o hub ↓</Link>
         </div>
         <div data-testid="hero-decoration" className="hero-decoration" aria-hidden="true">
           <Image className="hero-icon hero-icon-computer" src="/icons/streamline-pixel/computers-devices-electronics/computers-devices-electronics-vintage-mac.svg" alt="" width={256} height={256} />
@@ -32,7 +33,7 @@ export default function Home() {
         <div className="card-grid">
           {tools.slice(0, 4).map((tool) => <ToolCard key={tool.id} tool={tool} />)}
         </div>
-        <a className="action-link" href="/ferramentas">Ver todas as ferramentas</a>
+        <Link className="action-link" href="/ferramentas">Ver todas as ferramentas</Link>
       </section>
 
       <section aria-labelledby="content-title">
