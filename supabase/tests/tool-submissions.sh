@@ -28,4 +28,6 @@ for i in $(seq 1 12); do
 done
 wait
 psql -At -c "select count(*), count(distinct slug) from tool_submissions where title = 'Mesma ferramenta'" | grep -qx '12|12'
+psql < supabase/seed.sql
+psql < supabase/tests/tool_seed.sql
 echo "tool_submissions SQL checks passed"
