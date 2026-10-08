@@ -14,11 +14,13 @@ permissions:
 
 jobs:
   deploy:
-    name: Apply production migrations
+    name: Release database, functions and web
     runs-on: ubuntu-latest
     environment: production
     env:
       SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
 
     steps:
       - name: Check out source
@@ -29,13 +31,26 @@ jobs:
         with:
           version: latest
 
-      - name: Preview pending migrations
+      - name: Check release prerequisites
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
         run: |
           test -n "$SUPABASE_DB_URL"
+          test -n "$SUPABASE_ACCESS_TOKEN"
+          test -n "$SUPABASE_PROJECT_REF"
+          test -n "$VERCEL_DEPLOY_HOOK_URL"
+          supabase secrets list --project-ref "$SUPABASE_PROJECT_REF" --output json | jq -e 'any(.[]; .name == "TURNSTILE_SECRET_KEY")' >/dev/null
+
+      - name: Preview pending migrations
+        run: |
           supabase db push --db-url "$SUPABASE_DB_URL" --dry-run
 
       - name: Apply pending migrations
         run: supabase db push --db-url "$SUPABASE_DB_URL"
+
+      - name: Deploy tool submissions function
+        run: |
+          supabase functions deploy submit-tool --project-ref "$SUPABASE_PROJECT_REF"
 
       - name: Trigger Vercel production deploy
         env:
