@@ -1,0 +1,60 @@
+name: Sugerir melhoria
+description: Propor comportamento novo ou mudança de escopo para triagem.
+title: "[Melhoria] "
+labels: [triagem]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        [Busque issues existentes](https://github.com/tech-contra-flavio-bolsonaro/tech-contra-flavio-bolsonaro-web/issues) antes de abrir.
+        Consulte o [roteiro e regras de triagem](https://github.com/tech-contra-flavio-bolsonaro/tech-contra-flavio-bolsonaro-web/blob/main/docs/qa/roteiro-exploratorio.md).
+        Feature ausente não é bug. Não publique dados pessoais ou segredos.
+  - type: checkboxes
+    id: verificacao
+    attributes:
+      label: Verificação prévia
+      options:
+        - label: Busquei issues existentes e não encontrei duplicata.
+          required: true
+        - label: Removi dados pessoais e segredos dos exemplos.
+          required: true
+  - type: textarea
+    id: problema
+    attributes:
+      label: Problema ou necessidade
+      description: Quem precisa da melhoria e em qual situação? Inclua URL, ambiente ou caso de QA quando relevante.
+    validations:
+      required: true
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Proposta
+      description: Descreva comportamento desejado, alternativas e dependências de issues existentes.
+    validations:
+      required: true
+  - type: dropdown
+    id: impacto
+    attributes:
+      label: Impacto
+      description: Use as definições do roteiro e explique o efeito abaixo. Não aplica label de prioridade.
+      options:
+        - Crítico
+        - Alto
+        - Médio
+        - Baixo
+    validations:
+      required: true
+  - type: textarea
+    id: efeito
+    attributes:
+      label: Efeito esperado e evidência
+      description: Explique o impacto, a alternativa atual e os exemplos sanitizados que sustentam a proposta.
+    validations:
+      required: true
+  - type: textarea
+    id: aceite
+    attributes:
+      label: Critério de aceite
+      description: Qual resultado observável permite verificar que a melhoria atende à necessidade?
+    validations:
+      required: true

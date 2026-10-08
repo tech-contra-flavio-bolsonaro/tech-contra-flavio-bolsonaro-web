@@ -49,6 +49,8 @@ O status é controlado pelo enum `submission_status`: `pending`, `approved` e `r
 
 ## Desenvolvimento
 
+Consulte o [roteiro de QA exploratório da v1 e as regras para registrar bugs e melhorias](docs/qa/roteiro-exploratorio.md).
+
 ```bash
 bun install --frozen-lockfile
 cp .env.example .env.local
