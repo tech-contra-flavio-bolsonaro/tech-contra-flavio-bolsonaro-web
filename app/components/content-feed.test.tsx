@@ -28,6 +28,26 @@ it("gives the empty content state a clear next action", async () => {
   expect(screen.getByRole("link", { name: "Enviar o primeiro conteúdo" })).toHaveAttribute("href", "/enviar");
 });
 
+it("shares the selected content's permanent detail link from the feed", async () => {
+  const id = "123e4567-e89b-42d3-a456-426614174000";
+  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({
+      items: [{ id, title: "Card", description: "Descrição do card", credit: "Vira Voto", media_path: null, mediaUrl: null, video_url: null }],
+      hasMore: false,
+    }),
+  }));
+  const open = vi.spyOn(window, "open").mockImplementation(() => null);
+
+  render(<ContentFeed limit={1} />);
+  fireEvent.click(await screen.findByRole("button", { name: "Compartilhar" }));
+  fireEvent.click(await screen.findByRole("button", { name: "Compartilhar no X" }));
+
+  const intent = new URL(open.mock.calls[0][0] as string);
+  expect(intent.searchParams.get("url")).toBe(`http://localhost:3000/conteudos/${id}`);
+  expect(intent.searchParams.get("text")).toBe("Card\n\nDescrição do card");
+});
+
 it("keeps real Home content and its complete media in the sharing dialog", async () => {
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ items: [{ id: "home", title: "Passagem real", description: "Descrição completa do item aprovado", credit: "Coletivo real", media_path: "real.png", mediaUrl: "https://example.com/real.png", video_url: "https://example.com/associated.mp4" }], hasMore: false }) }));
   render(<ContentFeed limit={1} variant="home" />);

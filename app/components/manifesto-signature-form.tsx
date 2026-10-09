@@ -21,7 +21,6 @@ export function ManifestoSignatureForm() {
   const container = useRef<HTMLDivElement>(null);
   const widget = useRef<string | null>(null);
   const pending = useRef(false);
-  const feedback = useRef<HTMLParagraphElement>(null);
   const [token, setToken] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
@@ -40,7 +39,6 @@ export function ManifestoSignatureForm() {
     initialize();
     return () => { if (widget.current !== null) turnstile()?.remove(widget.current); widget.current = null; };
   }, [initialize]);
-  useEffect(() => { if (error || success) feedback.current?.focus(); }, [error, success]);
   async function submit(values: Values) {
     if (pending.current) return;
     setSuccess(false);
@@ -90,7 +88,7 @@ export function ManifestoSignatureForm() {
       </div>
       <div ref={container} className="turnstile-shell" />
       {!sitekey || !endpoint ? <p role="alert">O envio está temporariamente indisponível. Tente novamente mais tarde.</p> : null}
-      {error || success ? <p ref={feedback} className="manifesto-feedback" tabIndex={-1} role={error ? "alert" : "status"}>{error || successMessage}</p> : null}
+      {error || success ? <p className="manifesto-feedback" role={error ? "alert" : "status"}>{error || successMessage}</p> : null}
       <Button className="manifesto-submit" type="submit" disabled={sending || !sitekey || !endpoint}>{sending ? "Enviando…" : "Confirmar assinatura"}<HomeArrow /></Button>
     </form>
   </>;
