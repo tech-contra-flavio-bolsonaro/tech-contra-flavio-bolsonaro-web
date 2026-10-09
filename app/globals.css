@@ -705,3 +705,6 @@ h1 span { color: var(--tech-yellow); }
   .submission-upload { padding: 28px 18px; }
   .content-submission-page .submission-form-footer [data-slot="button"] { max-width: 100%; gap: 16px; padding: 0 18px; font-size: 16px; }
 }
+
+.home-hero-actions .home-hero-manifesto-cta { width: auto; max-width: 100%; height: auto; min-height: 58px; padding-block: 16px; white-space: normal; }
+.home-hero-manifesto-cta .home-hero-arrow { flex-shrink: 0; }

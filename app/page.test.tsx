@@ -51,3 +51,14 @@ it("invites reading and signing the manifesto",()=>{
  render(<Home />);
  expect(screen.getByRole("link",{name:/Leia e assine o manifesto/})).toHaveAttribute("href","/manifesto");
 });
+
+it("places the manifesto CTA in the hero and the hub CTA in the coral band", () => {
+ render(<Home />);
+ const manifesto = screen.getByRole("link", { name: /Leia e assine o manifesto/ });
+ expect(manifesto).toHaveAttribute("href", "/manifesto");
+ expect(manifesto.closest(".home-hero")).not.toBeNull();
+ const hub = screen.getByRole("link", { name: /Conheça nosso hub/ });
+ expect(hub).toHaveAttribute("href", "/ferramentas");
+ expect(hub.closest(".home-manifesto")).toHaveTextContent("NOSSO HUB");
+ expect(hub.closest(".home-manifesto")).toHaveTextContent("A democracia também se constrói em rede.");
+});
