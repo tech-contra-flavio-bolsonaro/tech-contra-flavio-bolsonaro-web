@@ -7,6 +7,7 @@ vi.mock("next/navigation", () => ({ usePathname: () => route.pathname }));
 afterEach(() => { cleanup(); route.pathname = "/conteudos"; });
 
 it("renders a shared accessible footer with a return-to-top control", () => {
+  route.pathname = "/ferramentas";
   render(<SiteFooter />);
 
   expect(screen.getByRole("contentinfo")).toHaveClass("site-footer");
@@ -14,8 +15,8 @@ it("renders a shared accessible footer with a return-to-top control", () => {
   expect(screen.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "#top");
 });
 
-it("uses the complete Home footer only on the Home route", () => {
-  route.pathname = "/";
+it.each(["/", "/manifesto", "/enviar", "/conteudos"])("uses the complete Penpot footer on %s", (pathname) => {
+  route.pathname = pathname;
   render(<SiteFooter />);
   expect(screen.getByRole("contentinfo")).toHaveClass("home-footer");
   for (const [name, href] of [["Manifesto", "/manifesto"], ["Ferramentas", "/ferramentas"], ["Conteúdos", "/conteudos"], ["Enviar conteúdo", "/enviar"]]) {

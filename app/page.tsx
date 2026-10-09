@@ -21,7 +21,7 @@ export default function Home() {
           <p className="home-eyebrow">UM HUB PARA QUEM QUER VIRAR O JOGO</p>
           <h1 id="hero-title"><span>IDEIAS</span>{" "}<span>GANHAM</span>{" "}<span className="home-hero-title-accent">MOVIMENTO.</span></h1>
           <p className="home-hero-description">Um espaço para conectar pessoas, compartilhar ferramentas e transformar ideias em ação coletiva.</p>
-          <div className="home-hero-actions"><Link className="home-button home-button-yellow" href="/ferramentas">Conhecer o hub <svg className="home-hero-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M0,24L24,0M24,0L0,0M24,0L24,24" stroke="currentColor" strokeWidth="2.5" /></svg></Link><p>ABERTO PARA TODO MUNDO.<br />INCLUSIVE VOCÊ.</p></div>
+          <div className="home-hero-actions"><Link className="home-button home-button-yellow home-hero-manifesto-cta" href="/manifesto">Leia e assine o manifesto <svg className="home-hero-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M0,24L24,0M24,0L0,0M24,0L24,24" stroke="currentColor" strokeWidth="2.5" /></svg></Link><p>ABERTO PARA TODO MUNDO.<br />INCLUSIVE VOCÊ.</p></div>
         </div>
         <div data-testid="hero-decoration" className="home-hero-decoration" aria-hidden="true">
           <Image
@@ -34,7 +34,7 @@ export default function Home() {
           />
         </div>
       </section>
-      <section className="home-manifesto" aria-labelledby="manifesto-title"><div><p className="home-eyebrow">NOSSO MANIFESTO</p><h2 id="manifesto-title">A democracia também se constrói em rede.</h2></div><Link className="home-button home-button-white" href="/manifesto">Leia e assine o manifesto <HomeArrow /></Link></section>
+      <section className="home-manifesto" aria-labelledby="manifesto-title"><div><p className="home-eyebrow">NOSSO HUB</p><h2 id="manifesto-title">A democracia também se constrói em rede.</h2></div><Link className="home-button home-button-white" href="/ferramentas">Conheça nosso hub <HomeArrow /></Link></section>
       <section className="home-preview home-tools" aria-labelledby="tools-title"><header className="home-section-heading"><div><p className="home-eyebrow">DO PLANO À PRÁTICA</p><h2 id="tools-title">Ferramentas</h2></div><p>Menos barreiras, mais ação. Recursos para fazer acontecer, juntos.</p></header><div className="home-preview-feed"><ToolFeed limit={3} variant="home" /></div></section>
       <section className="home-preview home-content" aria-labelledby="content-title"><header className="home-section-heading"><div><p className="home-eyebrow">ACERVO COLETIVO</p><h2 id="content-title">Conteúdos</h2></div><p>Ideias para circular. Conteúdos para levar a conversa mais longe.</p></header><div className="home-preview-feed"><ContentFeed limit={1} variant="home" /></div></section>
       <section className="home-submit" aria-labelledby="submit-title">
