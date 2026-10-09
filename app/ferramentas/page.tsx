@@ -48,7 +48,7 @@ export default function FerramentasPage() {
             </div>
             <Image
               className="tools-window-star"
-              src="/images/ferramentas/signal-star.svg"
+              src="/images/home-collective-star.svg"
               alt=""
               width={98}
               height={98}
@@ -79,7 +79,7 @@ export default function FerramentasPage() {
 
       <section className="tools-suggestion" aria-labelledby="tools-suggestion-title">
         <Image
-          src="/images/ferramentas/collective-star.svg"
+          src="/images/home-collective-star.svg"
           alt=""
           width={92}
           height={92}
