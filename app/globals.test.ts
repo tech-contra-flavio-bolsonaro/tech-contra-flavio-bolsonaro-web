@@ -69,6 +69,12 @@ it("switches the header to its menu layout before desktop links can overflow", (
   expect(styles).toContain("@media (max-width: 1024px) {");
 });
 
+it("makes the header viewport-wide without allowing horizontal page scrolling", () => {
+  expect(styles).toContain("html { overflow-x: clip; scroll-behavior: smooth; }");
+  expect(styles).toContain(".site-header { position: sticky;");
+  expect(styles).toContain("width: 100vw; max-width: 100vw;");
+});
+
 it("keeps the home layout responsive without replacing the desktop composition at tablet width", () => {
   expect(styles).toContain("@media (max-width: 1024px) { .home-page .site-header");
   expect(styles).toContain("@media (max-width: 600px) { .home-page .site-header");
