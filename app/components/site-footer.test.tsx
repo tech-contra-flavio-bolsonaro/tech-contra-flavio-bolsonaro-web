@@ -18,7 +18,7 @@ it.each(["/", "/manifesto", "/ferramentas", "/enviar", "/conteudos"])("uses the 
   expect(screen.queryByRole("link", { name: "Voltar ao topo" })).not.toBeInTheDocument();
 });
 
-it("exposes Blog on existing footer and compact Blog/detail footer", () => {
+it("uses the Home footer and original logo on detail while preserving navigation", () => {
   render(<SiteFooter />);
   expect(screen.getByRole("link", { name: "Blog" })).toHaveAttribute(
     "href",
@@ -27,9 +27,19 @@ it("exposes Blog on existing footer and compact Blog/detail footer", () => {
   cleanup();
   route.pathname = "/blog/1/acao";
   render(<SiteFooter />);
-  expect(screen.getByRole("contentinfo")).toHaveClass("blog-footer");
+  expect(screen.getByRole("contentinfo")).toHaveClass("home-footer");
+  expect(screen.getByRole("link", { name: "VIRA VOTO" }).querySelector("img")).toHaveAttribute("src", "/images/home-pixel-logo.svg");
+  for (const href of ["/manifesto", "/ferramentas", "/conteudos", "/blog", "/enviar"]) {
+    expect(screen.getByRole("contentinfo").querySelector(`a[href="${href}"]`)).not.toBeNull();
+  }
   expect(screen.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute(
     "href",
     "#top",
   );
+});
+
+it("retains the compact footer on Blog listing", () => {
+  route.pathname = "/blog";
+  render(<SiteFooter />);
+  expect(screen.getByRole("contentinfo")).toHaveClass("blog-footer");
 });
