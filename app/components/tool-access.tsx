@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { httpsUrl } from "@/app/lib/tools";
+import { HomeArrow } from "./home-arrow";
 
 export function ToolAccess({ slug, title, url, canEmbed }: { slug: string; title: string; url: string; canEmbed: boolean }) {
   const [embedUrl, setEmbedUrl] = useState<string | null>(null);
@@ -29,7 +30,7 @@ export function ToolAccess({ slug, title, url, canEmbed }: { slug: string; title
       {message ? <p role="status">{message}</p> : null}
       {embedUrl ? <iframe src={embedUrl} title={title} sandbox="allow-scripts allow-forms allow-popups" referrerPolicy="no-referrer" /> : null}
       <p>{canEmbed ? "Se a ferramenta não carregar, use o link externo." : "Esta ferramenta é usada no site de origem."}</p>
-      {httpsUrl(url) ? <a className="action-link" href={url} target="_blank" rel="noopener noreferrer">Abrir no site de origem (nova aba)</a> : <p role="status">O link desta ferramenta está indisponível.</p>}
+      {httpsUrl(url) ? <a className="action-link flex items-center gap-6" href={url} target="_blank" rel="noopener noreferrer">Abrir no site de origem (nova aba) <HomeArrow /> </a> : <p role="status">O link desta ferramenta está indisponível.</p>}
     </div>
   );
 }

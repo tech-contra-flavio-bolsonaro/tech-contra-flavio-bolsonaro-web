@@ -2,9 +2,13 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
 import { SiteNav } from "./site-nav";
 
-vi.mock("next/navigation", () => ({ usePathname: () => "/manifesto" }));
+const route = vi.hoisted(() => ({ pathname: "/manifesto" }));
+vi.mock("next/navigation", () => ({ usePathname: () => route.pathname }));
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  route.pathname = "/manifesto";
+});
 
 it("keeps the brand and a closed menu toggle on a single header row", () => {
   render(<SiteNav />);
@@ -61,4 +65,12 @@ it("lists every destination, marks the current page and highlights the send acti
   expect(screen.getByRole("link", { name: "Manifesto" })).toHaveAttribute("aria-current", "page");
   expect(screen.getByRole("link", { name: "Ferramentas" })).not.toHaveAttribute("aria-current");
   expect(screen.getByRole("link", { name: "Enviar conteúdo" })).toHaveClass("site-nav-cta");
+});
+
+it("marks Ferramentas current on a tool detail route", () => {
+  route.pathname = "/ferramentas/virada-no-bairro";
+  render(<SiteNav variant="home" />);
+
+  expect(screen.getByRole("link", { name: "Ferramentas" })).toHaveAttribute("aria-current", "page");
+  expect(screen.getByRole("link", { name: "VIRA VOTO" })).toHaveAttribute("href", "/");
 });

@@ -45,12 +45,16 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
   // A failed domain lookup must never prevent external access to an approved tool.
   const embedUrl = await findToolEmbed(slug).catch(() => null);
   return (
-    <main><SiteNav /><section className="tool-detail" aria-labelledby="tool-title">
-      <Link href="/ferramentas">Todas as ferramentas</Link>
-      <h1 id="tool-title">{tool.title}</h1>
-      <p>{tool.category} · Crédito: {tool.credit}</p>
-      <p className="tool-description">{tool.description}</p>
-      <ToolAccess slug={tool.slug} title={tool.title} url={tool.url} canEmbed={Boolean(embedUrl)} />
-    </section></main>
+    <main className="tools-page tool-detail-page">
+      <SiteNav variant="home" />
+      <section className="tool-detail" aria-labelledby="tool-title">
+        <Link className="tool-detail-back" href="/ferramentas">← TODAS AS FERRAMENTAS</Link>
+        <p className="tool-detail-eyebrow">{tool.category} / FERRAMENTA DA COMUNIDADE</p>
+        <h1 id="tool-title">{tool.title}</h1>
+        <p className="tool-detail-credit">Crédito: {tool.credit}</p>
+        <p className="tool-description">{tool.description}</p>
+        <ToolAccess slug={tool.slug} title={tool.title} url={tool.url} canEmbed={Boolean(embedUrl)} />
+      </section>
+    </main>
   );
 }

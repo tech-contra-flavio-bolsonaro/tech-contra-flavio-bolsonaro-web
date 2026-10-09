@@ -13,10 +13,13 @@ const VALID_PATHS = [
   "/conteudos",
 ];
 
+const TOOL_DETAIL_PATH = /^\/ferramentas\/[^/]+$/;
+
 export function SiteFooter() {
   const pathname = usePathname();
 
-  if (!VALID_PATHS.includes(pathname)) return null;
+  if (!VALID_PATHS.includes(pathname) && !TOOL_DETAIL_PATH.test(pathname))
+    return null;
 
   return (
     <footer className="site-footer home-footer">

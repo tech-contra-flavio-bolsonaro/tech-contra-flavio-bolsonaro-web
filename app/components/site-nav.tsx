@@ -40,7 +40,10 @@ export function SiteNav({ variant = "default" }: { variant?: "default" | "home" 
   }, [isOpen]);
 
   const close = () => setIsOpen(false);
-  const current = (href: string) => (pathname === href ? "page" : undefined);
+  const current = (href: string) =>
+    pathname === href || (href === "/ferramentas" && pathname.startsWith(`${href}/`))
+      ? "page"
+      : undefined;
 
   return (
     <header className="site-header" ref={header}>
