@@ -68,7 +68,16 @@ it("keeps the home layout responsive without replacing the desktop composition a
   expect(styles).toContain("@media (max-width: 600px) { .home-page .site-header");
 });
 
-it("keeps home content cards in the section grid instead of forcing a split-card layout", () => {
-  expect(styles).toContain(".home-content .card-grid { display: grid;");
-  expect(styles).not.toContain(".home-content .content-card { display: grid; grid-template-columns: 42% 58%;");
+it("renders the home content highlight as the Penpot horizontal editorial card", () => {
+  expect(styles).toContain(".home-content .card-grid { display: block;");
+  expect(styles).toContain(".home-content .content-card { display: grid; grid-template-columns: 532px minmax(0, 1fr);");
+  expect(styles).toContain("min-height: 350px;");
+});
+
+it("keeps portrait previews and sharing controls readable in the home highlight", () => {
+  expect(styles).toContain("height: 350px;");
+  expect(styles).toContain("object-fit: cover;");
+  expect(styles).toContain(".home-content .content-card .share-trigger { border: 3px solid #000; background: var(--vv-color-yellow); color: #000;");
+  expect(styles).toContain(".home-content .content-card small { color: rgb(0 0 0 / 68%);");
+  expect(styles).toContain(".home-content .content-card [data-slot=\"card-header\"], .home-content .content-card [data-slot=\"card-content\"], .home-content .content-card [data-slot=\"card-footer\"] { width: 100%;");
 });
