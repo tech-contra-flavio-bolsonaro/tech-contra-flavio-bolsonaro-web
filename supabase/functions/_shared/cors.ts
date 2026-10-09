@@ -1,6 +1,10 @@
 const defaultOrigins = [
   "http://localhost:3000",
   "http://127.0.0.1:3000",
+  "https://www.techcontrabolsonaro.dev",
+  "https://techcontrabolsonaro.dev",
+  "https://techcontraflaviobolsonaro.dev",
+  "https://www.techcontraflaviobolsonaro.dev",
 ];
 
 function allowedOrigins(): Set<string> {
