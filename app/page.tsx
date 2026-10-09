@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { SiteNav } from "@/app/components/site-nav";
 import { ToolFeed } from "@/app/components/tool-feed";
@@ -18,12 +17,16 @@ export default function Home() {
           <div className="home-hero-actions"><Link className="home-button home-button-yellow" href="/ferramentas">Conhecer o hub <Arrow /></Link><p>ABERTO PARA TODO MUNDO.<br />INCLUSIVE VOCÊ.</p></div>
         </div>
         <div data-testid="hero-decoration" className="home-hero-decoration" aria-hidden="true">
-          <Image className="home-hero-icon home-hero-icon-computer" src="/icons/streamline-pixel/computers-devices-electronics/computers-devices-electronics-vintage-mac.svg" alt="" width={256} height={256} priority />
-          <Image className="home-hero-icon home-hero-icon-keyboard" src="/icons/streamline-pixel/computers-devices-electronics/computers-devices-electronics-keyboard.svg" alt="" width={176} height={176} />
-          <Image className="home-hero-icon home-hero-icon-mouse" src="/icons/streamline-pixel/computers-devices-electronics/computers-devices-electronics-mouse.svg" alt="" width={112} height={112} />
-          <Image className="home-hero-icon home-hero-icon-cloud" src="/icons/streamline-pixel/internet-network/internet-network-computer-upload.svg" alt="" width={112} height={112} />
-          <Image className="home-hero-icon home-hero-icon-sparkles" src="/icons/streamline-pixel/design/design-magic-wand.svg" alt="" width={88} height={88} />
-          <Image className="home-hero-icon home-hero-icon-paperclip" src="/icons/streamline-pixel/interface-essential/interface-essential-link.svg" alt="" width={80} height={80} />
+          <span className="home-network-lines" />
+          <div className="home-network-window">
+            <div className="home-network-window-bar"><i /><i /><i /><span>ideias_em_movimento</span></div>
+            <div className="home-network-window-message"><small>&gt; conectar. criar. mobilizar.</small><strong>UMA IDEIA.<br />MUITAS VOZES.</strong><small><b />rede em construção coletiva_</small></div>
+          </div>
+          <span className="home-network-sticker home-network-sticker-action">IDEIA → AÇÃO</span>
+          <span className="home-network-star">✦</span>
+          <span className="home-network-sticker home-network-sticker-next">O PRÓXIMO PASSO É NOSSO.</span>
+          <span className="home-network-cursor">⌁</span>
+          <small className="home-network-caption">FEITO DE GENTE. MOVIDO POR IDEIAS.</small>
         </div>
       </section>
       <section className="home-manifesto" aria-labelledby="manifesto-title"><div><p className="home-eyebrow">NOSSO MANIFESTO</p><h2 id="manifesto-title">A democracia também se constrói em rede.</h2></div><Link className="home-button home-button-white" href="/manifesto">Leia o manifesto <Arrow /></Link></section>

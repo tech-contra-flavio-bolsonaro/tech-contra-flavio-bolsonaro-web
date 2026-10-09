@@ -28,16 +28,12 @@ it("uses contextual eyebrows instead of repeating the section titles", () => {
   expect(screen.queryByText("CONTEÚDOS")).not.toBeInTheDocument();
 });
 
-it("uses the existing pixel-icon collage for the hero decoration", () => {
+it("uses the Penpot network artwork for the hero decoration", () => {
   const { container } = render(<Home />);
 
   const decoration = container.querySelector('[data-testid="hero-decoration"]');
   expect(decoration).toBeInTheDocument();
-  expect(decoration?.querySelector('[src*="vintage-mac.svg"]')).toBeInTheDocument();
-  expect(decoration?.querySelector('[src*="keyboard.svg"]')).toBeInTheDocument();
-  expect(decoration?.querySelector('[src*="mouse.svg"]')).toBeInTheDocument();
-  expect(decoration?.querySelector('[src*="computer-upload.svg"]')).toBeInTheDocument();
-  expect(decoration?.querySelector('[src*="magic-wand.svg"]')).toBeInTheDocument();
-  expect(decoration?.querySelector('[src*="interface-essential-link.svg"]')).toBeInTheDocument();
-  expect(container.querySelector(".home-network")).not.toBeInTheDocument();
+  expect(decoration?.querySelector(".home-network-window")).toBeInTheDocument();
+  expect(decoration?.querySelector(".home-network-sticker")).toBeInTheDocument();
+  expect(decoration?.querySelector(".home-network-star")).toBeInTheDocument();
 });
