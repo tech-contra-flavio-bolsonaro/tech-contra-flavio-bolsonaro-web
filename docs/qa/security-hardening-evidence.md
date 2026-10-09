@@ -67,3 +67,18 @@ Nota CORS: a allowlist na edge function deixa de *refletir* Origin arbitrário.
 O Kong local do `supabase start` ainda injeta `Access-Control-Allow-Origin: *` no gateway
 (plugin cors em kong.yml). Em produção (functions hosted) validar headers reais;
 para fechar 100% no stack local seria preciso customizar o Kong (fora deste hardening app-level).
+
+## 3. AFTER — Next headers (A05)
+```
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+X-Frame-Options: SAMEORIGIN
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https: http://127.0.0.1:* http://localhost:*; frame-src 'self' https://challenges.cloudflare.com https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+```
+
+## Domínios CORS (prod)
+- https://www.techcontrabolsonaro.dev
+- https://techcontrabolsonaro.dev
+- https://techcontraflaviobolsonaro.dev
+- https://www.techcontraflaviobolsonaro.dev
