@@ -1,18 +1,10 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { cors } from "../_shared/cors.ts";
 import { parsePublicHttpsUrl } from "../_shared/public-https-url.ts";
 
 const bucket = "community-submissions";
 const maxFileSize = 25 * 1024 * 1024;
 const allowedMediaTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/gif", "video/mp4"]);
-
-function cors(request: Request) {
-  return {
-    "Access-Control-Allow-Origin": request.headers.get("origin") ?? "null",
-    "Access-Control-Allow-Headers": "content-type",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    Vary: "Origin",
-  };
-}
 
 function reply(request: Request, body: Record<string, string | boolean>, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { ...cors(request), "Content-Type": "application/json" } });

@@ -1,3 +1,4 @@
+import { cors } from "../_shared/cors.ts";
 import { parsePublicHttpsUrl } from "../_shared/public-https-url.ts";
 
 export type ToolRow = { title: string; description: string; category: string; credit: string; url: string; status: "pending" };
@@ -8,15 +9,6 @@ export type Deps = {
 };
 
 export { parsePublicHttpsUrl };
-
-function cors(request: Request) {
-  return {
-    "Access-Control-Allow-Origin": request.headers.get("origin") ?? "null",
-    "Access-Control-Allow-Headers": "content-type",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    Vary: "Origin",
-  };
-}
 
 function reply(request: Request, body: Record<string, string | boolean>, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { ...cors(request), "Content-Type": "application/json" } });

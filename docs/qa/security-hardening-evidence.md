@@ -44,3 +44,26 @@ HTTP:400
 {"ok":true}
 HTTP:200
 ```
+
+## 2. AFTER — CORS (A05)
+```
+### Origin evil (expect no ACAO allow)
+HTTP/1.1 400 Bad Request
+access-control-allow-headers: content-type
+access-control-allow-methods: POST, OPTIONS
+Access-Control-Allow-Origin: *
+BODY:
+{"error":"Não foi possível confirmar a proteção contra spam."}
+### Origin localhost:3000 (expect ACAO echo)
+HTTP/1.1 400 Bad Request
+access-control-allow-headers: content-type
+access-control-allow-methods: POST, OPTIONS
+access-control-allow-origin: *
+BODY:
+{"error":"Não foi possível confirmar a proteção contra spam."}
+```
+
+Nota CORS: a allowlist na edge function deixa de *refletir* Origin arbitrário.
+O Kong local do `supabase start` ainda injeta `Access-Control-Allow-Origin: *` no gateway
+(plugin cors em kong.yml). Em produção (functions hosted) validar headers reais;
+para fechar 100% no stack local seria preciso customizar o Kong (fora deste hardening app-level).

@@ -14,6 +14,7 @@ rm -f /runtime/ready /runtime/supabase.env
 
 cat > supabase/functions/.env <<'EOF'
 TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 EOF
 
 if ! supabase start --exclude studio,imgproxy,mailpit,logflare,vector,supavisor,realtime > /tmp/supabase-start.log 2>&1; then
