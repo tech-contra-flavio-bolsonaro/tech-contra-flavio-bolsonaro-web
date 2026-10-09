@@ -7,11 +7,11 @@ services:
       dockerfile: Dockerfile.supabase
     environment:
       SUPABASE_SERVICES_HOSTNAME: host.docker.internal
-    working_dir: ${PWD}
+    working_dir: /workspace
     extra_hosts:
       - host.docker.internal:host-gateway
     volumes:
-      - ./supabase:${PWD}/supabase
+      - ./supabase:/workspace/supabase
       - /var/run/docker.sock:/var/run/docker.sock
       - supabase-runtime:/runtime
     healthcheck:
