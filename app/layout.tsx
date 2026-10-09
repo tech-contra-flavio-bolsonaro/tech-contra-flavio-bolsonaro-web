@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Barlow_Condensed, IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toast";
+import { SiteFooter } from "@/app/components/site-footer";
 
 const barlowCondensed = Barlow_Condensed({
   variable: "--font-barlow-condensed",
@@ -31,7 +32,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       lang="pt-BR"
       className={`${barlowCondensed.variable} ${inter.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}<Toaster /></body>
+      <body id="top" className="min-h-full flex flex-col">
+        {children}
+        <SiteFooter />
+        <Toaster />
+      </body>
     </html>
   );
 }
