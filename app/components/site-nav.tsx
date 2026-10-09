@@ -11,6 +11,7 @@ const links = [
   ["/manifesto", "Manifesto"],
   ["/ferramentas", "Ferramentas"],
   ["/conteudos", "Conteúdos"],
+  ["/blog", "Blog"],
 ] as const;
 
 export function SiteNav({ variant = "default" }: { variant?: "default" | "home" }) {
@@ -40,7 +41,7 @@ export function SiteNav({ variant = "default" }: { variant?: "default" | "home" 
   }, [isOpen]);
 
   const close = () => setIsOpen(false);
-  const current = (href: string) => (pathname === href ? "page" : undefined);
+  const current = (href: string) => (pathname === href || (href === "/blog" && pathname?.startsWith("/blog/")) ? "page" : undefined);
 
   return (
     <header className="site-header" ref={header}>
