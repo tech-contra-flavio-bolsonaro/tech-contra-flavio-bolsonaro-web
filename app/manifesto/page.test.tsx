@@ -11,7 +11,7 @@ it("preserves the approved sections and accessible signature destination",()=>{
  expect(screen.getByRole("checkbox")).not.toBeChecked();
 });
 
-const canonical = readFileSync("app/manifesto/__fixtures__/issue-73.txt", "utf8");
+const canonical = readFileSync("app/manifesto/__fixtures__/issue-73.txt", "utf8").replace(/\r\n/g, "\n");
 const blocks = canonical.trim().split("\n\n");
 const normalizeHtmlSpace = (text: string) => text.replace(/\s+/g, " ").trim();
 
