@@ -90,3 +90,23 @@ it("uses the approved detail invitation instead of listing copy", async () => {
   ).toBeInTheDocument();
   expect(screen.queryByText("TEM UMA HISTÓRIA BOA?")).not.toBeInTheDocument();
 });
+
+it("uses Home buttons and SVG arrows for every detail action", async () => {
+  vi.mocked(getBlogArticle).mockResolvedValue({ status: "ok", article });
+  render(await DetailPage(props));
+  for (const name of ["Conheça mais histórias", "Compartilhar ideia", "Enviar uma ideia"]) {
+    const link = screen.getByRole("link", { name });
+    expect(link).toHaveClass("home-button");
+    expect(link.querySelector("svg.home-arrow")).not.toBeNull();
+    expect(link.textContent).not.toMatch(/[↗←]/u);
+  }
+  expect(screen.getByRole("link", { name: "Ler publicação original no DEV.to" }).querySelector("svg.home-arrow")).not.toBeNull();
+});
+
+it("keeps Home retry identity on detail origin failures", async () => {
+  vi.mocked(getBlogArticle).mockResolvedValue({ status: "unavailable", reason: "timeout" });
+  render(await DetailPage(props));
+  const retry = screen.getByRole("button", { name: "Tentar novamente" });
+  expect(retry).toHaveClass("home-button", "home-button-yellow");
+  expect(retry.querySelector("svg.home-arrow")).not.toBeNull();
+});

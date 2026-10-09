@@ -1,8 +1,10 @@
+import styles from "./detail.module.css";
+import { HomeArrow } from "@/app/components/home-arrow";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { SiteNav } from "@/app/components/site-nav";
+import { DetailShell } from "./detail-shell";
 import { ShareButton } from "@/app/components/share-button";
 import { BlogTags } from "@/app/components/blog-card";
 import {
@@ -58,24 +60,22 @@ export default async function BlogDetailPage({ params }: Props) {
   if (result.status === "not-found") notFound();
   if (result.status === "unavailable")
     return (
-      <>
-        <SiteNav variant="home" />
+      <DetailShell>
         <main className="blog-content">
           <Link className="blog-back" href="/blog">
-            ← Voltar para o Blog
+            <span className={styles.backArrow}><HomeArrow /></span> Voltar para o Blog
           </Link>
-          <BlogUnavailable reason={result.reason} />
+          <BlogUnavailable reason={result.reason} detail />
         </main>
-      </>
+      </DetailShell>
     );
   const { article } = result;
   if (slug !== article.slug) redirect(blogPermalink(article));
   return (
-    <>
-      <SiteNav variant="home" />
+    <DetailShell>
       <main className="blog-content blog-detail">
         <Link className="blog-back" href="/blog">
-          ← Voltar para o Blog
+          <span className={styles.backArrow}><HomeArrow /></span> Voltar para o Blog
         </Link>
         <header className="blog-detail-hero">
           <BlogTags tags={article.tags} />
@@ -109,6 +109,8 @@ export default async function BlogDetailPage({ params }: Props) {
             · {article.readingMinutes} MIN DE LEITURA
           </p>
           <ShareButton
+            variant="listing"
+            className="home-button home-button-yellow"
             title={article.title}
             url={blogPermalink(article)}
             credit={article.author.name}
@@ -130,7 +132,7 @@ export default async function BlogDetailPage({ params }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Ler publicação original no DEV.to ↗
+                Ler publicação original no DEV.to <HomeArrow />
               </a>
             </p>
           </article>
@@ -144,7 +146,7 @@ export default async function BlogDetailPage({ params }: Props) {
                 <br />
                 PARADAS.
               </h2>
-              <Link href="/blog">Conheça mais histórias ↗</Link>
+              <Link className="home-button home-button-white" href="/blog">Conheça mais histórias <HomeArrow /></Link>
             </section>
             <section>
               <h2>
@@ -153,8 +155,8 @@ export default async function BlogDetailPage({ params }: Props) {
                 <span className="blog-aside-conversation">DESSA CONVERSA.</span>
               </h2>
               <p>Tem uma ideia ou experiência?</p>
-              <Link className="blog-button" href="/enviar">
-                Compartilhar ideia ↗
+              <Link className="home-button home-button-yellow" href="/enviar">
+                Compartilhar ideia <HomeArrow />
               </Link>
             </section>
           </aside>
@@ -162,6 +164,8 @@ export default async function BlogDetailPage({ params }: Props) {
         <section className="blog-share-callout">
           <p>UMA HISTÓRIA QUE TE INSPIROU?</p>
           <ShareButton
+            variant="listing"
+            className="home-button home-button-yellow"
             title={article.title}
             url={blogPermalink(article)}
             credit={article.author.name}
@@ -169,6 +173,6 @@ export default async function BlogDetailPage({ params }: Props) {
         </section>
         <BlogContribution detail />
       </main>
-    </>
+    </DetailShell>
   );
 }
