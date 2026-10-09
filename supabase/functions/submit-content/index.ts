@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { parsePublicHttpsUrl } from "../_shared/public-https-url.ts";
 
 const bucket = "community-submissions";
 const maxFileSize = 25 * 1024 * 1024;
@@ -39,12 +40,13 @@ Deno.serve(async (request) => {
     const title = String(form.get("title") ?? "").trim();
     const description = String(form.get("description") ?? "").trim();
     const credit = String(form.get("credit") ?? "").trim();
-    const videoUrl = String(form.get("videoUrl") ?? "").trim();
+    const videoUrlRaw = String(form.get("videoUrl") ?? "").trim();
     const candidate = form.get("file");
     const file = candidate instanceof File && candidate.size > 0 ? candidate : null;
     if (title.length < 3 || title.length > 160 || description.length < 10 || description.length > 2000 || credit.length < 2 || credit.length > 160) return reply(request, { error: "Revise os campos obrigatórios." }, 400);
-    if (Boolean(file) === Boolean(videoUrl)) return reply(request, { error: "Envie um arquivo ou um link de vídeo." }, 400);
-    if (videoUrl) try { new URL(videoUrl); } catch { return reply(request, { error: "Informe um link de vídeo válido." }, 400); }
+    if (Boolean(file) === Boolean(videoUrlRaw)) return reply(request, { error: "Envie um arquivo ou um link de vídeo." }, 400);
+    const videoUrl = videoUrlRaw ? parsePublicHttpsUrl(videoUrlRaw) : null;
+    if (videoUrlRaw && !videoUrl) return reply(request, { error: "Informe um link HTTPS público válido." }, 400);
     if (file && (!allowedMediaTypes.has(file.type) || file.size > maxFileSize)) return reply(request, { error: "Envie JPG, PNG, WebP, GIF ou MP4 de até 25 MB." }, 400);
 
     const supabase = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
@@ -53,7 +55,7 @@ Deno.serve(async (request) => {
       const { error } = await supabase.storage.from(bucket).upload(mediaPath, file, { contentType: file.type, upsert: false });
       if (error) throw error;
     }
-    const { error } = await supabase.from("submissions").insert({ title, description, credit, media_path: mediaPath, video_url: videoUrl || null, status: "pending" });
+    const { error } = await supabase.from("submissions").insert({ title, description, credit, media_path: mediaPath, video_url: videoUrl, status: "pending" });
     if (error) {
       if (mediaPath) await supabase.storage.from(bucket).remove([mediaPath]);
       throw error;

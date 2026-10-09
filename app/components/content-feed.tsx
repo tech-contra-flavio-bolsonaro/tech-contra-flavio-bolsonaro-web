@@ -7,6 +7,7 @@ import { ContentListState, ContentListContribution } from "./content-list-state"
 import { ListingContentCard } from "./listing-content-card";
 import { HomeContentCard } from "./home-content-card";
 import { ShareButton } from "@/app/components/share-button";
+import { safeHttpsUrl } from "@/app/lib/safe-https-url";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 export type ContentItem = {
@@ -111,8 +112,8 @@ export function ContentFeed({ limit, variant = "default" }: { limit?: number; va
             {item.mediaUrl?.match(/\.mp4($|\?)/i) ? <video controls src={item.mediaUrl} /> : null}
             {item.mediaUrl && !item.mediaUrl.match(/\.mp4($|\?)/i) ? <Image src={item.mediaUrl} alt={item.title} width={800} height={600} unoptimized /> : null}
             <CardHeader><div className="content-card-kicker"><ImageIcon aria-hidden="true" /> Conteúdo da comunidade</div><CardTitle>{item.title}</CardTitle></CardHeader>
-            <CardContent><p>{item.description}</p><small><UserRound aria-hidden="true" /> {item.credit}</small>{item.video_url ? <a href={item.video_url} target="_blank" rel="noreferrer">Abrir vídeo ↗</a> : null}</CardContent>
-            <CardFooter><ShareButton title={item.title} url={item.video_url ?? window.location.href} imageUrl={item.mediaUrl ?? undefined} /></CardFooter>
+            <CardContent><p>{item.description}</p><small><UserRound aria-hidden="true" /> {item.credit}</small>{safeHttpsUrl(item.video_url) ? <a href={safeHttpsUrl(item.video_url)!} target="_blank" rel="noreferrer">Abrir vídeo ↗</a> : null}</CardContent>
+            <CardFooter><ShareButton title={item.title} url={safeHttpsUrl(item.video_url) ?? window.location.href} imageUrl={item.mediaUrl ?? undefined} /></CardFooter>
           </Card>
         ))}
       </div>

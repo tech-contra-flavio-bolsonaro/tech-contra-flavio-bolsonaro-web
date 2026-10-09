@@ -1,3 +1,5 @@
+import { parsePublicHttpsUrl } from "../_shared/public-https-url.ts";
+
 export type ToolRow = { title: string; description: string; category: string; credit: string; url: string; status: "pending" };
 
 export type Deps = {
@@ -5,20 +7,7 @@ export type Deps = {
   insertTool: (row: ToolRow) => Promise<void>;
 };
 
-const blockedSuffixes = [".localhost", ".local", ".internal", ".lan", ".home.arpa", ".intranet", ".corp"];
-
-// Accepts only public-looking HTTPS hosts: no credentials, IP literals, single-label or local names.
-export function parsePublicHttpsUrl(value: string) {
-  if (!value || value.length > 2048) return null;
-  let url: URL;
-  try { url = new URL(value); } catch { return null; }
-  const host = url.hostname.replace(/\.$/, "");
-  const invalid =
-    url.protocol !== "https:" || url.username || url.password ||
-    !host.includes(".") || host.startsWith("[") || /^[\d.]+$/.test(host) ||
-    blockedSuffixes.some((suffix) => host.endsWith(suffix));
-  return invalid || url.href.length > 2048 ? null : url.href;
-}
+export { parsePublicHttpsUrl };
 
 function cors(request: Request) {
   return {
