@@ -14,7 +14,9 @@ where slug = '<slug>';
 
 Use `'rejected'` to decline. Only `approved` rows appear on the site. Duplicates are allowed; approve the entries you want to show.
 
-Category is free text. Edit it to normalize names when you approve a tool.
+Category is free text. Edit it to normalize names when you approve a tool. The catalog filter lists every category of approved tools, so a variant spelling becomes a separate filter. These categories have an icon in `app/components/tool-card.tsx`; any other category shows the generic icon until one is added there:
+
+`Argumento com fonte`, `Mapa da virada`, `Vídeos e materiais`, `Organização e rua`, `Jogos`, `Monitoramento`, `Chegar à urna`, `Produção de vídeo`.
 
 ## Slugs
 

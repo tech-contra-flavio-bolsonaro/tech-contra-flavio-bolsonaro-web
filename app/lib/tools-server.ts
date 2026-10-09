@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
+import { httpsUrl, type PublishedTool, type ToolCategory } from "./tools";
 import { resolveServerSupabaseUrl } from "./supabase-url";
-import { httpsUrl, type PublishedTool } from "./tools";
+
 
 const fields = "id,slug,title,description,category,credit,url";
 const pageSize = 10;
@@ -12,13 +13,24 @@ function database() {
   return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
 }
 
-export async function listTools(page: number) {
-  const { data, error } = await database().from("tool_submissions")
-    .select(fields).eq("status", "approved")
+export async function listTools(page: number, category?: string) {
+  let query = database().from("tool_submissions").select(fields).eq("status", "approved");
+  if (category) query = query.eq("category", category);
+  const { data, error } = await query
     .order("created_at", { ascending: false }).order("id", { ascending: false })
     .range(page * pageSize, page * pageSize + pageSize);
   if (error) throw error;
   return { items: (data ?? []).slice(0, pageSize) as PublishedTool[], hasMore: (data ?? []).length > pageSize };
+}
+
+// Categories come from approved tools only, so a filter never leads to an empty published list.
+export async function listToolCategories(): Promise<ToolCategory[]> {
+  const { data, error } = await database().from("tool_submissions").select("category").eq("status", "approved");
+  if (error) throw error;
+  const counts = new Map<string, number>();
+  for (const { category } of (data ?? []) as { category: string }[]) counts.set(category, (counts.get(category) ?? 0) + 1);
+  return [...counts].map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, "pt-BR"));
 }
 
 export async function findTool(slug: string): Promise<PublishedTool | null> {

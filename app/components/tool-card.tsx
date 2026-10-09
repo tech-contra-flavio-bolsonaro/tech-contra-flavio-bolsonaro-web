@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { HomeArrow } from "./home-arrow";
-import { Wrench } from "lucide-react";
+import { Clapperboard, FileSearch, Gamepad2, MapPinned, Megaphone, Radar, Scissors, Vote, Wrench, type LucideIcon } from "lucide-react";
 import type { PublishedTool } from "@/app/lib/tools";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -11,6 +11,18 @@ const homeActions: Record<string, { label: string; icon: string }> = {
   "mapa-de-acoes": { label: "Explorar o mapa", icon: "/images/home-tool-map.svg" },
   "gerador-de-qr-code": { label: "Gerar QR code", icon: "/images/home-tool-qr.svg" },
   "calendario-de-mobilizacao": { label: "Ver calendário", icon: "/images/home-tool-organize.svg" },
+};
+
+// Category is free text normalized by curators; unknown categories keep the generic icon.
+const categoryIcons: Record<string, { icon: LucideIcon; tone: string }> = {
+  "Argumento com fonte": { icon: FileSearch, tone: "yellow" },
+  "Mapa da virada": { icon: MapPinned, tone: "coral" },
+  "Vídeos e materiais": { icon: Clapperboard, tone: "lilac" },
+  "Organização e rua": { icon: Megaphone, tone: "coral" },
+  "Jogos": { icon: Gamepad2, tone: "lilac" },
+  "Monitoramento": { icon: Radar, tone: "yellow" },
+  "Chegar à urna": { icon: Vote, tone: "yellow" },
+  "Produção de vídeo": { icon: Scissors, tone: "lilac" },
 };
 
 export function ToolCard({ tool, variant = "default", index = 0 }: { tool: PublishedTool; variant?: "default" | "home"; index?: number }) {
@@ -27,10 +39,11 @@ export function ToolCard({ tool, variant = "default", index = 0 }: { tool: Publi
       </article>
     );
   }
+  const { icon: Icon, tone } = Object.hasOwn(categoryIcons, tool.category) ? categoryIcons[tool.category] : { icon: Wrench, tone: "white" };
   return (
     <Card className="tool-card">
       <CardHeader>
-        <div className="tool-card-icon"><Wrench aria-hidden="true" /></div>
+        <div className="tool-card-icon" data-tone={tone}><Icon aria-hidden="true" /></div>
         <div className="tool-card-heading"><CardTitle>{tool.title}</CardTitle><p>{tool.category}</p></div>
       </CardHeader>
       <CardContent><p>{tool.description}</p><small>Crédito: {tool.credit}</small></CardContent>
