@@ -4,7 +4,7 @@ import Home from "./page";
 
 afterEach(cleanup);
 
-it("renders the Figma home sections while preserving the live feeds", () => {
+it("renders the home sections while preserving the live feeds", () => {
   const { container } = render(<Home />);
 
   expect(container.querySelector(".home-page")).toBeInTheDocument();
@@ -33,7 +33,9 @@ it("uses the Penpot network artwork for the hero decoration", () => {
 
   const decoration = container.querySelector('[data-testid="hero-decoration"]');
   expect(decoration).toBeInTheDocument();
-  expect(decoration?.querySelector(".home-network-window")).toBeInTheDocument();
-  expect(decoration?.querySelector(".home-network-sticker")).toBeInTheDocument();
-  expect(decoration?.querySelector(".home-network-star")).toBeInTheDocument();
+  expect(decoration).toHaveAttribute("aria-hidden", "true");
+  const image = decoration?.querySelector("img");
+  expect(image).toHaveAttribute("src", "/images/hero-ideas-network.svg");
+  expect(image).toHaveAttribute("alt", "");
+  expect(decoration?.querySelectorAll("img")).toHaveLength(1);
 });

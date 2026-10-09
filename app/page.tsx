@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { SiteNav } from "@/app/components/site-nav";
 import { ToolFeed } from "@/app/components/tool-feed";
 import { ContentFeed } from "@/app/components/content-feed";
@@ -18,21 +19,19 @@ export default function Home() {
       <section className="home-hero" id="inicio" aria-labelledby="hero-title">
         <div className="home-hero-copy">
           <p className="home-eyebrow">UM HUB PARA QUEM QUER VIRAR O JOGO</p>
-          <h1 id="hero-title">IDEIAS GANHAM <span>MOVIMENTO.</span></h1>
+          <h1 id="hero-title"><span>IDEIAS</span>{" "}<span>GANHAM</span>{" "}<span className="home-hero-title-accent">MOVIMENTO.</span></h1>
           <p className="home-hero-description">Um espaço para conectar pessoas, compartilhar ferramentas e transformar ideias em ação coletiva.</p>
-          <div className="home-hero-actions"><Link className="home-button home-button-yellow" href="/ferramentas">Conhecer o hub <Arrow /></Link><p>ABERTO PARA TODO MUNDO.<br />INCLUSIVE VOCÊ.</p></div>
+          <div className="home-hero-actions"><Link className="home-button home-button-yellow" href="/ferramentas">Conhecer o hub <svg className="home-hero-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M0,24L24,0M24,0L0,0M24,0L24,24" stroke="currentColor" strokeWidth="2.5" /></svg></Link><p>ABERTO PARA TODO MUNDO.<br />INCLUSIVE VOCÊ.</p></div>
         </div>
         <div data-testid="hero-decoration" className="home-hero-decoration" aria-hidden="true">
-          <span className="home-network-lines" />
-          <div className="home-network-window">
-            <div className="home-network-window-bar"><i /><i /><i /><span>ideias_em_movimento</span></div>
-            <div className="home-network-window-message"><small>&gt; conectar. criar. mobilizar.</small><strong>UMA IDEIA.<br />MUITAS VOZES.</strong><small><b />rede em construção coletiva_</small></div>
-          </div>
-          <span className="home-network-sticker home-network-sticker-action">IDEIA → AÇÃO</span>
-          <span className="home-network-star">✦</span>
-          <span className="home-network-sticker home-network-sticker-next">O PRÓXIMO PASSO É NOSSO.</span>
-          <span className="home-network-cursor">⌁</span>
-          <small className="home-network-caption">FEITO DE GENTE. MOVIDO POR IDEIAS.</small>
+          <Image
+            className="home-hero-art"
+            src="/images/hero-ideas-network.svg"
+            alt=""
+            width={471.116}
+            height={520}
+            unoptimized
+          />
         </div>
       </section>
       <section className="home-manifesto" aria-labelledby="manifesto-title"><div><p className="home-eyebrow">NOSSO MANIFESTO</p><h2 id="manifesto-title">A democracia também se constrói em rede.</h2></div><Link className="home-button home-button-white" href="/manifesto">Leia o manifesto <Arrow /></Link></section>
