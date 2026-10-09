@@ -25,8 +25,8 @@ type ShareButtonProps = {
   associatedVideoUrl?: string;
   description?: string;
   credit?: string;
+  variant?: "default" | "home" | "listing" | "home-colors";
   className?: string;
-  variant?: "default" | "home" | "home-colors" | "listing";
 };
 
 async function fetchClipboardImage(imageUrl: string) {
@@ -301,9 +301,9 @@ export function ShareButton({
           />
         }
       >
-        {variant === "default" ? <Share2Icon /> : null}
-        Compartilhar
-        {variant !== "default" ? <HomeArrow /> : null}
+        {variant === "default" && <Share2Icon />}
+        {variant !== "home-colors" && variant !== "home" && "Compartilhar"}
+        {variant !== "default" && <HomeArrow />}
       </DialogTrigger>
       <DialogContent
         className={variant !== "default" ? "home-share-dialog" : undefined}
