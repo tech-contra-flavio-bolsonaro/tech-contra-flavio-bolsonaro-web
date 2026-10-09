@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { SiteNav } from "@/app/components/site-nav";
 import { ToolFeed } from "@/app/components/tool-feed";
@@ -16,7 +17,14 @@ export default function Home() {
           <p className="home-hero-description">Um espaço para conectar pessoas, compartilhar ferramentas e transformar ideias em ação coletiva.</p>
           <div className="home-hero-actions"><Link className="home-button home-button-yellow" href="/ferramentas">Conhecer o hub <Arrow /></Link><p>ABERTO PARA TODO MUNDO.<br />INCLUSIVE VOCÊ.</p></div>
         </div>
-        <div className="home-network" aria-hidden="true"><p className="home-network-sticker">IDEIA → AÇÃO</p><span className="home-network-star">✳</span><div className="home-network-window"><div className="home-window-bar"><span>● ● ●</span> ideias_em_movimento</div><div className="home-window-message"><p>&gt; conectar. criar. mobilizar.</p><strong>UMA IDEIA.<br />MUITAS VOZES.</strong><small><i /> rede em construção coletiva_</small></div></div><p className="home-network-note">O PRÓXIMO PASSO É NOSSO.</p><small className="home-network-caption">FEITO DE GENTE. MOVIDO POR IDEIAS.</small></div>
+        <div data-testid="hero-decoration" className="home-hero-decoration" aria-hidden="true">
+          <Image className="home-hero-icon home-hero-icon-computer" src="/icons/streamline-pixel/computers-devices-electronics/computers-devices-electronics-vintage-mac.svg" alt="" width={256} height={256} priority />
+          <Image className="home-hero-icon home-hero-icon-keyboard" src="/icons/streamline-pixel/computers-devices-electronics/computers-devices-electronics-keyboard.svg" alt="" width={176} height={176} />
+          <Image className="home-hero-icon home-hero-icon-mouse" src="/icons/streamline-pixel/computers-devices-electronics/computers-devices-electronics-mouse.svg" alt="" width={112} height={112} />
+          <Image className="home-hero-icon home-hero-icon-cloud" src="/icons/streamline-pixel/internet-network/internet-network-computer-upload.svg" alt="" width={112} height={112} />
+          <Image className="home-hero-icon home-hero-icon-sparkles" src="/icons/streamline-pixel/design/design-magic-wand.svg" alt="" width={88} height={88} />
+          <Image className="home-hero-icon home-hero-icon-paperclip" src="/icons/streamline-pixel/interface-essential/interface-essential-link.svg" alt="" width={80} height={80} />
+        </div>
       </section>
       <section className="home-manifesto" aria-labelledby="manifesto-title"><div><p className="home-eyebrow">NOSSO MANIFESTO</p><h2 id="manifesto-title">A democracia também se constrói em rede.</h2></div><Link className="home-button home-button-white" href="/manifesto">Leia o manifesto <Arrow /></Link></section>
       <section className="home-preview home-tools" aria-labelledby="tools-title"><header className="home-section-heading"><div><p className="home-eyebrow">FERRAMENTAS PARA AGIR</p><h2 id="tools-title">Ferramentas</h2></div><p>Recursos práticos para transformar intenção em ação coletiva.</p></header><div className="home-preview-feed"><ToolFeed limit={3} /></div><Link className="home-button home-button-outline" href="/ferramentas">Ver todas as ferramentas <Arrow /></Link></section>
