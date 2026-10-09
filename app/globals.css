@@ -285,6 +285,9 @@ h1 span { color: var(--tech-yellow); }
 .content-card .share-trigger { min-height: 2.5rem; border: 1px solid rgb(255 241 74 / 75%); background: transparent; color: var(--tech-yellow); font-weight: 800; }
 .share-trigger:hover { background: var(--tech-yellow); color: var(--tech-blue); }
 .share-trigger:focus-visible { outline: 3px solid #f8f7ff; outline-offset: 3px; }
+.share-trigger.share-trigger-home-colors { border-color: #000; background: var(--vv-color-yellow); color: #000; }
+.share-trigger.share-trigger-home-colors:hover { background: var(--vv-color-coral); color: #000; }
+.share-trigger.share-trigger-home-colors:focus-visible { outline-color: var(--vv-color-blue); }
 
 /* Shared shell measured from Figma Home: navigation 112px desktop / 72px mobile. */
 .site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; display: flex; width: 100%; max-width: 100vw; min-height: 112px; align-items: center; justify-content: space-between; gap: 2rem; margin-left: calc(50% - 50vw); padding: 0 var(--vv-space-10); border-bottom: 3px solid #000; background: #fff; color: var(--vv-color-blue); }

@@ -15,6 +15,7 @@ import Image from "next/image";
 import { CopyIcon, Share2Icon } from "lucide-react";
 import { SharePlatformIcon } from "./share-platform-icon";
 import { threadsShareIntent, xShareIntent } from "@/app/lib/share-intents";
+import { cn } from "cn";
 
 type ShareButtonProps = {
   title: string;
@@ -24,7 +25,8 @@ type ShareButtonProps = {
   associatedVideoUrl?: string;
   description?: string;
   credit?: string;
-  variant?: "default" | "home";
+  variant?: "default" | "home" | "home-colors";
+  className?: string;
 };
 
 async function fetchClipboardImage(imageUrl: string) {
@@ -162,9 +164,8 @@ export function ShareButton({
   description,
   credit,
   variant = "default",
+  className,
 }: ShareButtonProps) {
-  const shareUrl = new URL(url, window.location.origin).toString();
-
   async function shareFile(file: File, text?: string) {
     try {
       if (!navigator.canShare?.({ files: [file] }) || !navigator.share) {
@@ -205,6 +206,7 @@ export function ShareButton({
   }
 
   async function openWhatsapp() {
+    const shareUrl = new URL(url, window.location.origin).toString();
     if (imageUrl) {
       await shareImage(`${title}\n\n${shareUrl}`);
       return;
@@ -217,6 +219,7 @@ export function ShareButton({
   }
 
   function openX() {
+    const shareUrl = new URL(url, window.location.origin).toString();
     window.open(
       xShareIntent(title, shareUrl, description),
       "_blank",
@@ -225,6 +228,7 @@ export function ShareButton({
   }
 
   function openThreads() {
+    const shareUrl = new URL(url, window.location.origin).toString();
     window.open(
       threadsShareIntent(title, shareUrl, description),
       "_blank",
@@ -243,6 +247,7 @@ export function ShareButton({
       return;
     }
 
+    const shareUrl = new URL(url, window.location.origin).toString();
     if (imageUrl) {
       await shareImage();
       return;
@@ -266,7 +271,9 @@ export function ShareButton({
           new ClipboardItem({ "image/png": fetchClipboardImage(imageUrl) }),
         ]);
       } else {
-        await navigator.clipboard.writeText(shareUrl);
+        await navigator.clipboard.writeText(
+          new URL(url, window.location.origin).toString(),
+        );
       }
 
       toast.add({
@@ -288,14 +295,19 @@ export function ShareButton({
       <DialogTrigger
         render={
           <Button
-            variant={variant === "home" ? "default" : "outline"}
+            variant={variant === "default" ? "outline" : "default"}
             size={variant === "home" ? "lg" : "sm"}
-            className="share-trigger"
+            aria-label={variant === "home-colors" ? "Compartilhar" : undefined}
+            className={cn(
+              "share-trigger",
+              variant === "home-colors" && "share-trigger-home-colors",
+              className,
+            )}
           />
         }
       >
-        {variant === "default" ? <Share2Icon aria-hidden="true" /> : null}
-        Compartilhar
+        {variant !== "home" ? <Share2Icon aria-hidden="true" /> : null}
+        {variant !== "home-colors" && variant !== "home" && "Compartilhar"}
         {variant === "home" ? <HomeArrow /> : null}
       </DialogTrigger>
       <DialogContent

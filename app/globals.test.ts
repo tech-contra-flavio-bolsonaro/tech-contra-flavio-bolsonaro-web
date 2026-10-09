@@ -43,6 +43,12 @@ it("keeps the content-card share trigger legible on hover", () => {
   expect(styles).toContain('.share-trigger:hover { background: var(--tech-yellow); color: var(--tech-blue); }');
 });
 
+it("applies home colors to the default share trigger presentation", () => {
+  expect(styles).toContain(".share-trigger.share-trigger-home-colors { border-color: #000; background: var(--vv-color-yellow); color: #000; }");
+  expect(styles).toContain(".share-trigger.share-trigger-home-colors:hover { background: var(--vv-color-coral); color: #000; }");
+  expect(styles).toContain(".share-trigger.share-trigger-home-colors:focus-visible { outline-color: var(--vv-color-blue); }");
+});
+
 it("defines the Figma brand, geometry, and spacing tokens", () => {
   expect(styles).toContain("--vv-color-blue: #1900d0;");
   expect(styles).toContain("--vv-color-yellow: #fcf050;");
