@@ -6,7 +6,7 @@ import { Wrench } from "lucide-react";
 import type { PublishedTool } from "@/app/lib/tools";
 import { ToolCard } from "./tool-card";
 
-export function ToolFeed({ limit }: { limit?: number }) {
+export function ToolFeed({ limit, variant = "default" }: { limit?: number; variant?: "default" | "home" }) {
   const [items, setItems] = useState<PublishedTool[]>([]);
   const [page, setPage] = useState(-1);
   const [hasMore, setHasMore] = useState(false);
@@ -56,7 +56,7 @@ export function ToolFeed({ limit }: { limit?: number }) {
           </div>
         </div>
       ) : null}
-      {items.length > 0 ? <div className="card-grid">{items.slice(0, limit).map((tool) => <ToolCard key={tool.id} tool={tool} />)}</div> : null}
+      {items.length > 0 ? <div className="card-grid">{items.slice(0, limit).map((tool, index) => <ToolCard key={tool.id} tool={tool} variant={variant} index={index} />)}</div> : null}
       {loading ? <p role="status">Carregando ferramentas…</p> : null}
       {error ? <div role="alert"><p>Não foi possível carregar ferramentas.</p><button className="load-more" onClick={() => void loadPage(page + 1)}>Tentar novamente</button></div> : null}
       {!limit && hasMore && !loading && !error ? <button className="load-more" onClick={() => void loadPage(page + 1)}>Carregar mais ferramentas</button> : null}

@@ -3,10 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ImageIcon, UserRound } from "lucide-react";
+import { HomeContentCard } from "./home-content-card";
 import { ShareButton } from "@/app/components/share-button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
-type ContentItem = {
+export type ContentItem = {
   id: string;
   title: string;
   description: string;
@@ -16,7 +17,7 @@ type ContentItem = {
   video_url: string | null;
 };
 
-export function ContentFeed({ limit }: { limit?: number }) {
+export function ContentFeed({ limit, variant = "default" }: { limit?: number; variant?: "default" | "home" }) {
   const [items, setItems] = useState<ContentItem[]>([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -71,7 +72,7 @@ export function ContentFeed({ limit }: { limit?: number }) {
   return (
     <>
       <div className="card-grid">
-        {items.slice(0, limit).map((item) => (
+        {items.slice(0, limit).map((item) => variant === "home" ? <HomeContentCard item={item} key={item.id} /> : (
           <Card className="content-card" key={item.id}>
             {item.mediaUrl?.match(/\.mp4($|\?)/i) ? <video controls src={item.mediaUrl} /> : null}
             {item.mediaUrl && !item.mediaUrl.match(/\.mp4($|\?)/i) ? <Image src={item.mediaUrl} alt={item.title} width={800} height={600} unoptimized /> : null}

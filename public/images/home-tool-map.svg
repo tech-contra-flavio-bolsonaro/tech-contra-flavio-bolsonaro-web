@@ -1,0 +1,22 @@
+<svg width="56" xmlns="http://www.w3.org/2000/svg" height="56" id="screenshot-71ee01a5-ad32-5e0b-8721-7cfe0c6b4dc3" viewBox="11755 -122.99999999999977 56 56" style="-webkit-print-color-adjust::exact" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1">
+  <g id="shape-71ee01a5-ad32-5e0b-8721-7cfe0c6b4dc3" style="opacity:1">
+    <g class="fills" id="fills-71ee01a5-ad32-5e0b-8721-7cfe0c6b4dc3">
+      <path d="M11755,-116L11773.6669921875,-123L11792.3330078125,-116L11811,-123L11811,-74L11792.3330078125,-67L11773.6669921875,-74L11755,-67L11755,-116Z" fill-rule="nonzero">
+      </path>
+    </g>
+    <g fill-rule="nonzero" id="strokes-5c2c89dd-eaab-8075-8008-c2f62cdbd74c-71ee01a5-ad32-5e0b-8721-7cfe0c6b4dc3" class="strokes">
+      <g class="inner-stroke-shape">
+        <defs>
+          <clipPath id="inner-stroke-render-6111-71ee01a5-ad32-5e0b-8721-7cfe0c6b4dc3-0">
+            <use href="#stroke-shape-render-6111-71ee01a5-ad32-5e0b-8721-7cfe0c6b4dc3-0">
+            </use>
+          </clipPath>
+          <path d="M11755,-116L11773.6669921875,-123L11792.3330078125,-116L11811,-123L11811,-74L11792.3330078125,-67L11773.6669921875,-74L11755,-67L11755,-116Z" style="fill:none;fill-opacity:none;stroke-width:6;stroke:#000000;stroke-opacity:1" id="stroke-shape-render-6111-71ee01a5-ad32-5e0b-8721-7cfe0c6b4dc3-0">
+          </path>
+        </defs>
+        <use href="#stroke-shape-render-6111-71ee01a5-ad32-5e0b-8721-7cfe0c6b4dc3-0" clip-path="url(&#x27;#inner-stroke-render-6111-71ee01a5-ad32-5e0b-8721-7cfe0c6b4dc3-0&#x27;)">
+        </use>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import { HomeArrow } from "./home-arrow";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
@@ -11,7 +13,7 @@ const links = [
   ["/conteudos", "Conteúdos"],
 ] as const;
 
-export function SiteNav() {
+export function SiteNav({ variant = "default" }: { variant?: "default" | "home" }) {
   const [isOpen, setIsOpen] = useState(false);
   const header = useRef<HTMLElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
@@ -42,7 +44,7 @@ export function SiteNav() {
 
   return (
     <header className="site-header" ref={header}>
-      <Link className="site-header-brand" href="/" onClick={close}>VIRA VOTO</Link>
+      <Link className="site-header-brand" href="/" onClick={close}>{variant === "home" ? <Image src="/images/home-pixel-logo.svg" alt="" width={36} height={36} unoptimized /> : null}VIRA VOTO</Link>
       <button
         ref={toggle}
         className="site-nav-toggle"
@@ -56,7 +58,7 @@ export function SiteNav() {
       </button>
       <nav id="site-nav-links" className="site-nav" aria-label="Navegação principal" data-open={isOpen}>
         {links.map(([href, label]) => <Link href={href} key={href} aria-current={current(href)} onClick={close}>{label}</Link>)}
-        <Link className="site-nav-cta" href="/enviar" aria-current={current("/enviar")} onClick={close}>Enviar conteúdo</Link>
+        <Link className="site-nav-cta" href="/enviar" aria-current={current("/enviar")} onClick={close}>Enviar conteúdo{variant === "home" ? <HomeArrow /> : null}</Link>
       </nav>
     </header>
   );
