@@ -12,12 +12,9 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "@/components/ui/toast";
 import Image from "next/image";
-import {
-  CameraIcon,
-  CopyIcon,
-  MessageCircleIcon,
-  Share2Icon,
-} from "lucide-react";
+import { CopyIcon, Share2Icon } from "lucide-react";
+import { SharePlatformIcon } from "./share-platform-icon";
+import { threadsShareIntent, xShareIntent } from "@/app/lib/share-intents";
 
 type ShareButtonProps = {
   title: string;
@@ -77,10 +74,7 @@ function wrapCanvasText(
     line = "";
 
     for (const character of word) {
-      if (
-        line &&
-        context.measureText(`${line}${character}`).width > maxWidth
-      ) {
+      if (line && context.measureText(`${line}${character}`).width > maxWidth) {
         lines.push(line);
         line = character;
       } else {
@@ -136,8 +130,7 @@ async function createTextStoryImage(title: string, url: string) {
   context.font = "400 42px Arial, sans-serif";
   const urlLines = wrapCanvasText(context, url, 888);
   const urlLineHeight = 60;
-  const firstUrlY =
-    1000 - ((urlLines.length - 1) * urlLineHeight) / 2;
+  const firstUrlY = 1000 - ((urlLines.length - 1) * urlLineHeight) / 2;
   urlLines.forEach((line, index) => {
     context.fillText(line, 540, firstUrlY + index * urlLineHeight, 888);
   });
@@ -160,7 +153,18 @@ async function createTextStoryImage(title: string, url: string) {
   });
 }
 
-export function ShareButton({ title, url, imageUrl, videoUrl, associatedVideoUrl, description, credit, variant = "default" }: ShareButtonProps) {
+export function ShareButton({
+  title,
+  url,
+  imageUrl,
+  videoUrl,
+  associatedVideoUrl,
+  description,
+  credit,
+  variant = "default",
+}: ShareButtonProps) {
+  const shareUrl = new URL(url, window.location.origin).toString();
+
   async function shareFile(file: File, text?: string) {
     try {
       if (!navigator.canShare?.({ files: [file] }) || !navigator.share) {
@@ -202,14 +206,30 @@ export function ShareButton({ title, url, imageUrl, videoUrl, associatedVideoUrl
 
   async function openWhatsapp() {
     if (imageUrl) {
-      await shareImage(`${title}\n\nhttps://techcontraflaviobolsonaro.dev/`);
+      await shareImage(`${title}\n\n${shareUrl}`);
       return;
     }
 
-    const shareText = `${title}\n${url}\n\nhttps://techcontraflaviobolsonaro.dev/`;
+    const shareText = `${title}\n${shareUrl}`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
 
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+  }
+
+  function openX() {
+    window.open(
+      xShareIntent(title, shareUrl, description),
+      "_blank",
+      "noopener,noreferrer",
+    );
+  }
+
+  function openThreads() {
+    window.open(
+      threadsShareIntent(title, shareUrl, description),
+      "_blank",
+      "noopener,noreferrer",
+    );
   }
 
   async function openInstagram() {
@@ -229,7 +249,7 @@ export function ShareButton({ title, url, imageUrl, videoUrl, associatedVideoUrl
     }
 
     try {
-      const storyImage = await createTextStoryImage(title, url);
+      const storyImage = await createTextStoryImage(title, shareUrl);
       await shareFile(storyImage);
     } catch {
       toast.add({
@@ -246,7 +266,7 @@ export function ShareButton({ title, url, imageUrl, videoUrl, associatedVideoUrl
           new ClipboardItem({ "image/png": fetchClipboardImage(imageUrl) }),
         ]);
       } else {
-        await navigator.clipboard.writeText(url);
+        await navigator.clipboard.writeText(shareUrl);
       }
 
       toast.add({
@@ -267,21 +287,45 @@ export function ShareButton({ title, url, imageUrl, videoUrl, associatedVideoUrl
     <Dialog>
       <DialogTrigger
         render={
-          <Button variant={variant === "home" ? "default" : "outline"} size={variant === "home" ? "lg" : "sm"} className="share-trigger" />
+          <Button
+            variant={variant === "home" ? "default" : "outline"}
+            size={variant === "home" ? "lg" : "sm"}
+            className="share-trigger"
+          />
         }
       >
-        {variant === "default" ? <Share2Icon /> : null}
+        {variant === "default" ? <Share2Icon aria-hidden="true" /> : null}
         Compartilhar
         {variant === "home" ? <HomeArrow /> : null}
       </DialogTrigger>
-      <DialogContent className={variant === "home" ? "home-share-dialog" : undefined}>
+      <DialogContent
+        className={variant === "home" ? "home-share-dialog" : undefined}
+      >
         <DialogHeader>
           <DialogTitle>Compartilhar conteúdo</DialogTitle>
-          <DialogDescription>{description ?? "Escolha uma ação."}</DialogDescription>
+          <DialogDescription>
+            {description ?? "Escolha uma ação."}
+          </DialogDescription>
         </DialogHeader>
-        {variant === "home" ? <p className="home-share-credit">{title}{credit ? ` — ${credit}` : ""}</p> : null}
-        {associatedVideoUrl ? <a href={associatedVideoUrl} target="_blank" rel="noreferrer">Abrir vídeo associado</a> : null}
-        {videoUrl ? <video className="share-preview" src={videoUrl} controls aria-label={title} /> : null}
+        {variant === "home" ? (
+          <p className="home-share-credit">
+            {title}
+            {credit ? ` — ${credit}` : ""}
+          </p>
+        ) : null}
+        {associatedVideoUrl ? (
+          <a href={associatedVideoUrl} target="_blank" rel="noreferrer">
+            Abrir vídeo associado
+          </a>
+        ) : null}
+        {videoUrl ? (
+          <video
+            className="share-preview"
+            src={videoUrl}
+            controls
+            aria-label={title}
+          />
+        ) : null}
         {imageUrl ? (
           <Image
             className="share-preview"
@@ -297,7 +341,7 @@ export function ShareButton({ title, url, imageUrl, videoUrl, associatedVideoUrl
             className="share-action share-action-whatsapp"
             onClick={openWhatsapp}
           >
-            <MessageCircleIcon />
+            <SharePlatformIcon platform="whatsapp" />
             Compartilhar via WhatsApp
           </Button>
           <Button
@@ -305,8 +349,20 @@ export function ShareButton({ title, url, imageUrl, videoUrl, associatedVideoUrl
             onClick={openInstagram}
             variant="secondary"
           >
-            <CameraIcon />
+            <SharePlatformIcon platform="instagram" />
             Compartilhar via Instagram
+          </Button>
+          <Button className="share-action share-action-x" onClick={openX}>
+            <SharePlatformIcon platform="x" />
+            Compartilhar no X
+          </Button>
+          <Button
+            className="share-action share-action-threads"
+            onClick={openThreads}
+            variant="secondary"
+          >
+            <SharePlatformIcon platform="threads" />
+            Compartilhar no Threads
           </Button>
           <Button
             className="share-action share-action-copy"

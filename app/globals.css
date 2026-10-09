@@ -275,6 +275,10 @@ h1 span { color: var(--tech-yellow); }
 .share-actions .share-action-whatsapp:hover { background: #fff98a; }
 .share-actions .share-action-instagram { background: var(--tech-blue); color: #f8f7ff; }
 .share-actions .share-action-instagram:hover { background: #2a18e3; }
+.share-actions .share-action-x { background: #000; color: #fff; }
+.share-actions .share-action-x:hover { background: #242424; }
+.share-actions .share-action-threads { background: #fff; color: #000; }
+.share-actions .share-action-threads:hover { background: #f0f0f0; }
 .share-actions .share-action-copy { border-color: rgb(24 0 216 / 35%); background: transparent; color: var(--tech-blue); }
 .share-actions .share-action-copy:hover { background: #eef0f8; }
 
@@ -443,6 +447,14 @@ h1 span { color: var(--tech-yellow); }
 .tool-description { max-width: 70ch; white-space: pre-wrap; overflow-wrap: anywhere; }
 .tool-access { display: grid; justify-items: start; gap: 1rem; margin-top: 2rem; }
 .tool-access p, .tool-access .action-link { margin: 0; }
+
+.content-detail { display: grid; gap: 1.25rem; width: min(calc(100% - 2.5rem), 60rem); margin: 0 auto; padding: clamp(3rem, 8vw, 7rem) 0; }
+.content-detail-back { width: fit-content; font-weight: 700; }
+.content-detail > .eyebrow { margin: 0; color: var(--tech-blue); font-size: .75rem; font-weight: 800; letter-spacing: .12em; }
+.content-detail h1 { max-width: 18ch; font-size: clamp(2.5rem, 7vw, 5rem); line-height: 1.05; letter-spacing: -.035em; overflow-wrap: anywhere; }
+.content-detail-description, .content-detail-credit { max-width: 70ch; margin: 0; line-height: 1.6; overflow-wrap: anywhere; }
+.content-detail-media { display: block; width: 100%; height: auto; max-height: 75vh; border: 3px solid #000; border-radius: 8px; object-fit: contain; background: #eef0f8; }
+.content-detail-credit { color: rgb(0 0 0 / 70%); font-size: .9rem; }
 .tool-access iframe { width: 100%; min-height: min(70vh, 44rem); border: 1px solid var(--border); border-radius: .75rem; background: white; }
 .tool-card-heading, .tool-card [data-slot="card-content"] { min-width: 0; overflow-wrap: anywhere; }
 .tool-card-heading p { margin: 0; color: var(--tech-yellow); }
