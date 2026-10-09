@@ -1,5 +1,6 @@
 "use client";
 
+import { HomeArrow } from "./home-arrow";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,6 +23,11 @@ type ShareButtonProps = {
   title: string;
   url: string;
   imageUrl?: string;
+  videoUrl?: string;
+  associatedVideoUrl?: string;
+  description?: string;
+  credit?: string;
+  variant?: "default" | "home";
 };
 
 async function fetchClipboardImage(imageUrl: string) {
@@ -154,7 +160,7 @@ async function createTextStoryImage(title: string, url: string) {
   });
 }
 
-export function ShareButton({ title, url, imageUrl }: ShareButtonProps) {
+export function ShareButton({ title, url, imageUrl, videoUrl, associatedVideoUrl, description, credit, variant = "default" }: ShareButtonProps) {
   async function shareFile(file: File, text?: string) {
     try {
       if (!navigator.canShare?.({ files: [file] }) || !navigator.share) {
@@ -261,17 +267,21 @@ export function ShareButton({ title, url, imageUrl }: ShareButtonProps) {
     <Dialog>
       <DialogTrigger
         render={
-          <Button variant="outline" size="sm" className="share-trigger" />
+          <Button variant={variant === "home" ? "default" : "outline"} size={variant === "home" ? "lg" : "sm"} className="share-trigger" />
         }
       >
-        <Share2Icon />
+        {variant === "default" ? <Share2Icon /> : null}
         Compartilhar
+        {variant === "home" ? <HomeArrow /> : null}
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className={variant === "home" ? "home-share-dialog" : undefined}>
         <DialogHeader>
           <DialogTitle>Compartilhar conteúdo</DialogTitle>
-          <DialogDescription>Escolha uma ação.</DialogDescription>
+          <DialogDescription>{description ?? "Escolha uma ação."}</DialogDescription>
         </DialogHeader>
+        {variant === "home" ? <p className="home-share-credit">{title}{credit ? ` — ${credit}` : ""}</p> : null}
+        {associatedVideoUrl ? <a href={associatedVideoUrl} target="_blank" rel="noreferrer">Abrir vídeo associado</a> : null}
+        {videoUrl ? <video className="share-preview" src={videoUrl} controls aria-label={title} /> : null}
         {imageUrl ? (
           <Image
             className="share-preview"

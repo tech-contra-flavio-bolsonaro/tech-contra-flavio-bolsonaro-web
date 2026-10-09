@@ -70,14 +70,14 @@ it("keeps the home layout responsive without replacing the desktop composition a
 
 it("renders the home content highlight as the Penpot horizontal editorial card", () => {
   expect(styles).toContain(".home-content .card-grid { display: block;");
-  expect(styles).toContain(".home-content .content-card { display: grid; grid-template-columns: 532px minmax(0, 1fr);");
-  expect(styles).toContain("min-height: 350px;");
+  expect(styles).toContain(".home-content-card { position: relative; display: grid; grid-template-columns: 532px minmax(0, 1fr);");
+  expect(styles).toContain("height: 350px;");
 });
 
 it("keeps portrait previews and sharing controls readable in the home highlight", () => {
   expect(styles).toContain("height: 350px;");
   expect(styles).toContain("object-fit: cover;");
-  expect(styles).toContain(".home-content .content-card .share-trigger { border: 3px solid #000; background: var(--vv-color-yellow); color: #000;");
-  expect(styles).toContain(".home-content .content-card small { color: rgb(0 0 0 / 68%);");
-  expect(styles).toContain(".home-content .content-card [data-slot=\"card-header\"], .home-content .content-card [data-slot=\"card-content\"], .home-content .content-card [data-slot=\"card-footer\"] { width: 100%;");
+  expect(styles).toContain(".home-content-info .share-trigger:hover { background: var(--vv-color-coral); color: #000; }");
+  expect(styles).toContain(".home-content-info .share-trigger:focus-visible { outline-color: var(--vv-color-blue); }");
+  expect(styles).toContain(".home-share-dialog .share-preview { width: 100%; height: auto; max-height: 40vh; object-fit: contain; }");
 });

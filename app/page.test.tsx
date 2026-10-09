@@ -20,7 +20,7 @@ it("renders the home sections while preserving the live feeds", () => {
 it("uses contextual eyebrows instead of repeating the section titles", () => {
   render(<Home />);
 
-  expect(screen.getByText("FERRAMENTAS PARA AGIR")).toBeInTheDocument();
+  expect(screen.getByText("DO PLANO À PRÁTICA")).toBeInTheDocument();
   expect(screen.getByText("ACERVO COLETIVO")).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "Ferramentas" })).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "Conteúdos" })).toBeInTheDocument();
@@ -38,4 +38,11 @@ it("uses the Penpot network artwork for the hero decoration", () => {
   expect(image).toHaveAttribute("src", "/images/hero-ideas-network.svg");
   expect(image).toHaveAttribute("alt", "");
   expect(decoration?.querySelectorAll("img")).toHaveLength(1);
+});
+
+it("shows the collective invitation from the authoritative frame", () => {
+  render(<Home />);
+  expect(screen.getByRole("heading", { name: "Ideias boas não ficam paradas." })).toBeInTheDocument();
+  expect(screen.getByText("O HUB TAMBÉM É SEU")).toBeInTheDocument();
+  expect(screen.getByText("Tem algo para somar? Coloque sua ideia em movimento.")).toBeInTheDocument();
 });
