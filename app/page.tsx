@@ -34,7 +34,7 @@ export default function Home() {
           />
         </div>
       </section>
-      <section className="home-manifesto" aria-labelledby="manifesto-title"><div><p className="home-eyebrow">NOSSO MANIFESTO</p><h2 id="manifesto-title">A democracia também se constrói em rede.</h2></div><Link className="home-button home-button-white" href="/manifesto">Leia o manifesto <HomeArrow /></Link></section>
+      <section className="home-manifesto" aria-labelledby="manifesto-title"><div><p className="home-eyebrow">NOSSO MANIFESTO</p><h2 id="manifesto-title">A democracia também se constrói em rede.</h2></div><Link className="home-button home-button-white" href="/manifesto">Leia e assine o manifesto <HomeArrow /></Link></section>
       <section className="home-preview home-tools" aria-labelledby="tools-title"><header className="home-section-heading"><div><p className="home-eyebrow">DO PLANO À PRÁTICA</p><h2 id="tools-title">Ferramentas</h2></div><p>Menos barreiras, mais ação. Recursos para fazer acontecer, juntos.</p></header><div className="home-preview-feed"><ToolFeed limit={3} variant="home" /></div></section>
       <section className="home-preview home-content" aria-labelledby="content-title"><header className="home-section-heading"><div><p className="home-eyebrow">ACERVO COLETIVO</p><h2 id="content-title">Conteúdos</h2></div><p>Ideias para circular. Conteúdos para levar a conversa mais longe.</p></header><div className="home-preview-feed"><ContentFeed limit={1} variant="home" /></div></section>
       <section className="home-submit" aria-labelledby="submit-title">

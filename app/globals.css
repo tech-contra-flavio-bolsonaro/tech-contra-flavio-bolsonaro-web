@@ -494,3 +494,108 @@ h1 span { color: var(--tech-yellow); }
   .home-hero-actions { flex-direction: column; align-items: flex-start; gap: 16px; }
   .home-hero-decoration { width: min(440px, calc(100% - 32px)); }
 }
+
+/* Issue 71: authoritative Penpot Manifesto + approved signature adaptation from Enviar. */
+.manifesto-page { width: 100%; margin: 0; background: var(--vv-color-blue); }
+.manifesto-page section { border: 0; margin: 0; }
+.manifesto-page .site-nav a:not(.site-nav-cta) { line-height: 1.2; }
+.manifesto-page h1, .manifesto-page h2, .manifesto-page h3 { max-width: none; margin: 0; letter-spacing: 0; font-family: var(--vv-font-display); font-weight: 800; }
+.manifesto-page .home-eyebrow { margin: 0; font-size: 12px; font-weight: 500; line-height: 15px; letter-spacing: 0; }
+.manifesto-hero { position: relative; display: grid; grid-template-columns: minmax(0, 816fr) minmax(0, 416fr); gap: 48px; padding: 88px 80px 96px; background-image: linear-gradient(rgb(255 255 255 / 15%) .532524px, transparent .532524px), linear-gradient(90deg,rgb(255 255 255 / 15%) 1px, transparent 1px); background-size: 90px 74.333333px; }
+.manifesto-presentation { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+.manifesto-presentation h1 { font-size: 136px; line-height: .94; color: #fff; }
+.manifesto-conviction { max-width: 750px; margin: 0; font-size: 24px; line-height: 1.5; }
+.manifesto-purpose { max-width: 750px; margin: 0; font-size: 18px; line-height: 1.6; }
+.manifesto-sign-link { width: fit-content; }
+.manifesto-art { align-self: center; min-width: 0; margin-left: -17px; }
+.manifesto-art img { display: block; width: calc(100% + 54px); max-width: none; height: auto; }
+.manifesto-statement { display: grid; grid-template-columns: minmax(0, 530fr) minmax(0, 654fr); gap: 96px; align-items: center; padding: 72px 80px; }
+.manifesto-statement > div { display: grid; gap: 20px; }
+.manifesto-statement h2 { font-size: 72px; line-height: 1; }
+.manifesto-page .manifesto-statement > p { max-width: none; margin: 0; font-size: 22px; line-height: 1.6; }
+.manifesto-page .manifesto-circulation { background: var(--vv-color-yellow); color: var(--vv-color-blue); box-shadow: inset 0 0 0 3px #00bb00; }
+.manifesto-page .manifesto-collective { background: var(--vv-color-coral); color: #000; box-shadow: inset 0 0 0 3px #000; }
+.manifesto-statement .home-eyebrow { color: inherit; }
+.manifesto-statement .home-eyebrow::before { background: currentColor; }
+.manifesto-principles { display: grid; gap: 40px; padding: 88px 80px 96px; }
+.manifesto-principles h2 { font-size: 72px; line-height: 1; }
+.manifesto-principle-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 28px; }
+.manifesto-principle-grid article { display: grid; gap: 24px; padding: 32px; border-radius: 8px; background: var(--vv-color-yellow); color: var(--vv-color-blue); box-shadow: inset 0 0 0 3px #000,7px 7px 0 #000; }
+.manifesto-principle-grid article:nth-child(2) { background: var(--vv-color-coral); }
+.manifesto-principle-grid article:nth-child(3) { background: #fff; }
+.manifesto-principle-grid article > span { width: 16px; height: 16px; background: var(--vv-color-blue); }
+.manifesto-principle-grid h3 { font-size: 52px; line-height: 1; }
+.manifesto-principle-grid p { margin: 0; font-size: 18px; line-height: 1.6; }
+.manifesto-next { display: flex; gap: 32px; justify-content: space-between; align-items: center; margin-top: 32px; }
+.manifesto-next > p { margin: 0; font-family: var(--vv-font-display); font-size: 56px; font-weight: 700; line-height: 1.05; }
+.manifesto-signature { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,640px); gap: 72px; padding: 88px 80px 96px; box-shadow: inset 0 3px #000; }
+.manifesto-signature-intro { display: grid; gap: 28px; align-content: start; }
+.manifesto-signature-intro h2 { font-size: 72px; line-height: 1; scroll-margin-top: 140px; }
+.manifesto-signature-intro > p:not(.home-eyebrow) { margin: 0; max-width: 520px; font-size: 18px; line-height: 1.6; }
+.manifesto-signature-panel { padding: 40px; border-radius: 8px; background: var(--vv-color-coral); box-shadow: inset 0 0 0 3px #000,10px 10px 0 #000; color: #000; }
+.manifesto-signature-panel h3 { font-size: 52px; line-height: 1; }
+.manifesto-signature-panel > p { margin: 12px 0 0; font-size: 15px; line-height: 1.5; }
+.manifesto-form { gap: 28px; margin-top: 28px; }
+.manifesto-form .submission-field { gap: 12px; }
+.manifesto-form .submission-field [data-slot="label"] { color: #000; font-size: 16px; font-weight: 700; line-height: 1.2; letter-spacing: 0; }
+.manifesto-form .submission-field [data-slot="input"] { min-height: 62px; padding: 18px; border: 3px solid #000; border-radius: 4px; background: transparent; color: #000; font-size: 15px; line-height: 1.5; }
+.manifesto-form .submission-field [data-slot="input"]::placeholder { color: #000; opacity: .7; }
+.manifesto-form .submission-field > p { color: #000; font-size: 14px; }
+.manifesto-form .submission-field > .submission-field-error { color: #750000; }
+.manifesto-consent { display: flex; align-items: start; gap: 12px; }
+.manifesto-consent input { width: 22px; height: 22px; flex: 0 0 auto; margin-top: 2px; accent-color: var(--vv-color-blue); }
+.manifesto-consent span { font-size: 15px; font-weight: 400; line-height: 1.5; }
+.manifesto-submit[data-slot="button"] { min-height: 58px; width: fit-content; padding: 0 24px; gap: 24px; border: 3px solid #000; border-radius: 4px; background: var(--vv-color-yellow); color: #000; box-shadow: 7px 7px 0 #000; font-size: 17px; font-weight: 700; }
+.manifesto-submit[data-slot="button"] svg { width: 28px; height: 28px; }
+.manifesto-submit[data-slot="button"]:hover { background: #fff; }
+.manifesto-page :focus-visible, .manifesto-feedback:focus { outline: 3px solid var(--vv-color-blue); outline-offset: 5px; }
+.manifesto-presentation a:focus-visible, .manifesto-next a:focus-visible, .manifesto-signature-intro h2:focus { outline: 3px solid var(--vv-color-yellow); outline-offset: 5px; }
+.manifesto-feedback { margin: 0; font-size: 16px; line-height: 1.5; }
+@media (max-width: 1100px) {
+  .manifesto-hero { gap: 32px; padding: 64px 40px; }
+  .manifesto-presentation h1 { font-size: 96px; }
+  .manifesto-statement { padding: 56px 40px; gap: 48px; }
+  .manifesto-statement h2, .manifesto-principles h2, .manifesto-signature-intro h2 { font-size: 60px; }
+  .manifesto-principles { padding: 64px 40px; }
+  .manifesto-principle-grid { gap: 24px; }
+  .manifesto-principle-grid article { padding: 24px; }
+  .manifesto-principle-grid h3 { font-size: 42px; }
+  .manifesto-next > p { font-size: 44px; }
+  .manifesto-signature { padding: 64px 40px; gap: 40px; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr); }
+  .manifesto-signature-panel { padding: 28px; }
+}
+@media (max-width: 700px) {
+  .manifesto-hero { grid-template-columns: 1fr; padding: 48px 22px; gap: 40px; }
+  .manifesto-presentation h1 { font-size: clamp(60px,15vw,96px); }
+  .manifesto-conviction { font-size: 20px; }
+  .manifesto-art { width: min(100% - 54px,350px); margin-inline: auto; }
+  .manifesto-statement { grid-template-columns: 1fr; padding: 40px 22px; gap: 28px; }
+  .manifesto-statement h2, .manifesto-principles h2, .manifesto-signature-intro h2 { font-size: 52px; }
+  .manifesto-page .manifesto-statement > p { font-size: 18px; }
+  .manifesto-principles { padding: 48px 22px; gap: 28px; }
+  .manifesto-principle-grid { grid-template-columns: 1fr; }
+  .manifesto-next { align-items: start; flex-direction: column; margin-top: 20px; }
+  .manifesto-next > p { font-size: 40px; }
+  .manifesto-signature { grid-template-columns: 1fr; padding: 48px 22px; gap: 32px; }
+  .manifesto-signature-panel { padding: 28px 22px; }
+  .manifesto-signature-panel h3 { font-size: 44px; }
+  .manifesto-signature-intro h2 { scroll-margin-top: 100px; }
+  .manifesto-submit[data-slot="button"] { width: 100%; padding-inline: 16px; gap: 12px; }
+}
+.manifesto-page .site-header { border: 0; box-shadow: inset 0 0 0 3px #000; }
+.manifesto-page .site-header-brand { display: inline-flex; align-items: center; gap: 12px; letter-spacing: 0; }
+.manifesto-page .site-nav { gap: 36px; }
+.manifesto-page .site-nav .site-nav-cta { display: inline-flex; align-items: center; gap: 24px; border: 0; box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); }
+.manifesto-presentation > .home-eyebrow, .manifesto-principles > .home-eyebrow, .manifesto-signature-intro > .home-eyebrow { color: var(--vv-color-yellow); }
+@media (max-width: 1024px) { .manifesto-page .site-nav { gap: 0; } }
+.manifesto-art { width: 100%; align-self: start; margin-top: 16.5px; }
+.manifesto-page .site-nav a[aria-current="page"]:not(.site-nav-cta) { text-decoration-color: var(--vv-color-blue); }
+@media (max-width: 700px) { .manifesto-art { width: min(100% - 54px,350px); margin-top: 0; } }
+@media (min-width: 1101px) {
+  .manifesto-presentation h1 { min-height: 256px; }
+  .manifesto-conviction { min-height: 72px; }
+  .manifesto-purpose { min-height: 58px; }
+  .manifesto-principle-grid article { min-height: 296px; }
+  .manifesto-next { margin-top: 36px; min-height: 59px; }
+}
+@media (max-width: 700px) { .manifesto-art img { margin-left: -27px; } }
