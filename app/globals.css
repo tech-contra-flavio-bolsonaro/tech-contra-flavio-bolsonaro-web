@@ -599,3 +599,90 @@ h1 span { color: var(--tech-yellow); }
   .manifesto-next { margin-top: 36px; min-height: 59px; }
 }
 @media (max-width: 700px) { .manifesto-art img { margin-left: -27px; } }
+
+/* Enviar — Penpot Page 1, 2fc2f195-1337-5226-a193-05a76c7bc2ff.
+   No mobile frame: keep invitation → steps → collective mark → form hierarchy. */
+.content-submission-page { width: 100%; max-width: none; margin: 0; background: var(--vv-color-blue); color: #fff; font-family: var(--vv-font-body); }
+.content-submission-page .site-header { width: 100%; margin: 0; min-height: 112px; padding: 0 80px; border: 0; box-shadow: inset 0 0 0 3px #000; }
+.content-submission-page .site-header-brand { display: inline-flex; align-items: center; gap: 12px; font-size: 38px; letter-spacing: 0; }
+.content-submission-page .site-nav { gap: 36px; line-height: 1.2; }
+.content-submission-page .site-nav .site-nav-cta { height: 48px; gap: 24px; border: 0; box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); }
+.content-submission-page .submission-page { width: 100%; max-width: none; display: grid; grid-template-columns: minmax(0,568fr) minmax(0,640fr); align-items: start; gap: 72px; min-height: 0; margin: 0; padding: 88px 80px 104px; border: 0; background-image: linear-gradient(rgb(255 255 255 / 8%) 1.1313px, transparent 1.1313px), linear-gradient(90deg, rgb(255 255 255 / 8%) 1px, transparent 1px); background-size: 90px 83.5882px; }
+.content-submission-page .submission-intro { position: static; display: grid; gap: 32px; max-width: none; }
+.content-submission-page .submission-eyebrow { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--vv-color-yellow); font: 500 12px/15px var(--vv-font-mono); letter-spacing: 0; }
+.content-submission-page .submission-eyebrow::before { content: ""; width: 8px; height: 8px; background: currentColor; }
+.content-submission-page .submission-intro h1 { max-width: none; margin: 0; color: #fff; font-family: var(--vv-font-display); font-size: clamp(64px,7.7778vw,112px); font-weight: 800; line-height: .96; min-height: 216px; letter-spacing: 0; }
+.content-submission-page .submission-lede { max-width: none; margin: 0; color: #fff; font-size: 21px; line-height: 1.6; min-height: 101px; }
+.content-submission-page .submission-steps { display: grid; gap: 24px; margin: 0; padding: 24px 0 0; }
+.content-submission-page .submission-steps li { display: flex; min-height: 100px; gap: 22px; align-items: center; padding: 24px; border-radius: 4px; box-shadow: inset 0 0 0 2px #fff; }
+.content-submission-page .submission-steps li > span { display: block; width: auto; height: auto; border: 0; border-radius: 0; color: var(--vv-color-yellow); font: 800 52px/1 var(--vv-font-display); }
+.content-submission-page .submission-steps p { margin: 0; color: #fff; font-size: 19px; line-height: 1.5; }
+.content-submission-page .submission-steps strong { color: inherit; font-size: inherit; font-weight: 700; }
+.submission-collective { display: flex; align-items: center; gap: 24px; padding-top: 28px; }
+.submission-collective img { flex: 0 0 90px; }
+.submission-collective p { margin: 0; color: var(--vv-color-yellow); font: 400 12px/1.7 var(--vv-font-mono); }
+.content-submission-page .submission-panel { padding: 40px; border: 0; border-radius: 8px; box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard-lg); background: var(--vv-color-coral); color: #000; }
+.content-submission-page .submission-panel-heading { padding: 0 0 28px; border-bottom: 3px solid #000; }
+.content-submission-page .submission-panel-heading h2 { max-width: none; margin: 0; color: #000; font: 800 64px/1 var(--vv-font-display); letter-spacing: 0; }
+.content-submission-page .submission-panel-heading span { margin-top: 12px; color: #000; font-size: 14px; line-height: 21px; }
+.content-submission-page .submission-form { gap: 28px; margin-top: 28px; }
+.content-submission-page .submission-field { gap: 12px; min-width: 0; }
+.content-submission-page .submission-field [data-slot="label"] { color: #000; font-size: 16px; font-weight: 700; line-height: 20px; letter-spacing: 0; }
+.content-submission-page .submission-field [data-slot="input"], .content-submission-page .submission-field [data-slot="textarea"] { height: 62px; min-height: 62px; padding: 18px; border: 0; border-radius: 4px; box-shadow: inset 0 0 0 3px #000; background: transparent; color: #000; font-size: 15px; line-height: 23px; }
+.content-submission-page .submission-field [data-slot="textarea"] { height: 150px; min-height: 150px; field-sizing: fixed; resize: vertical; background-image: url("/images/send-resize.svg"); background-repeat: no-repeat; background-position: right 9px bottom 9px; background-size: 10px 10px; }
+.content-submission-page .submission-field [data-slot="textarea"]::-webkit-resizer { background: transparent; }
+.content-submission-page .submission-field [data-slot="input"]::placeholder, .content-submission-page .submission-field [data-slot="textarea"]::placeholder { color: rgb(0 0 0 / 60%); }
+.content-submission-page .submission-field > p { color: #000; font-size: 14px; line-height: 21px; }
+.content-submission-page .submission-field > .submission-field-error { color: #750000; font-weight: 700; }
+.content-submission-page .submission-field [aria-invalid="true"] { box-shadow: inset 0 0 0 3px #750000; }
+.content-submission-page .submission-media { display: grid; grid-template-columns: minmax(0,1fr); gap: 28px; }
+.submission-upload { position: relative; display: flex; min-height: 169px; flex-direction: column; align-items: center; gap: 16px; padding: 28px; border: 0; border-radius: 4px; text-align: center; }
+.submission-upload-border { position: absolute; inset: 0; overflow: hidden; color: #000; border-radius: inherit; pointer-events: none; }
+.submission-upload > :not(input) { pointer-events: none; }
+.submission-upload input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.submission-upload-icon { position: relative; width: 40px; height: 40px; }
+.submission-upload-icon img { position: absolute; top: -7px; left: -7px; width: 54px; height: 54px; max-width: none; }
+.submission-upload-action { max-width: 100%; font-size: 16px; font-weight: 700; line-height: 20px; text-decoration: underline; overflow-wrap: anywhere; }
+.submission-upload p { margin: 0; font-size: 13px; line-height: 21px; }
+.submission-upload:hover { background: rgb(255 255 255 / 12%); }
+.submission-upload:focus-within { outline: 3px solid var(--vv-color-blue); outline-offset: 5px; }
+.submission-upload[data-invalid="true"] .submission-upload-border { color: #750000; }
+.submission-upload[data-disabled="true"] { opacity: .6; }
+.submission-remove { justify-self: start; color: #000; font-size: 14px; text-decoration: underline; cursor: pointer; }
+.content-submission-page .submission-or { display: flex; align-items: center; gap: 16px; padding: 0; color: #000; font: 400 13px/16px var(--vv-font-mono); }
+.content-submission-page .submission-or::before, .content-submission-page .submission-or::after { content: ""; height: 1px; flex: 1; background: rgb(0 0 0 / 20%); }
+.content-submission-page .turnstile-shell:empty { display: none; }
+.content-submission-page .submission-form-footer { display: flex; align-items: start; flex-direction: column; gap: 20px; padding: 12px 0 0; border: 0; }
+.content-submission-page .submission-form-footer > p { display: block; max-width: none; margin: 0; color: #000; font-size: 14px; line-height: 21px; }
+.content-submission-page .submission-form-footer [data-slot="button"] { width: fit-content; height: 58px; min-height: 58px; padding: 0 22px; border: 0; box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); font-size: 17px; font-weight: 700; line-height: 21px; }
+.content-submission-page .submission-form-footer [data-slot="button"]:disabled { box-shadow: inset 0 0 0 3px #000; }
+.content-submission-page .submission-feedback { margin: 0; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+.content-submission-page .submission-panel :focus-visible, .content-submission-page .submission-feedback:focus { outline: 3px solid var(--vv-color-blue); outline-offset: 5px; }
+@media (max-width: 1100px) {
+  .content-submission-page .submission-page { grid-template-columns: minmax(0,1fr); gap: 48px; padding: 64px 40px 80px; }
+  .content-submission-page .submission-intro { max-width: 640px; }
+  .content-submission-page .submission-intro h1 { font-size: 96px; min-height: 0; }
+  .content-submission-page .submission-panel { width: 100%; max-width: 640px; }
+}
+@media (max-width: 1024px) {
+  .content-submission-page .site-header { min-height: 72px; padding: 0 22px; }
+  .content-submission-page .site-header-brand { gap: 8px; font-size: 26px; }
+  .content-submission-page .site-header-brand img { width: 26px; height: 26px; }
+  .content-submission-page .site-nav { gap: 0; }
+}
+@media (max-width: 600px) {
+  .content-submission-page .submission-page { gap: 40px; padding: 48px 22px 64px; }
+  .content-submission-page .submission-intro { gap: 28px; }
+  .content-submission-page .submission-intro h1 { font-size: clamp(48px,14.9vw,80px); }
+  .content-submission-page .submission-lede { font-size: 18px; min-height: 0; }
+  .content-submission-page .submission-steps { gap: 20px; padding-top: 12px; }
+  .content-submission-page .submission-steps li { gap: 16px; padding: 20px; }
+  .content-submission-page .submission-steps p { font-size: 16px; }
+  .submission-collective { gap: 20px; padding-top: 12px; }
+  .submission-collective img { width: 72px; height: 72px; flex-basis: 72px; }
+  .content-submission-page .submission-panel { padding: 22px; }
+  .content-submission-page .submission-panel-heading h2 { font-size: 44px; }
+  .content-submission-page .submission-field [data-slot="input"], .content-submission-page .submission-field [data-slot="textarea"] { font-size: 16px; }
+  .submission-upload { padding: 28px 18px; }
+  .content-submission-page .submission-form-footer [data-slot="button"] { max-width: 100%; gap: 16px; padding: 0 18px; font-size: 16px; }
+}
