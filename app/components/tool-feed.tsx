@@ -25,6 +25,7 @@ export function ToolFeed({ limit, variant = "default" }: { limit?: number; varia
   const [error, setError] = useState(false);
   const pending = useRef(false);
   const current = useRef<string | null | undefined>(category);
+  const sentinel = useRef<HTMLDivElement>(null);
 
   const loadPage = useCallback(async (next: number, selected: string | null, signal?: AbortSignal) => {
     if (next > 0 && pending.current) return;
@@ -67,6 +68,15 @@ export function ToolFeed({ limit, variant = "default" }: { limit?: number; varia
     const timer = window.setTimeout(() => void loadPage(0, category, controller.signal), 0);
     return () => { window.clearTimeout(timer); controller.abort(); };
   }, [category, loadPage]);
+
+  useEffect(() => {
+    if (limit || error || !sentinel.current || !hasMore || loading || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0]?.isIntersecting) void loadPage(page + 1, category ?? null);
+    });
+    observer.observe(sentinel.current);
+    return () => observer.disconnect();
+  }, [category, error, hasMore, limit, loadPage, loading, page]);
 
   function choose(next: string | null) {
     if (next === category) return;
@@ -125,6 +135,7 @@ export function ToolFeed({ limit, variant = "default" }: { limit?: number; varia
       {items.length > 0 ? <div className="card-grid">{items.slice(0, limit).map((tool, index) => <ToolCard key={tool.id} tool={tool} variant={variant} index={index} />)}</div> : null}
       {loading ? <p role="status">Carregando ferramentas…</p> : null}
       {error ? <div role="alert"><p>Não foi possível carregar ferramentas.</p><button className="load-more" onClick={() => void loadPage(page + 1, category ?? null)}>Tentar novamente</button></div> : null}
+      {!limit ? <div ref={sentinel} className="scroll-sentinel" aria-hidden="true" /> : null}
       {!limit && hasMore && !loading && !error ? <button className="load-more" onClick={() => void loadPage(page + 1, category ?? null)}>Carregar mais ferramentas</button> : null}
     </div>
   );

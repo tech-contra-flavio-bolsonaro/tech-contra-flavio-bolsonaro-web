@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { findTool, findToolEmbed, listToolCategories, listTools } from "./tools-server";
+import { resolveServerSupabaseUrl } from "./supabase-url";
 
 beforeEach(() => {
   vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://database.example.com");
@@ -21,6 +22,17 @@ it("requests only approved public fields with stable ordering and a pagination l
   expect(query.get("offset")).toBe("20");
   expect(query.get("limit")).toBe("11");
   expect(query.get("order")).toBe("created_at.desc,id.desc");
+});
+
+it("uses the internal Supabase URL for server-side tool queries when configured", async () => {
+  vi.stubEnv("SUPABASE_URL_INTERNAL", "http://supabase.internal:54321");
+  const fetch = vi.fn().mockResolvedValue(json([]));
+  vi.stubGlobal("fetch", fetch);
+
+  await listTools(0);
+
+  expect(new URL(fetch.mock.calls[0][0]).origin).toBe("http://supabase.internal:54321");
+  expect(resolveServerSupabaseUrl()).toBe("http://supabase.internal:54321");
 });
 
 it("returns no detail when an approved slug is absent, without querying pending records", async () => {

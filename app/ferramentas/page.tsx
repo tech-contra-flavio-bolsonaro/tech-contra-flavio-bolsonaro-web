@@ -3,18 +3,13 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { HomeArrow } from "@/app/components/home-arrow";
 import { SiteNav } from "@/app/components/site-nav";
+import { ToolFeed } from "@/app/components/tool-feed";
 
 export const metadata: Metadata = {
   title: "Ferramentas",
   description:
-    "Em breve, ferramentas da comunidade para planejar, criar e colocar ideias em movimento.",
+    "Explore ferramentas da comunidade para planejar, criar e colocar ideias em movimento.",
 };
-
-const categories = [
-  { title: "Calculadoras", icon: "/images/ferramentas/calculator.svg", tone: "yellow" },
-  { title: "Guias", icon: "/images/ferramentas/guides.svg", tone: "coral" },
-  { title: "Formulários", icon: "/images/ferramentas/forms.svg", tone: "white" },
-];
 
 export default function FerramentasPage() {
   return (
@@ -26,11 +21,11 @@ export default function FerramentasPage() {
             <p className="tools-eyebrow">DO PLANO À PRÁTICA</p>
             <h1 id="tools-title">O QUE AJUDA A AGIR.</h1>
             <p className="tools-intro">
-              Em breve, este espaço vai concentrar as ferramentas da comunidade:
-              calculadoras, guias, formulários e acessos diretos para a ação.
+              Ferramentas da comunidade para planejar, criar e colocar ideias
+              em movimento.
             </p>
           </div>
-          <div className="tools-window" aria-label="Ferramentas da comunidade em construção">
+          <div className="tools-window" aria-label="Ferramentas da comunidade">
             <div className="tools-window-bar">
               <span className="tools-window-controls" aria-hidden="true">
                 <Image src="/images/ferramentas/window-control.svg" alt="" width={9} height={9} unoptimized />
@@ -40,9 +35,9 @@ export default function FerramentasPage() {
               <span>ferramentas_da_comunidade</span>
             </div>
             <div className="tools-window-content">
-              <p>&gt; em construção coletiva_</p>
-              <h2>EM BREVE.</h2>
-              <div className="tools-progress" aria-label="Em preparação">
+              <p>&gt; ferramentas_publicadas_</p>
+              <h2>EM MOVIMENTO.</h2>
+              <div className="tools-progress" aria-hidden="true">
                 <span /><span /><span /><span />
               </div>
             </div>
@@ -60,20 +55,9 @@ export default function FerramentasPage() {
         <section className="tools-categories" aria-labelledby="tools-categories-title">
           <div className="tools-section-heading">
             <h2 id="tools-categories-title">RECURSOS DA COMUNIDADE</h2>
-            <p>EM BREVE / AINDA NÃO DISPONÍVEIS</p>
+            <p>PUBLICADAS PELA COMUNIDADE</p>
           </div>
-          <div className="tools-category-grid">
-            {categories.map((category) => (
-              <article className="tools-category-card" data-tone={category.tone} key={category.title}>
-                <Image src={category.icon} alt="" width={56} height={56} unoptimized />
-                <h3>{category.title}</h3>
-                <div className="tools-placeholder-lines" aria-hidden="true">
-                  <span /><span />
-                </div>
-                <span className="tools-status"><span aria-hidden="true" />Em breve</span>
-              </article>
-            ))}
-          </div>
+          <ToolFeed variant="home" />
         </section>
       </div>
 
