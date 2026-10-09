@@ -63,6 +63,12 @@ it("switches the header to its menu layout before desktop links can overflow", (
   expect(styles).toContain("@media (max-width: 1024px) {");
 });
 
-it("switches the fixed-width home composition to compact mode below the 1440px Figma frame", () => {
-  expect(styles).toContain("@media (max-width: 1439px) { .home-page .site-header");
+it("keeps the home layout responsive without replacing the desktop composition at tablet width", () => {
+  expect(styles).toContain("@media (max-width: 1024px) { .home-page .site-header");
+  expect(styles).toContain("@media (max-width: 600px) { .home-page .site-header");
+});
+
+it("keeps home content cards in the section grid instead of forcing a split-card layout", () => {
+  expect(styles).toContain(".home-content .card-grid { display: grid;");
+  expect(styles).not.toContain(".home-content .content-card { display: grid; grid-template-columns: 42% 58%;");
 });
