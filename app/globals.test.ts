@@ -53,3 +53,12 @@ it("defines the Figma brand, geometry, and spacing tokens", () => {
   expect(styles).toContain("--vv-space-10: 80px;");
   expect(styles).toContain("--vv-grid-unit: 90px;");
 });
+
+it("keeps the technical grid decorative and responsive", () => {
+  expect(styles).toContain("background-size: var(--vv-grid-unit) var(--vv-grid-unit);");
+  expect(styles).toContain("body { background-size: 48px 48px; }");
+});
+
+it("switches the header to its menu layout before desktop links can overflow", () => {
+  expect(styles).toContain("@media (max-width: 1024px) {");
+});
