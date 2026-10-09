@@ -12,6 +12,15 @@ it("preserves the approved sections and accessible signature destination",()=>{
 });
 
 const canonical = readFileSync("app/manifesto/__fixtures__/issue-73.txt", "utf8").replace(/\r\n/g, "\n");
+it("offers sharing the manifesto page", () => {
+  render(<ManifestoPage />);
+  const shareButton = screen.getByRole("button", { name: "Compartilhar" });
+  expect(shareButton).toHaveClass("inline-block ml-4!");
+  fireEvent.click(shareButton);
+  expect(screen.getByRole("heading", { name: "Compartilhar conteúdo" })).toBeInTheDocument();
+  expect(screen.getByText("Escolha uma ação.")).toBeInTheDocument();
+});
+
 const blocks = canonical.trim().split("\n\n");
 const normalizeHtmlSpace = (text: string) => text.replace(/\s+/g, " ").trim();
 
@@ -30,7 +39,9 @@ it("renders the entire issue 73 text, punctuation and block order immediately af
   expect(within(reading as HTMLElement).getAllByRole("heading", { level: 3 }).map(node => node.textContent)).toEqual(blocks.slice(8).map(block => block.split("\n")[0]));
   expect(reading.querySelectorAll(".manifesto-full-intro > p")).toHaveLength(7);
   expect(reading.querySelectorAll(".manifesto-full-demand > p")).toHaveLength(9);
-  expect(reading.querySelector("svg, img")).toBeNull();
+  expect(reading.querySelector(".manifesto-full-intro svg, .manifesto-full-intro img, .manifesto-full-demand svg, .manifesto-full-demand img")).toBeNull();
+  const shareControl = within(reading as HTMLElement).getByRole("button", { name: "Compartilhar" });
+  expect(shareControl.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
   expect(sections[sections.length - 1]).toHaveClass("manifesto-signature");
 });
 

@@ -43,6 +43,12 @@ it("keeps the content-card share trigger legible on hover", () => {
   expect(styles).toContain('.share-trigger:hover { background: var(--tech-yellow); color: var(--tech-blue); }');
 });
 
+it("applies home colors to the default share trigger presentation", () => {
+  expect(styles).toContain(".share-trigger.share-trigger-home-colors { border-color: #000; background: var(--vv-color-yellow); color: #000; }");
+  expect(styles).toContain(".share-trigger.share-trigger-home-colors:hover { background: var(--vv-color-coral); color: #000; }");
+  expect(styles).toContain(".share-trigger.share-trigger-home-colors:focus-visible { outline-color: var(--vv-color-blue); }");
+});
+
 it("defines the Figma brand, geometry, and spacing tokens", () => {
   expect(styles).toContain("--vv-color-blue: #1900d0;");
   expect(styles).toContain("--vv-color-yellow: #fcf050;");
@@ -61,6 +67,12 @@ it("keeps the technical grid decorative and responsive", () => {
 
 it("switches the header to its menu layout before desktop links can overflow", () => {
   expect(styles).toContain("@media (max-width: 1024px) {");
+});
+
+it("makes the header viewport-wide without allowing horizontal page scrolling", () => {
+  expect(styles).toContain("html { overflow-x: clip; scroll-behavior: smooth; }");
+  expect(styles).toContain(".site-header { position: sticky;");
+  expect(styles).toContain("width: 100vw; max-width: 100vw;");
 });
 
 it("keeps the home layout responsive without replacing the desktop composition at tablet width", () => {

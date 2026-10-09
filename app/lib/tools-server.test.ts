@@ -10,6 +10,14 @@ beforeEach(() => {
 afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
 const json = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { "Content-Type": "application/json" } });
 
+it("prefers SUPABASE_URL_INTERNAL over NEXT_PUBLIC_SUPABASE_URL for server calls", async () => {
+  vi.stubEnv("SUPABASE_URL_INTERNAL", "http://host.docker.internal:54321");
+  const fetch = vi.fn().mockResolvedValue(json([]));
+  vi.stubGlobal("fetch", fetch);
+  await listTools(0);
+  expect(new URL(fetch.mock.calls[0][0]).origin).toBe("http://host.docker.internal:54321");
+});
+
 it("requests only approved public fields with stable ordering and a pagination lookahead", async () => {
   const fetch = vi.fn().mockResolvedValue(json(Array.from({ length: 11 }, (_, id) => ({ id: String(id) }))));
   vi.stubGlobal("fetch", fetch);
