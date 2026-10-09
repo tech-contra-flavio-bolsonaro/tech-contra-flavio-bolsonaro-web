@@ -1,3 +1,4 @@
+import { HomeArrow } from "./home-arrow";
 import Image from "next/image";
 import Link from "next/link";
 import type { BlogArticle } from "@/app/lib/blog/types";
@@ -15,14 +16,17 @@ export function BlogCard({
   article,
   featured = false,
   featuredLabel,
+  variant = "default",
 }: {
   article: BlogArticle;
   featured?: boolean;
   featuredLabel?: string;
+  variant?: "default" | "home";
 }) {
+  const Heading = variant === "home" ? "h3" : "h2";
   return (
     <article
-      className={`blog-card${featured ? " blog-card-featured" : ""}${article.coverImage ? "" : " blog-card-no-cover"}`}
+      className={`blog-card${variant === "home" ? " home-blog-card" : ""}${featured ? " blog-card-featured" : ""}${article.coverImage ? "" : " blog-card-no-cover"}`}
     >
       {article.coverImage ? (
         <Image
@@ -37,9 +41,9 @@ export function BlogCard({
       <div className="blog-card-copy">
         {featuredLabel ? <p className="blog-label blog-section-label blog-featured-label">{featuredLabel}</p> : null}
         <BlogTags tags={article.tags} />
-        <h2>
+        <Heading>
           <Link href={blogPermalink(article)}>{article.title}</Link>
-        </h2>
+        </Heading>
         <p className="blog-card-description">{article.description}</p>
         <p className="blog-card-author">{article.author.name}</p>
         <div className="blog-card-bottom">
@@ -49,8 +53,8 @@ export function BlogCard({
               {blogDate(article.publishedAt)}
             </time>
           </p>
-          <Link className="blog-read" href={blogPermalink(article)}>
-            Ler artigo ↗
+          <Link className={variant === "home" ? "blog-read home-button home-button-white" : "blog-read"} href={blogPermalink(article)}>
+            {variant === "home" ? <>Ler artigo <HomeArrow /></> : "Ler artigo ↗"}
           </Link>
         </div>
       </div>

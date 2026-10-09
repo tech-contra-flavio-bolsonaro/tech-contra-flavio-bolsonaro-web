@@ -1,6 +1,8 @@
 import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, expect, it } from "vitest";
+import { afterEach, expect, it, vi } from "vitest";
 import Home from "./page";
+
+vi.mock("@/app/components/home-blog", () => ({ HomeBlog: () => <section aria-labelledby="blog-title"><h2 id="blog-title">Blog</h2></section>, HomeBlogLoading: () => null }));
 
 afterEach(cleanup);
 
@@ -61,4 +63,10 @@ it("places the manifesto CTA in the hero and the hub CTA in the coral band", () 
  expect(hub).toHaveAttribute("href", "/ferramentas");
  expect(hub.closest(".home-manifesto")).toHaveTextContent("NOSSO HUB");
  expect(hub.closest(".home-manifesto")).toHaveTextContent("A democracia também se constrói em rede.");
+});
+
+it("places Blog between Ferramentas and Conteúdos before the final CTA", () => {
+ const { container } = render(<Home />);
+ const sections = [...container.querySelectorAll("main > section")].map(section => section.getAttribute("aria-labelledby"));
+ expect(sections).toEqual(["hero-title", "manifesto-title", "tools-title", "blog-title", "content-title", "submit-title"]);
 });
