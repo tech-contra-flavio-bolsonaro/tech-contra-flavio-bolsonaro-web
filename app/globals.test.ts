@@ -32,7 +32,11 @@ it("isolates toast and dialog typography from editorial headings", () => {
   expect(styles).toContain('[data-slot="toast-title"] {');
   expect(styles).toContain('font-size: .95rem !important;');
   expect(styles).toContain('[data-slot="dialog-title"] {');
-  expect(styles).toContain('font-size: 1.25rem !important;');
+  expect(styles).toContain('font-size: 2rem !important;');
+});
+
+it("preserves the Figma dialog frame after global styles are applied", () => {
+  expect(styles).toContain('[data-slot="dialog-content"] { width: min(calc(100vw - 2rem), 32rem); max-height: min(44rem, calc(100dvh - 2rem)); gap: 1rem; overflow-y: auto; padding: 1.5rem; border: 3px solid #000; border-radius: 8px; background: #fff; color: #000; box-shadow: 10px 10px 0 #000; }');
 });
 
 it("keeps the content-card share trigger legible on hover", () => {
