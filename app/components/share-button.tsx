@@ -298,6 +298,7 @@ export function ShareButton({
             variant={variant !== "default" ? "default" : "outline"}
             size={!["default", "home-colors"].includes(variant) ? "lg" : "sm"}
             className={cn("share-trigger", className ?? "")}
+            aria-label="Compartilhar"
           />
         }
       >

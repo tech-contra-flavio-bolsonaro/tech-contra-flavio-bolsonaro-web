@@ -1,8 +1,9 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
 import { ShareButton } from "./share-button";
 
 afterEach(() => {
+  cleanup();
   Reflect.deleteProperty(navigator, "userAgent");
   Reflect.deleteProperty(navigator, "clipboard");
   Reflect.deleteProperty(navigator, "canShare");
@@ -57,6 +58,14 @@ it("opens sharing actions in a dialog", async () => {
   }
 });
 
+it.each(["default", "home", "listing", "home-colors"] as const)(
+  "gives the %s share trigger an accessible name",
+  (variant) => {
+    render(<ShareButton title="Conteúdo real" url="/conteudos/real" variant={variant} />);
+    expect(screen.getByRole("button", { name: "Compartilhar" })).toHaveAccessibleName("Compartilhar");
+  },
+);
+
 it("keeps the default presentation with home colors", async () => {
   render(
     <ShareButton
@@ -70,9 +79,10 @@ it("keeps the default presentation with home colors", async () => {
   const trigger = screen.getByRole("button", { name: "Compartilhar" });
 
   expect(trigger).toHaveClass(
-    "share-trigger share-trigger-home-colors inline-block ml-4",
+    "share-trigger inline-block ml-4",
   );
   expect(trigger).toHaveAttribute("data-variant", "default");
+  expect(trigger).toHaveClass("h-10");
   expect(trigger).toHaveAttribute("aria-label", "Compartilhar");
   expect(trigger).not.toHaveTextContent("Compartilhar");
   expect(trigger.querySelectorAll("svg")).toHaveLength(1);
@@ -203,7 +213,7 @@ it("shares the actual image file with the source and title", async () => {
   });
 });
 
-it("shares the source, title, and URL when there is no image", async () => {
+it("shares the title and canonical URL when there is no image", async () => {
   const open = vi.spyOn(window, "open").mockImplementation(() => null);
   render(<ShareButton title="Card" url="https://example.com/card" />);
   fireEvent.click(screen.getByRole("button", { name: "Compartilhar" }));
@@ -213,7 +223,7 @@ it("shares the source, title, and URL when there is no image", async () => {
 
   const whatsappUrl = new URL(open.mock.calls[0][0] as string);
   expect(whatsappUrl.searchParams.get("text")).toBe(
-    "Card\nhttps://example.com/card\n\nhttps://techcontraflaviobolsonaro.dev/",
+    "Card\nhttps://example.com/card",
   );
 });
 

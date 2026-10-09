@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { SiteNav } from "@/app/components/site-nav";
 import { contentPermalink } from "@/app/lib/content-permalink";
 import { findPublishedContent } from "@/app/lib/published-content";
+import { safeHttpsUrl } from "@/app/lib/safe-https-url";
 
 export const dynamic = "force-dynamic";
 
@@ -42,6 +43,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
   const content = await findPublishedContent(id);
   if (!content) notFound();
 
+  const videoLink = safeHttpsUrl(content.video_url);
   const isVideo = Boolean(content.mediaUrl?.match(/\.(mp4|webm)($|\?)/i));
 
   return (
@@ -65,8 +67,8 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
             unoptimized
           />
         ) : null}
-        {content.video_url ? (
-          <p><a href={content.video_url} target="_blank" rel="noreferrer">Abrir vídeo original ↗</a></p>
+        {videoLink ? (
+          <p><a href={videoLink} target="_blank" rel="noreferrer">Abrir vídeo original ↗</a></p>
         ) : null}
         <p className="content-detail-credit">Crédito: {content.credit}</p>
       </article>
