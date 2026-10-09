@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { SiteNav } from "@/app/components/site-nav";
+
+export const metadata: Metadata = {
+  title: "Manifesto",
+  description:
+    "Entenda a proposta do Vira Voto: ideias ganham força quando circulam, encontram pessoas e viram ação coletiva.",
+};
 
 export default function ManifestoPage() {
   return (

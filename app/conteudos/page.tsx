@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { SiteNav } from "@/app/components/site-nav";
 import { ContentFeed } from "@/app/components/content-feed";
+
+export const metadata: Metadata = {
+  title: "Conteúdos",
+  description:
+    "Acesse referências, vídeos e materiais que ajudam a informar, inspirar e ampliar a conversa pública.",
+};
 
 export default function ConteudosPage() {
   return (
