@@ -379,7 +379,7 @@ h1 span { color: var(--tech-yellow); }
 .home-content-info .share-trigger:focus-visible { outline-color: var(--vv-color-blue); }
 .home-share-dialog .share-preview { width: 100%; height: auto; max-height: 40vh; object-fit: contain; }
 .home-share-credit { margin: 0; overflow-wrap: anywhere; color: #000; font: 400 14px/1.5 var(--vv-font-body); }
-.home-submit { padding: 0 80px 72px; background: var(--vv-color-blue); color: #fff; }
+.home-submit { padding: 72px 80px; background: var(--vv-color-blue); color: #fff; }
 .home-submit-panel { display: grid; grid-template-columns: 102px minmax(0, 1fr) auto; gap: 36px; align-items: center; min-height: 203px; padding: 40px; border-radius: 8px; box-shadow: inset 0 0 0 3px var(--vv-color-yellow); }
 .home-submit-copy { min-width: 0; }
 .home-submit .home-eyebrow { color: var(--vv-color-yellow); }
