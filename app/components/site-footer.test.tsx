@@ -17,3 +17,19 @@ it.each(["/", "/manifesto", "/ferramentas", "/enviar", "/conteudos"])("uses the 
   expect(screen.getByText("CONSTRUÍDO EM REDE. PARA VIRAR O JOGO.")).toBeInTheDocument();
   expect(screen.queryByRole("link", { name: "Voltar ao topo" })).not.toBeInTheDocument();
 });
+
+it("exposes Blog on existing footer and compact Blog/detail footer", () => {
+  render(<SiteFooter />);
+  expect(screen.getByRole("link", { name: "Blog" })).toHaveAttribute(
+    "href",
+    "/blog",
+  );
+  cleanup();
+  route.pathname = "/blog/1/acao";
+  render(<SiteFooter />);
+  expect(screen.getByRole("contentinfo")).toHaveClass("blog-footer");
+  expect(screen.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute(
+    "href",
+    "#top",
+  );
+});

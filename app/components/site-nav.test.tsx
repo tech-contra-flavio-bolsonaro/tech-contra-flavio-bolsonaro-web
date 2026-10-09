@@ -62,3 +62,11 @@ it("lists every destination, marks the current page and highlights the send acti
   expect(screen.getByRole("link", { name: "Ferramentas" })).not.toHaveAttribute("aria-current");
   expect(screen.getByRole("link", { name: "Enviar conteúdo" })).toHaveClass("site-nav-cta");
 });
+
+it("exposes Blog alongside existing destinations", () => {
+  render(<SiteNav />);
+  expect(screen.getByRole("link", { name: "Blog" })).toHaveAttribute(
+    "href",
+    "/blog",
+  );
+});
