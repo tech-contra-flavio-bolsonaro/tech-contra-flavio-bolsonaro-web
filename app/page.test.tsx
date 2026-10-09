@@ -46,3 +46,8 @@ it("shows the collective invitation from the authoritative frame", () => {
   expect(screen.getByText("O HUB TAMBÉM É SEU")).toBeInTheDocument();
   expect(screen.getByText("Tem algo para somar? Coloque sua ideia em movimento.")).toBeInTheDocument();
 });
+
+it("invites reading and signing the manifesto",()=>{
+ render(<Home />);
+ expect(screen.getByRole("link",{name:/Leia e assine o manifesto/})).toHaveAttribute("href","/manifesto");
+});

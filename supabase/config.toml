@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.submit-tool]
 verify_jwt = false
+
+[functions.submit-manifesto]
+verify_jwt = false

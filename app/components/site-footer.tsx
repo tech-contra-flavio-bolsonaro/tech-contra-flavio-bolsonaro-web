@@ -7,7 +7,7 @@ import { ArrowUp } from "lucide-react";
 
 export function SiteFooter() {
   const pathname = usePathname();
-  if (pathname === "/") return (
+  if (pathname === "/" || pathname === "/manifesto") return (
     <footer className="site-footer home-footer">
       <div className="home-footer-main">
         <Link className="site-footer-brand" href="/"><Image src="/images/home-pixel-logo.svg" alt="" width={28} height={28} unoptimized />VIRA VOTO</Link>
