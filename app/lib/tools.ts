@@ -8,6 +8,8 @@ export type PublishedTool = {
   url: string;
 };
 
+export type ToolCategory = { name: string; count: number };
+
 export function httpsUrl(value: string): URL | null {
   try {
     const url = new URL(value);

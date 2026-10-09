@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
-import { findTool, findToolEmbed, listTools } from "./tools-server";
+import { findTool, findToolEmbed, listToolCategories, listTools } from "./tools-server";
 
 beforeEach(() => {
   vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://database.example.com");
@@ -55,4 +55,22 @@ it.each(["javascript:alert(1)", "http://example.com", "https://user:pass@example
 it("does not turn database failures into an empty published collection", async () => {
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue(json({ message: "unavailable" }, 401)));
   await expect(listTools(0)).rejects.toMatchObject({ message: "unavailable" });
+});
+
+it("filters the approved listing by exact category", async () => {
+  const fetch = vi.fn().mockResolvedValue(json([]));
+  vi.stubGlobal("fetch", fetch);
+  await listTools(0, "Mapa da virada");
+  const query = new URL(fetch.mock.calls[0][0]).searchParams;
+  expect(query.get("status")).toBe("eq.approved");
+  expect(query.get("category")).toBe("eq.Mapa da virada");
+});
+
+it("counts categories from approved tools only, largest first", async () => {
+  const fetch = vi.fn().mockResolvedValue(json([{ category: "Jogos" }, { category: "Mapa da virada" }, { category: "Mapa da virada" }, { category: "Chegar à urna" }]));
+  vi.stubGlobal("fetch", fetch);
+  expect(await listToolCategories()).toEqual([{ name: "Mapa da virada", count: 2 }, { name: "Chegar à urna", count: 1 }, { name: "Jogos", count: 1 }]);
+  const query = new URL(fetch.mock.calls[0][0]).searchParams;
+  expect(query.get("status")).toBe("eq.approved");
+  expect(query.get("select")).toBe("category");
 });
