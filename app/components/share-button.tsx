@@ -296,14 +296,14 @@ export function ShareButton({
         render={
           <Button
             variant={variant !== "default" ? "default" : "outline"}
-            size={variant !== "default" ? "lg" : "sm"}
+            size={!["default", "home-colors"].includes(variant) ? "lg" : "sm"}
             className={cn("share-trigger", className ?? "")}
           />
         }
       >
-        {variant === "default" && <Share2Icon />}
-        {variant !== "home-colors" && variant !== "home" && "Compartilhar"}
-        {variant !== "default" && <HomeArrow />}
+        {["default", "home-colors"].includes(variant) && <Share2Icon />}
+        {!["home-colors", "home"].includes(variant) && "Compartilhar"}
+        {!["default", "home-colors"].includes(variant) && <HomeArrow />}
       </DialogTrigger>
       <DialogContent
         className={variant !== "default" ? "home-share-dialog" : undefined}

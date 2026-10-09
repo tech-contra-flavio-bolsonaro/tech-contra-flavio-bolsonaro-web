@@ -63,7 +63,6 @@ export function ManifestoFullText() {
 
           <ShareButton
             title="Manifesto Tech Contra Flávio Bolsonaro"
-            description="Compartilhe nas redes sociais o manifesto da comunidade Tech Contra Flávio Bolsonaro"
             url="/manifesto"
             variant="home-colors"
             className="inline-block ml-4!"
