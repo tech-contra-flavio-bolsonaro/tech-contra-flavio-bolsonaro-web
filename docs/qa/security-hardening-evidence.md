@@ -74,7 +74,7 @@ HTTP/1.1 200 OK
 X-Content-Type-Options: nosniff
 Referrer-Policy: strict-origin-when-cross-origin
 X-Frame-Options: SAMEORIGIN
-Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https: http://127.0.0.1:* http://localhost:*; frame-src 'self' https://challenges.cloudflare.com https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https: http://127.0.0.1:* http://localhost:*; frame-src 'self' https://challenges.cloudflare.com https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
 ```
 
 ## Domínios CORS (prod)
