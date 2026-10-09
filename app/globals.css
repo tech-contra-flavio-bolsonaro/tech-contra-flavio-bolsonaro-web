@@ -391,6 +391,12 @@ h1 span { color: var(--tech-yellow); }
 .home-footer nav { display: flex; flex-wrap: wrap; gap: 32px; font: 600 14px/1.2 var(--vv-font-body); }
 .home-footer-credits p { margin: 0; font: 400 11px/14px var(--vv-font-mono); }
 .home-footer nav a:hover { text-decoration: underline; }
+.home-footer-social { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+.home-footer-social a { display: grid; width: 44px; height: 44px; place-items: center; border: 2px solid #000; border-radius: 4px; background: var(--vv-color-yellow); box-shadow: 3px 3px 0 #000; color: #000; }
+.home-footer-social a:hover { background: var(--vv-color-lilac); }
+.home-footer-social a:focus-visible { outline: 3px solid var(--vv-color-blue); outline-offset: 4px; }
+.home-footer-social svg { width: 22px; height: 22px; }
+.home-footer-social .share-platform-icon-kwai { width: 19px; height: 22px; }
 @media (max-width: 1200px) {
   .home-content-card { grid-template-columns: 42% minmax(0, 1fr); }
   .home-content-description h3 { font-size: 48px; }
@@ -412,7 +418,7 @@ h1 span { color: var(--tech-yellow); }
   .home-content-info { gap: 18px; padding: 28px; }
   .home-content-description h3 { font-size: 40px; }
   .home-content-description > p { font-size: 16px; }
-  .home-submit { padding: 0 40px 56px; }
+  .home-submit { padding: 56px 40px; }
   .home-submit-panel { grid-template-columns: 72px minmax(0, 1fr); gap: 24px; padding: 32px; }
   .home-submit-star { width: 72px; height: 72px; }
   .home-submit h2 { font-size: 44px; }
@@ -435,13 +441,14 @@ h1 span { color: var(--tech-yellow); }
   .home-content-description h3 { font-size: 40px; }
   .home-content-description > p { display: block; }
   .home-content-info .share-trigger { margin-top: 12px; }
-  .home-submit { padding: 0 22px 56px; }
+  .home-submit { padding: 56px 22px; }
   .home-submit-panel { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 28px; }
   .home-submit h2 { font-size: 40px; }
   .home-submit-panel .home-button { grid-column: 1; }
   .home-footer.site-footer { padding: 32px 22px; }
   .home-footer-main, .home-footer-credits { flex-direction: column; align-items: start; gap: 24px; }
   .home-footer nav { justify-content: start; gap: 20px 24px; }
+  .home-footer-social { justify-content: center; }
   .home-footer-credits { gap: 12px; }
 }
 

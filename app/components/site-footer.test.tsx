@@ -15,6 +15,21 @@ it.each(["/", "/manifesto", "/ferramentas", "/ferramentas/mapa-da-virada", "/env
   }
   expect(screen.getByText("VIRA VOTO — IDEIAS EM MOVIMENTO.")).toBeInTheDocument();
   expect(screen.getByText("CONSTRUÍDO EM REDE. PARA VIRAR O JOGO.")).toBeInTheDocument();
+  for (const [name, href] of [
+    ["Instagram", "https://www.instagram.com/techcontrabolsonaro.dev"],
+    ["X", "https://x.com/techcontra_dev"],
+    ["TikTok", "https://www.tiktok.com/@techcontraflavio"],
+    ["Kwai", "https://k.kwai.com/u/@techcontraflavio/BUOCAPC4"],
+  ]) {
+    const socialLink = screen.getByRole("link", { name });
+    expect(socialLink).toHaveAttribute("href", href);
+    expect(socialLink).toHaveAttribute("target", "_blank");
+    expect(socialLink).toHaveAttribute("rel", "noopener noreferrer");
+  }
+  const kwaiIcon = screen.getByRole("link", { name: "Kwai" }).querySelector("svg");
+  expect(kwaiIcon).toHaveClass("share-platform-icon-kwai");
+  expect(kwaiIcon).toHaveAttribute("width", "21");
+  expect(kwaiIcon).toHaveAttribute("height", "24");
   expect(screen.queryByRole("link", { name: "Voltar ao topo" })).not.toBeInTheDocument();
 });
 
