@@ -67,10 +67,19 @@ docker compose -f docker-compose.test.yml up --build
 
 O Compose inicia o app, a stack local necessária do Supabase e, antes de liberar o app, recria o banco usando as migrations e o arquivo `supabase/seed.sql`. O seed inclui conteúdos aprovados para o feed e um item pendente para testar a curadoria. A aplicação fica disponível em `localhost:3000`.
 
+No Windows, inicie o Docker Desktop com `docker desktop start`, mantenha o mecanismo de contêineres Linux ativo e confirme que `docker info` exibe a seção `Server` antes de executar o Compose. O volume do Supabase é montado em `/workspace/supabase` no contêiner para evitar ambiguidade entre os dois-pontos dos caminhos Windows e a sintaxe de volumes do Docker.
+
 Se a porta `3000` já estiver em uso, escolha outra porta sem alterar o arquivo:
 
 ```bash
 APP_PORT=3001 docker compose -f docker-compose.test.yml up --build
+```
+
+No PowerShell, defina a porta assim:
+
+```powershell
+$env:APP_PORT = "3001"
+docker compose -f docker-compose.test.yml up --build
 ```
 
 Para encerrar e remover os dados locais de teste:

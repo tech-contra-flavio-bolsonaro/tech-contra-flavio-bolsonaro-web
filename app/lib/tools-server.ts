@@ -1,11 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
 import { httpsUrl, type PublishedTool, type ToolCategory } from "./tools";
+import { resolveServerSupabaseUrl } from "./supabase-url";
+
 
 const fields = "id,slug,title,description,category,credit,url";
 const pageSize = 10;
 
 function database() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const url = resolveServerSupabaseUrl();
   const key = process.env.SUPABASE_SECRET_KEY;
   if (!url || !key) throw new Error("Supabase não está configurado.");
   return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });

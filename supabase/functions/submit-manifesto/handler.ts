@@ -1,11 +1,9 @@
+import { cors } from "../_shared/cors.ts";
 import { MANIFESTO_VERSION, CONSENT_VERSION, normalizeEmail, normalizePhone, validText } from "../_shared/manifesto.ts";
 export type SignatureRow = { name: string; email: string; phone: string; work_area: string; consent: true; manifesto_version: string; consent_version: string };
 type Deps = { verifyTurnstile: (token: string) => Promise<boolean>; recordSignature: (row: SignatureRow, tokenHash: string) => Promise<boolean> };
 const maxBody = 16384;
 const protectionError = "Não foi possível confirmar a proteção contra spam. Tente novamente.";
-function cors(request: Request) {
-  return { "Access-Control-Allow-Origin": request.headers.get("origin") ?? "null", "Access-Control-Allow-Headers": "content-type", "Access-Control-Allow-Methods": "POST, OPTIONS", Vary: "Origin" };
-}
 function reply(request: Request, body: { ok?: boolean; error?: string }, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { ...cors(request), "Content-Type": "application/json", "Cache-Control": "no-store" } });
 }
