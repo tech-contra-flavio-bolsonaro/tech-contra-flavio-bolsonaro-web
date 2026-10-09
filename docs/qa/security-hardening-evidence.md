@@ -82,3 +82,19 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' '
 - https://techcontrabolsonaro.dev
 - https://techcontraflaviobolsonaro.dev
 - https://www.techcontraflaviobolsonaro.dev
+
+## 4. BEFORE — MIME/magic (A04)
+```
+{"ok":true}
+HTTP:200
+```
+
+## 4. AFTER — MIME/magic (A04)
+```
+### spoofed jpeg (expect 400)
+{"error":"Arquivo de mídia inválido ou corrompido."}
+HTTP:400
+### real jpeg header (expect 200)
+{"ok":true}
+HTTP:200
+```
