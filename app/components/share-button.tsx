@@ -27,7 +27,7 @@ type ShareButtonProps = {
   associatedVideoUrl?: string;
   description?: string;
   credit?: string;
-  variant?: "default" | "home";
+  variant?: "default" | "home" | "listing";
 };
 
 async function fetchClipboardImage(imageUrl: string) {
@@ -267,19 +267,19 @@ export function ShareButton({ title, url, imageUrl, videoUrl, associatedVideoUrl
     <Dialog>
       <DialogTrigger
         render={
-          <Button variant={variant === "home" ? "default" : "outline"} size={variant === "home" ? "lg" : "sm"} className="share-trigger" />
+          <Button variant={variant !== "default" ? "default" : "outline"} size={variant !== "default" ? "lg" : "sm"} className="share-trigger" />
         }
       >
         {variant === "default" ? <Share2Icon /> : null}
         Compartilhar
-        {variant === "home" ? <HomeArrow /> : null}
+        {variant !== "default" ? <HomeArrow /> : null}
       </DialogTrigger>
-      <DialogContent className={variant === "home" ? "home-share-dialog" : undefined}>
+      <DialogContent className={variant !== "default" ? "home-share-dialog" : undefined}>
         <DialogHeader>
           <DialogTitle>Compartilhar conteúdo</DialogTitle>
           <DialogDescription>{description ?? "Escolha uma ação."}</DialogDescription>
         </DialogHeader>
-        {variant === "home" ? <p className="home-share-credit">{title}{credit ? ` — ${credit}` : ""}</p> : null}
+        {variant !== "default" ? <p className="home-share-credit">{title}{credit ? ` — ${credit}` : ""}</p> : null}
         {associatedVideoUrl ? <a href={associatedVideoUrl} target="_blank" rel="noreferrer">Abrir vídeo associado</a> : null}
         {videoUrl ? <video className="share-preview" src={videoUrl} controls aria-label={title} /> : null}
         {imageUrl ? (
