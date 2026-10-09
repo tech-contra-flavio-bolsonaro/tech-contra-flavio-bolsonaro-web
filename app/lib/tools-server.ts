@@ -1,7 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { resolveServerSupabaseUrl } from "./supabase-url";
 import { httpsUrl, type PublishedTool, type ToolCategory } from "./tools";
-import { resolveServerSupabaseUrl } from "./supabase-url";
 
 
 const fields = "id,slug,title,description,category,credit,url";
