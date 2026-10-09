@@ -62,3 +62,7 @@ it("keeps the technical grid decorative and responsive", () => {
 it("switches the header to its menu layout before desktop links can overflow", () => {
   expect(styles).toContain("@media (max-width: 1024px) {");
 });
+
+it("switches the fixed-width home composition to compact mode below the 1440px Figma frame", () => {
+  expect(styles).toContain("@media (max-width: 1439px) { .home-page .site-header");
+});
