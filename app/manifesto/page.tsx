@@ -4,6 +4,8 @@ import Image from "next/image";
 import { SiteNav } from "@/app/components/site-nav";
 import { HomeArrow } from "@/app/components/home-arrow";
 import { ManifestoSignLink } from "@/app/components/manifesto-sign-link";
+import { ManifestoReadLink } from "@/app/components/manifesto-read-link";
+import { ManifestoFullText } from "@/app/components/manifesto-full-text";
 import { ManifestoSignatureForm } from "@/app/components/manifesto-signature-form";
 export const metadata: Metadata = {
   title: "Manifesto",
@@ -23,10 +25,11 @@ export default function ManifestoPage() {
         <h1 id="manifesto-title">VIRAR É FAZER<br /> JUNTO.</h1>
         <p className="manifesto-conviction">Acreditamos que boas ideias ficam mais fortes quando circulam, encontram pessoas e viram ação coletiva.</p>
         <p className="manifesto-purpose">Este hub reúne ferramentas, referências e criações para quem quer mobilizar a sua comunidade com clareza, afeto e coragem.</p>
-        <ManifestoSignLink />
+        <div className="manifesto-hero-actions"><ManifestoReadLink /><ManifestoSignLink /></div>
       </div>
       <div className="manifesto-art" aria-hidden="true"><Image src="/images/manifesto-collective-circuit.svg" alt="" width={470} height={452} unoptimized priority /></div>
     </section>
+    <ManifestoFullText />
     <section className="manifesto-statement manifesto-circulation" aria-labelledby="circulation-title">
       <div><p className="home-eyebrow">CIRCULAÇÃO</p><h2 id="circulation-title">IDEIA BOA NÃO FICA PARADA.</h2></div>
       <p>Circular é deixar uma ideia encontrar novos olhares. É compartilhar o que inspira, ouvir o que volta e abrir caminhos para que a conversa continue. Uma ideia em movimento é um convite para participar.</p>
