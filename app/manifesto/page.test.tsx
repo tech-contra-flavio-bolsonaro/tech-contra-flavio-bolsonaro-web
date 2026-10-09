@@ -11,6 +11,15 @@ it("preserves the approved sections and accessible signature destination",()=>{
  expect(screen.getByRole("checkbox")).not.toBeChecked();
 });
 
+it("offers sharing the manifesto page", () => {
+  render(<ManifestoPage />);
+  const shareButton = screen.getByRole("button", { name: "Compartilhar" });
+  expect(shareButton.parentElement).toHaveClass("inline-block ml-4");
+  fireEvent.click(shareButton);
+  expect(screen.getByRole("heading", { name: "Compartilhar conteúdo" })).toBeInTheDocument();
+  expect(screen.getByText(/Entenda a proposta do Vira Voto/)).toBeInTheDocument();
+});
+
 const canonical = readFileSync("app/manifesto/__fixtures__/issue-73.txt", "utf8");
 const blocks = canonical.trim().split("\n\n");
 const normalizeHtmlSpace = (text: string) => text.replace(/\s+/g, " ").trim();

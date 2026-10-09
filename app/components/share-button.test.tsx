@@ -23,6 +23,12 @@ it("opens sharing actions in a dialog", async () => {
     screen.getByRole("button", { name: "Compartilhar via Instagram" }),
   ).toBeInTheDocument();
   expect(
+    screen.getByRole("button", { name: "Compartilhar no X" }),
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: "Compartilhar no Threads" }),
+  ).toBeInTheDocument();
+  expect(
     screen.getByRole("button", { name: "Copiar link" }),
   ).toBeInTheDocument();
   expect(
@@ -31,8 +37,95 @@ it("opens sharing actions in a dialog", async () => {
   expect(
     screen.getByRole("button", { name: "Compartilhar via Instagram" }),
   ).toHaveClass("share-action-instagram");
+  expect(screen.getByRole("button", { name: "Compartilhar no X" })).toHaveClass(
+    "share-action-x",
+  );
+  expect(
+    screen.getByRole("button", { name: "Compartilhar no Threads" }),
+  ).toHaveClass("share-action-threads");
   expect(screen.getByRole("button", { name: "Copiar link" })).toHaveClass(
     "share-action-copy",
+  );
+  for (const name of [
+    "Compartilhar via WhatsApp",
+    "Compartilhar via Instagram",
+    "Compartilhar no X",
+    "Compartilhar no Threads",
+  ]) {
+    const button = screen.getByRole("button", { name });
+    expect(button.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+  }
+});
+
+it("keeps the default presentation with home colors", async () => {
+  render(
+    <ShareButton
+      title="Manifesto Tech Contra Flávio Bolsonaro"
+      description="Ação coletiva."
+      url="/manifesto"
+      variant="home-colors"
+      className="inline-block ml-4"
+    />,
+  );
+  const trigger = screen.getByRole("button", { name: "Compartilhar" });
+
+  expect(trigger).toHaveClass(
+    "share-trigger share-trigger-home-colors inline-block ml-4",
+  );
+  expect(trigger).toHaveAttribute("data-variant", "default");
+  expect(trigger).toHaveAttribute("aria-label", "Compartilhar");
+  expect(trigger).not.toHaveTextContent("Compartilhar");
+  expect(trigger.querySelectorAll("svg")).toHaveLength(1);
+  expect(trigger.querySelector(".home-arrow")).toBeNull();
+
+  fireEvent.click(trigger);
+  expect(
+    screen.getByRole("heading", { name: "Compartilhar conteúdo" }),
+  ).toBeInTheDocument();
+  expect(screen.getByText("Ação coletiva.")).toBeInTheDocument();
+  expect(screen.queryByText("Manifesto Vira Voto")).not.toBeInTheDocument();
+});
+
+it.each([
+  ["X", "Compartilhar no X", "https://twitter.com/intent/tweet"],
+  ["Threads", "Compartilhar no Threads", "https://www.threads.com/intent/post"],
+])(
+  "opens the %s intent with encoded content text and its canonical URL",
+  async (_platform, name, endpoint) => {
+    const open = vi.spyOn(window, "open").mockImplementation(() => null);
+    const title = "Ideias com ação — já!";
+    const description = "Ação coletiva: cuidado, diálogo & respeito.";
+    const url = "https://example.com/conteudos/ação?id=1&origem=hub";
+    render(<ShareButton title={title} description={description} url={url} />);
+    fireEvent.click(screen.getByRole("button", { name: "Compartilhar" }));
+    fireEvent.click(await screen.findByRole("button", { name }));
+
+    const intent = new URL(open.mock.calls[0][0] as string);
+    expect(intent.origin + intent.pathname).toBe(endpoint);
+    expect(intent.searchParams.get("text")).toBe(`${title}\n\n${description}`);
+    expect(intent.searchParams.get("url")).toBe(new URL(url).toString());
+    expect(open).toHaveBeenCalledWith(
+      intent.toString(),
+      "_blank",
+      "noopener,noreferrer",
+    );
+  },
+);
+
+it("copies the absolute canonical URL when given a relative permalink", async () => {
+  const writeText = vi.fn().mockResolvedValue(undefined);
+  Object.defineProperty(navigator, "clipboard", {
+    configurable: true,
+    value: { writeText },
+  });
+  render(<ShareButton title="Card" url="/conteudos/card-id" />);
+  fireEvent.click(screen.getByRole("button", { name: "Compartilhar" }));
+  fireEvent.click(await screen.findByRole("button", { name: "Copiar link" }));
+
+  await waitFor(() =>
+    expect(writeText).toHaveBeenCalledWith(
+      "http://localhost:3000/conteudos/card-id",
+    ),
   );
 });
 
@@ -103,9 +196,7 @@ it("shares the actual image file with the source and title", async () => {
 
   await waitFor(() => expect(share).toHaveBeenCalledTimes(1));
   const shareData = share.mock.calls[0][0];
-  expect(shareData.text).toBe(
-    "Card\n\nhttps://techcontraflaviobolsonaro.dev/",
-  );
+  expect(shareData.text).toBe("Card\n\nhttps://example.com/card");
   expect(shareData.files?.[0]).toMatchObject({
     name: "image.png",
     type: "image/png",
