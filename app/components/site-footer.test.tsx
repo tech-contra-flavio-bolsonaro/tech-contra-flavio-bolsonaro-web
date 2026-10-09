@@ -6,16 +6,7 @@ const route = vi.hoisted(() => ({ pathname: "/conteudos" }));
 vi.mock("next/navigation", () => ({ usePathname: () => route.pathname }));
 afterEach(() => { cleanup(); route.pathname = "/conteudos"; });
 
-it("renders a shared accessible footer with a return-to-top control", () => {
-  route.pathname = "/ferramentas";
-  render(<SiteFooter />);
-
-  expect(screen.getByRole("contentinfo")).toHaveClass("site-footer");
-  expect(screen.getByRole("link", { name: "VIRA VOTO" })).toHaveAttribute("href", "/");
-  expect(screen.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "#top");
-});
-
-it.each(["/", "/manifesto", "/enviar", "/conteudos"])("uses the complete Penpot footer on %s", (pathname) => {
+it.each(["/", "/manifesto", "/ferramentas", "/enviar", "/conteudos"])("uses the complete Penpot footer on %s", (pathname) => {
   route.pathname = pathname;
   render(<SiteFooter />);
   expect(screen.getByRole("contentinfo")).toHaveClass("home-footer");

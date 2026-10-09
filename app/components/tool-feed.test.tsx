@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
 import { ToolFeed } from "./tool-feed";
 
@@ -7,6 +7,7 @@ const response = (ids: number[], hasMore = false) => ({ ok: true, json: async ()
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); window.history.replaceState(null, "", "/"); });
 
 it("loads later pages, retains existing tools on failure, and retries the same page", async () => {
+  vi.stubGlobal("IntersectionObserver", undefined);
   const fetch = vi.fn().mockResolvedValueOnce(response([1], true)).mockRejectedValueOnce(new Error("offline")).mockResolvedValueOnce(response([1, 2]));
   vi.stubGlobal("fetch", fetch);
   render(<ToolFeed />);
@@ -22,7 +23,32 @@ it("loads later pages, retains existing tools on failure, and retries the same p
   await waitFor(() => expect(screen.queryByRole("button")).not.toBeInTheDocument());
 });
 
+it("loads the next page automatically when the feed sentinel enters view", async () => {
+  let onIntersect: IntersectionObserverCallback | undefined;
+  vi.stubGlobal("IntersectionObserver", class {
+    constructor(callback: IntersectionObserverCallback) { onIntersect = callback; }
+    observe() {}
+    disconnect() {}
+  });
+  const fetch = vi.fn().mockResolvedValueOnce(response([1], true)).mockResolvedValueOnce(response([2], false));
+  vi.stubGlobal("fetch", fetch);
+  const { container } = render(<ToolFeed />);
+
+  expect(await screen.findByText("Mapa 1")).toBeInTheDocument();
+  expect(container.querySelector(".scroll-sentinel")).toBeInTheDocument();
+  await waitFor(() => expect(onIntersect).toBeDefined());
+  act(() => onIntersect?.([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver));
+
+  expect(await screen.findByText("Mapa 2")).toBeInTheDocument();
+  expect(fetch.mock.calls.map(([url]) => url)).toEqual(["/api/ferramentas?page=0", "/api/ferramentas?page=1"]);
+});
+
 it("limits homepage tools to four without fetching extra pages", async () => {
+  vi.stubGlobal("IntersectionObserver", class {
+    constructor() {}
+    observe() {}
+    disconnect() {}
+  });
   const fetch = vi.fn().mockResolvedValue(response([1, 2, 3, 4, 5], true));
   vi.stubGlobal("fetch", fetch);
   render(<ToolFeed limit={4} />);

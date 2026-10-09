@@ -5,17 +5,43 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ArrowUp } from "lucide-react";
 
+const VALID_PATHS = [
+  "/",
+  "/manifesto",
+  "/ferramentas",
+  "/enviar",
+  "/conteudos",
+];
+
 export function SiteFooter() {
   const pathname = usePathname();
-  if (pathname === "/" || pathname === "/manifesto" || pathname === "/enviar" || pathname === "/conteudos") return (
+
+  if (!VALID_PATHS.includes(pathname)) return null;
+
+  return (
     <footer className="site-footer home-footer">
       <div className="home-footer-main">
-        <Link className="site-footer-brand" href="/"><Image src="/images/home-pixel-logo.svg" alt="" width={28} height={28} unoptimized />VIRA VOTO</Link>
+        <Link className="site-footer-brand" href="/">
+          <Image
+            src="/images/home-pixel-logo.svg"
+            alt=""
+            width={28}
+            height={28}
+            unoptimized
+          />
+          VIRA VOTO
+        </Link>
         <nav aria-label="Navegação do rodapé">
-          <Link href="/manifesto">Manifesto</Link><Link href="/ferramentas">Ferramentas</Link><Link href="/conteudos">Conteúdos</Link><Link href="/enviar">Enviar conteúdo</Link>
+          <Link href="/manifesto">Manifesto</Link>
+          <Link href="/ferramentas">Ferramentas</Link>
+          <Link href="/conteudos">Conteúdos</Link>
+          <Link href="/enviar">Enviar conteúdo</Link>
         </nav>
       </div>
-      <div className="home-footer-credits"><p>VIRA VOTO — IDEIAS EM MOVIMENTO.</p><p>CONSTRUÍDO EM REDE. PARA VIRAR O JOGO.</p></div>
+      <div className="home-footer-credits">
+        <p>VIRA VOTO — IDEIAS EM MOVIMENTO.</p>
+        <p>CONSTRUÍDO EM REDE. PARA VIRAR O JOGO.</p>
+      </div>
     </footer>
   );
   return (
