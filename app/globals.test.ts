@@ -30,7 +30,7 @@ it("keeps the submission panel above the editorial heading", () => {
 
 it("isolates toast and dialog typography from editorial headings", () => {
   expect(styles).toContain('[data-slot="toast-title"] {');
-  expect(styles).toContain('font-size: .95rem !important;');
+  expect(styles).toContain('font-size: 1rem !important;');
   expect(styles).toContain('[data-slot="dialog-title"] {');
   expect(styles).toContain('font-size: 2rem !important;');
 });
