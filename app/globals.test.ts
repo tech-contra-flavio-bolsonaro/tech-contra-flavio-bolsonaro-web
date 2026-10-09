@@ -5,8 +5,8 @@ import { expect, it } from "vitest";
 const styles = readFileSync(join(process.cwd(), "app/globals.css"), "utf8");
 
 it("uses a dark, high-contrast surface for community cards", () => {
-  expect(styles).toContain("--tech-card: #1000aa;");
-  expect(styles).toContain("--tech-card-foreground: #f8f7ff;");
+  expect(styles).toContain("--tech-card: var(--vv-color-blue);");
+  expect(styles).toContain("--tech-card-foreground: var(--vv-color-white);");
   expect(styles).toContain(".tool-card, .content-card { background: var(--tech-card);");
   expect(styles).toContain("color: var(--tech-card-foreground);");
 });
@@ -30,11 +30,54 @@ it("keeps the submission panel above the editorial heading", () => {
 
 it("isolates toast and dialog typography from editorial headings", () => {
   expect(styles).toContain('[data-slot="toast-title"] {');
-  expect(styles).toContain('font-size: .95rem !important;');
+  expect(styles).toContain('font-size: 1rem !important;');
   expect(styles).toContain('[data-slot="dialog-title"] {');
-  expect(styles).toContain('font-size: 1.25rem !important;');
+  expect(styles).toContain('font-size: 2rem !important;');
+});
+
+it("preserves the Figma dialog frame after global styles are applied", () => {
+  expect(styles).toContain('[data-slot="dialog-content"] { width: min(calc(100vw - 2rem), 32rem); max-height: min(44rem, calc(100dvh - 2rem)); gap: 1rem; overflow-y: auto; padding: 1.5rem; border: 3px solid #000; border-radius: 8px; background: #fff; color: #000; box-shadow: 10px 10px 0 #000; }');
 });
 
 it("keeps the content-card share trigger legible on hover", () => {
   expect(styles).toContain('.share-trigger:hover { background: var(--tech-yellow); color: var(--tech-blue); }');
+});
+
+it("defines the Figma brand, geometry, and spacing tokens", () => {
+  expect(styles).toContain("--vv-color-blue: #1900d0;");
+  expect(styles).toContain("--vv-color-yellow: #fcf050;");
+  expect(styles).toContain("--vv-color-coral: #ff8d78;");
+  expect(styles).toContain("--vv-border-width: 3px;");
+  expect(styles).toContain("--vv-radius-control: 4px;");
+  expect(styles).toContain("--vv-shadow-hard: 7px 7px 0 var(--vv-color-black);");
+  expect(styles).toContain("--vv-space-10: 80px;");
+  expect(styles).toContain("--vv-grid-unit: 90px;");
+});
+
+it("keeps the technical grid decorative and responsive", () => {
+  expect(styles).toContain("background-size: var(--vv-grid-unit) var(--vv-grid-unit);");
+  expect(styles).toContain("body { background-size: 48px 48px; }");
+});
+
+it("switches the header to its menu layout before desktop links can overflow", () => {
+  expect(styles).toContain("@media (max-width: 1024px) {");
+});
+
+it("keeps the home layout responsive without replacing the desktop composition at tablet width", () => {
+  expect(styles).toContain("@media (max-width: 1024px) { .home-page .site-header");
+  expect(styles).toContain("@media (max-width: 600px) { .home-page .site-header");
+});
+
+it("renders the home content highlight as the Penpot horizontal editorial card", () => {
+  expect(styles).toContain(".home-content .card-grid { display: block;");
+  expect(styles).toContain(".home-content .content-card { display: grid; grid-template-columns: 532px minmax(0, 1fr);");
+  expect(styles).toContain("min-height: 350px;");
+});
+
+it("keeps portrait previews and sharing controls readable in the home highlight", () => {
+  expect(styles).toContain("height: 350px;");
+  expect(styles).toContain("object-fit: cover;");
+  expect(styles).toContain(".home-content .content-card .share-trigger { border: 3px solid #000; background: var(--vv-color-yellow); color: #000;");
+  expect(styles).toContain(".home-content .content-card small { color: rgb(0 0 0 / 68%);");
+  expect(styles).toContain(".home-content .content-card [data-slot=\"card-header\"], .home-content .content-card [data-slot=\"card-content\"], .home-content .content-card [data-slot=\"card-footer\"] { width: 100%;");
 });
