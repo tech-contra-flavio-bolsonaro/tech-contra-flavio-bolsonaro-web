@@ -7,24 +7,28 @@ import type { PublishedTool, ToolCategory } from "@/app/lib/tools";
 import { ToolCard } from "./tool-card";
 
 type Page = { items: PublishedTool[]; hasMore: boolean; categories?: ToolCategory[] };
+// Tools rendered on the server for one category, so crawlers get real links without JavaScript.
+export type InitialTools = Page & { category: string | null };
 
 // The category lives in ?categoria= so a filtered list can be shared and survives a reload.
 function categoryFromUrl() {
   return new URLSearchParams(window.location.search).get("categoria")?.trim() || null;
 }
 
-export function ToolFeed({ limit, variant = "default" }: { limit?: number; variant?: "default" | "home" }) {
+export function ToolFeed({ limit, variant = "default", initial }: { limit?: number; variant?: "default" | "home"; initial?: InitialTools }) {
   const filterable = !limit;
-  const [items, setItems] = useState<PublishedTool[]>([]);
-  const [categories, setCategories] = useState<ToolCategory[]>([]);
+  const [items, setItems] = useState<PublishedTool[]>(initial?.items ?? []);
+  const [categories, setCategories] = useState<ToolCategory[]>(initial?.categories ?? []);
   // undefined until the URL has been read, so the first request already carries the shared category.
-  const [category, setCategory] = useState<string | null | undefined>(filterable ? undefined : null);
-  const [page, setPage] = useState(-1);
-  const [hasMore, setHasMore] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState<string | null | undefined>(initial ? initial.category : filterable ? undefined : null);
+  const [page, setPage] = useState(initial ? 0 : -1);
+  const [hasMore, setHasMore] = useState(initial?.hasMore ?? false);
+  const [loading, setLoading] = useState(!initial);
   const [error, setError] = useState(false);
   const pending = useRef(false);
   const current = useRef<string | null | undefined>(category);
+  // The category whose tools came from the server; it needs no first request.
+  const served = useRef(initial ? { category: initial.category } : null);
   const sentinel = useRef<HTMLDivElement>(null);
 
   const loadPage = useCallback(async (next: number, selected: string | null, signal?: AbortSignal) => {
@@ -64,6 +68,7 @@ export function ToolFeed({ limit, variant = "default" }: { limit?: number; varia
   useEffect(() => {
     if (category === undefined) return;
     current.current = category;
+    if (served.current?.category === category) return;
     const controller = new AbortController();
     const timer = window.setTimeout(() => void loadPage(0, category, controller.signal), 0);
     return () => { window.clearTimeout(timer); controller.abort(); };
@@ -83,6 +88,7 @@ export function ToolFeed({ limit, variant = "default" }: { limit?: number; varia
     const url = new URL(window.location.href);
     if (next) url.searchParams.set("categoria", next); else url.searchParams.delete("categoria");
     window.history.replaceState(null, "", url);
+    served.current = null;
     setItems([]);
     setHasMore(false);
     setCategory(next);

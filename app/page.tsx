@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { SiteNav } from "@/app/components/site-nav";
-import { ToolFeed } from "@/app/components/tool-feed";
+import { HomeTools } from "@/app/components/home-tools";
 import { ContentFeed } from "@/app/components/content-feed";
 import { HomeArrow } from "@/app/components/home-arrow";
 import { pageMetadata } from "@/app/lib/page-metadata";
@@ -15,6 +15,9 @@ export const metadata: Metadata = pageMetadata({
     "Vira Voto reúne ferramentas, conteúdos e referências para transformar ideias em ação coletiva.",
   path: "/",
 });
+
+// Tools are rendered on the server; regenerate often enough for newly approved ones.
+export const revalidate = 60;
 
 export default function Home() {
   return (
@@ -39,7 +42,7 @@ export default function Home() {
         </div>
       </section>
       <section className="home-manifesto" aria-labelledby="manifesto-title"><div><p className="home-eyebrow">NOSSO HUB</p><h2 id="manifesto-title">A democracia também se constrói em rede.</h2></div><Link className="home-button home-button-white" href="/ferramentas">Conheça nosso hub <HomeArrow /></Link></section>
-      <section className="home-preview home-tools" aria-labelledby="tools-title"><header className="home-section-heading"><div><p className="home-eyebrow">DO PLANO À PRÁTICA</p><h2 id="tools-title">Ferramentas</h2></div><p>Menos barreiras, mais ação. Recursos para fazer acontecer, juntos.</p></header><div className="home-preview-feed"><ToolFeed limit={3} variant="home" /></div></section>
+      <section className="home-preview home-tools" aria-labelledby="tools-title"><header className="home-section-heading"><div><p className="home-eyebrow">DO PLANO À PRÁTICA</p><h2 id="tools-title">Ferramentas</h2></div><p>Menos barreiras, mais ação. Recursos para fazer acontecer, juntos.</p></header><div className="home-preview-feed"><HomeTools /></div></section>
       <Suspense fallback={<HomeBlogLoading />}><HomeBlog /></Suspense>
       <section className="home-preview home-content" aria-labelledby="content-title"><header className="home-section-heading"><div><p className="home-eyebrow">ACERVO COLETIVO</p><h2 id="content-title">Conteúdos</h2></div><p>Ideias para circular. Conteúdos para levar a conversa mais longe.</p></header><div className="home-preview-feed"><ContentFeed limit={1} variant="home" /></div></section>
       <section className="home-submit" aria-labelledby="submit-title">

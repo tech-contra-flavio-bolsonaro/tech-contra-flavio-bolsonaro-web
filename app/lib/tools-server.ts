@@ -23,6 +23,18 @@ export async function listTools(page: number, category?: string) {
   return { items: (data ?? []).slice(0, pageSize) as PublishedTool[], hasMore: (data ?? []).length > pageSize };
 }
 
+// Server-rendered catalogue: every approved tool becomes a crawlable link (issue #102).
+// The cap only guards against an unbounded response; the catalogue is far smaller.
+export async function listAllTools(category?: string): Promise<PublishedTool[]> {
+  let query = database().from("tool_submissions").select(fields).eq("status", "approved");
+  if (category) query = query.eq("category", category);
+  const { data, error } = await query
+    .order("created_at", { ascending: false }).order("id", { ascending: false })
+    .limit(500);
+  if (error) throw error;
+  return (data ?? []) as PublishedTool[];
+}
+
 // Categories come from approved tools only, so a filter never leads to an empty published list.
 export async function listToolCategories(): Promise<ToolCategory[]> {
   const { data, error } = await database().from("tool_submissions").select("category").eq("status", "approved");
