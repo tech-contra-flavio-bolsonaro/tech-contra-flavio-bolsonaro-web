@@ -14,6 +14,7 @@ export const metadata: Metadata = pageMetadata({
   description:
     "Vira Voto reúne ferramentas, conteúdos e referências para transformar ideias em ação coletiva.",
   path: "/",
+  ownShareImage: true,
 });
 
 export default function Home() {
