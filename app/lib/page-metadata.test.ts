@@ -10,8 +10,8 @@ import { metadata as manifesto } from "@/app/manifesto/page";
 import { metadata as blog } from "@/app/blog/(listing)/page";
 
 it("gives the home a descriptive title that skips the template", () => {
-  expect(home.title).toEqual({ absolute: "Vira Voto – Tech Contra Bolsonaro" });
-  expect(home.openGraph?.title).toBe("Vira Voto – Tech Contra Bolsonaro");
+  expect(home.title).toEqual({ absolute: "Tech Contra Bolsonaro – ideias em movimento" });
+  expect(home.openGraph?.title).toBe("Tech Contra Bolsonaro – ideias em movimento");
 });
 
 it.each([
@@ -22,7 +22,7 @@ it.each([
   [blog, "/blog"],
 ])("declares canonical and og:url for %#", (metadata, path) => {
   expect(metadata.alternates).toEqual({ canonical: path });
-  expect(metadata.openGraph).toMatchObject({ url: path, siteName: "Vira Voto", locale: "pt_BR" });
+  expect(metadata.openGraph).toMatchObject({ url: path, siteName: "Tech Contra Bolsonaro", locale: "pt_BR" });
 });
 
 it.each([
@@ -32,11 +32,11 @@ it.each([
   ["app/blog/[id]/[slug]/not-found"],
 ])("titles the %s page as not found, outside the site template", async (path) => {
   const { metadata } = await import(`@/${path}`);
-  expect(metadata.title).toEqual({ absolute: "Vira Voto - Página Não Encontrada" });
+  expect(metadata.title).toEqual({ absolute: "Tech Contra Bolsonaro - Página Não Encontrada" });
 });
 
 it("points to the default share image at 1200x630", () => {
-  expect(defaultShareImages).toEqual([{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "Vira Voto" }]);
+  expect(defaultShareImages).toEqual([{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "Tech Contra Bolsonaro" }]);
 });
 
 it.each([

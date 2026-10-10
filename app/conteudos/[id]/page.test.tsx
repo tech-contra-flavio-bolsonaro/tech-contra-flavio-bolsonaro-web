@@ -31,7 +31,7 @@ it("preserves a normalized HTTPS video link, uploaded media, and permalink metad
     title: item.title,
     description: item.description,
     alternates: { canonical: `/conteudos/${id}` },
-    openGraph: { siteName: "Vira Voto", locale: "pt_BR", title: item.title, description: item.description, type: "article", url: `/conteudos/${id}`, images: defaultShareImages },
+    openGraph: { siteName: "Tech Contra Bolsonaro", locale: "pt_BR", title: item.title, description: item.description, type: "article", url: `/conteudos/${id}`, images: defaultShareImages },
     twitter: { card: "summary_large_image", title: item.title, description: item.description },
   });
 });

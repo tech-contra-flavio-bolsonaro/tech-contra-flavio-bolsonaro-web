@@ -93,7 +93,7 @@ it("keeps the default presentation with home colors", async () => {
     screen.getByRole("heading", { name: "Compartilhar conteúdo" }),
   ).toBeInTheDocument();
   expect(screen.getByText("Ação coletiva.")).toBeInTheDocument();
-  expect(screen.queryByText("Manifesto Vira Voto")).not.toBeInTheDocument();
+  expect(screen.queryByText("Manifesto Tech Contra Bolsonaro")).not.toBeInTheDocument();
 });
 
 it.each([

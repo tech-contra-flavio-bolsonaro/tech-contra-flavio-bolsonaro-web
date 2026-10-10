@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   if (!content) {
     return {
       title: "Conteúdo não encontrado",
-      description: "O conteúdo solicitado não está disponível no Vira Voto.",
+      description: "O conteúdo solicitado não está disponível no Tech Contra Bolsonaro.",
     };
   }
 

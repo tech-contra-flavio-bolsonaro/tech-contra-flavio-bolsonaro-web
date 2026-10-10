@@ -6,7 +6,7 @@ afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 it("loads approved content in batches of ten", async () => {
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
     ok: true,
-    json: async () => ({ items: [{ id: "1", title: "Card", description: "Conteúdo aprovado", credit: "Vira Voto", priority: 0, media_path: null, mediaUrl: null, video_url: null }], hasMore: true }),
+    json: async () => ({ items: [{ id: "1", title: "Card", description: "Conteúdo aprovado", credit: "Tech Contra Bolsonaro", priority: 0, media_path: null, mediaUrl: null, video_url: null }], hasMore: true }),
   }));
   vi.stubGlobal("IntersectionObserver", undefined);
 
@@ -33,7 +33,7 @@ it("shares the selected content's permanent detail link from the feed", async ()
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
     ok: true,
     json: async () => ({
-      items: [{ id, title: "Card", description: "Descrição do card", credit: "Vira Voto", priority: 0, media_path: null, mediaUrl: null, video_url: null }],
+      items: [{ id, title: "Card", description: "Descrição do card", credit: "Tech Contra Bolsonaro", priority: 0, media_path: null, mediaUrl: null, video_url: null }],
       hasMore: false,
     }),
   }));

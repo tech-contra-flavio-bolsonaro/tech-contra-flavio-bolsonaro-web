@@ -55,7 +55,7 @@ export function SiteFooter() {
             height={28}
             unoptimized
           />
-          VIRA VOTO
+          TECH CONTRA BOLSONARO
         </Link>
         <nav aria-label="Navegação do rodapé">
           <Link href="/manifesto">Manifesto</Link>
@@ -74,8 +74,9 @@ export function SiteFooter() {
 
       <div className="flex justify-between flex-wrap flex-col items-center gap-4 md:flex-row md:items-end">
         <div className="home-footer-credits">
-          <p>VIRA VOTO — IDEIAS EM MOVIMENTO.</p>
-          <p>CONSTRUÍDO EM REDE. PARA VIRAR O JOGO.</p>
+          <p>IDEIAS EM MOVIMENTO.</p>
+          <p>CONSTRUÍDO EM REDE.</p>
+          <p>PARA VIRAR O JOGO.</p>
         </div>
 
         <div className="home-footer-social">

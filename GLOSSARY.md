@@ -1,4 +1,4 @@
-# Vira Voto
+# Tech Contra Bolsonaro
 
 O hub reúne ferramentas de mobilização e conteúdos para compartilhar, com publicação após curadoria.
 

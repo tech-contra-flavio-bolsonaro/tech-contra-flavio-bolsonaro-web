@@ -25,22 +25,22 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  applicationName: "Vira Voto",
+  applicationName: "Tech Contra Bolsonaro",
   title: {
-    default: "Vira Voto — ideias em movimento",
-    template: "%s | Vira Voto",
+    default: "Tech Contra Bolsonaro — ideias em movimento",
+    template: "%s | Tech Contra Bolsonaro",
   },
   description:
     "Um hub de ferramentas e conteúdos para colocar ideias em movimento e fortalecer a ação coletiva.",
   keywords: [
-    "Vira Voto",
+    "Tech Contra Bolsonaro",
     "mobilização cívica",
     "ferramentas para ação",
     "conteúdos para mobilização",
     "política e participação",
   ],
   openGraph: {
-    title: "Vira Voto",
+    title: "Tech Contra Bolsonaro",
     description:
       "Ferramentas e conteúdos para transformar ideias em ação coletiva.",
     ...siteOpenGraph,
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vira Voto",
+    title: "Tech Contra Bolsonaro",
     description:
       "Ferramentas e conteúdos para transformar ideias em ação coletiva.",
   },
@@ -61,7 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${barlowCondensed.variable} ${inter.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
       <head>
-        <meta name="apple-mobile-web-app-title" content="Vira Voto" />
+        <meta name="apple-mobile-web-app-title" content="Tech Contra Bolsonaro" />
       </head>
       <body id="top" className="min-h-full flex flex-col">
         {children}

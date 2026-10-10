@@ -10,9 +10,9 @@ import { HomeArrow } from "@/app/components/home-arrow";
 import { pageMetadata } from "@/app/lib/page-metadata";
 
 export const metadata: Metadata = pageMetadata({
-  title: { absolute: "Vira Voto – Tech Contra Bolsonaro" },
+  title: { absolute: "Tech Contra Bolsonaro – ideias em movimento" },
   description:
-    "Vira Voto reúne ferramentas, conteúdos e referências para transformar ideias em ação coletiva.",
+    "Tech Contra Bolsonaro reúne ferramentas, conteúdos e referências para transformar ideias em ação coletiva.",
   path: "/",
   ownShareImage: true,
 });
