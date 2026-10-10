@@ -28,12 +28,13 @@ it.each([
   ]) {
     expect(screen.getByRole("link", { name })).toHaveAttribute("href", href);
   }
-  expect(
-    screen.getByText("TECH CONTRA BOLSONARO — IDEIAS EM MOVIMENTO."),
-  ).toBeInTheDocument();
-  expect(
-    screen.getByText("CONSTRUÍDO EM REDE. PARA VIRAR O JOGO."),
-  ).toBeInTheDocument();
+  for (const text of [
+    "IDEIAS EM MOVIMENTO.",
+    "CONSTRUÍDO EM REDE.",
+    "PARA VIRAR O JOGO.",
+  ]) {
+    expect(screen.getByText(text)).toBeInTheDocument();
+  }
   for (const [name, href] of [
     ["Instagram", "https://www.instagram.com/techcontrabolsonaro.dev"],
     ["X", "https://x.com/techcontra_dev"],
@@ -92,5 +93,11 @@ it("uses complete Home identity on Blog listing", () => {
   expect(screen.getByRole("contentinfo")).toHaveClass("home-footer");
   expect(screen.getByRole("link", { name: "TECH CONTRA BOLSONARO" }).querySelector("img")).toHaveAttribute("src", "/images/home-pixel-logo.svg");
   expect(screen.getByRole("link", { name: "Enviar conteúdo" })).toHaveAttribute("href", "/enviar");
-  expect(screen.getByText("CONSTRUÍDO EM REDE. PARA VIRAR O JOGO.")).toBeInTheDocument();
+  for (const text of [
+    "IDEIAS EM MOVIMENTO.",
+    "CONSTRUÍDO EM REDE.",
+    "PARA VIRAR O JOGO.",
+  ]) {
+    expect(screen.getByText(text)).toBeInTheDocument();
+  }
 });
