@@ -22,9 +22,9 @@ it("preserves unexpected error retry using the Home Button", () => {
   fireEvent.click(button);
   expect(retry).toHaveBeenCalledOnce();
 });
-it("keeps listing retry unchanged and detail retry refreshing the route", () => {
+it("uses Home retry on listing and detail while refreshing the route", () => {
   render(<BlogUnavailable reason="timeout" />);
-  expect(screen.getByRole("button", { name: "Tentar novamente" })).toHaveClass("blog-button");
+  expect(screen.getByRole("button", { name: "Tentar novamente" })).toHaveClass("home-button");
   cleanup();
   render(<BlogUnavailable reason="timeout" detail />);
   const button = screen.getByRole("button", { name: "Tentar novamente" });

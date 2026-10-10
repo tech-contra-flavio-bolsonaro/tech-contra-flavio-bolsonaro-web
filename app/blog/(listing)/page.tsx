@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { HomeArrow } from "@/app/components/home-arrow";
 import { SiteNav } from "@/app/components/site-nav";
 import { BlogArt } from "@/app/components/blog-art";
 import { BlogCard } from "@/app/components/blog-card";
@@ -48,11 +49,12 @@ export default async function BlogPage({
           <b>BLOG DA COMUNIDADE</b>
           <p>Todos os artigos publicados pela Tech Contra Bolsonaro.</p>
           <a
+            className="home-button home-button-white"
             href="https://dev.to/techcontrabolsonaro"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Conheça no DEV.to ↗
+            Conheça no DEV.to <HomeArrow />
           </a>
         </div>
         {result.status === "unavailable" ? (
@@ -85,13 +87,13 @@ export default async function BlogPage({
                 aria-label="Paginação dos artigos"
               >
                 {page > 1 ? (
-                  <Link href={`/blog?page=${page - 1}`}>← Anterior</Link>
+                  <Link className="home-button home-button-white" href={`/blog?page=${page - 1}`}><span className="blog-arrow-previous"><HomeArrow /></span> Anterior</Link>
                 ) : (
                   <span />
                 )}
                 <span aria-current="page">Página {page}</span>
                 {result.hasNext ? (
-                  <Link href={`/blog?page=${page + 1}`}>Próxima →</Link>
+                  <Link className="home-button home-button-white" href={`/blog?page=${page + 1}`}>Próxima <span className="blog-arrow-next"><HomeArrow /></span></Link>
                 ) : (
                   <span />
                 )}
@@ -103,7 +105,7 @@ export default async function BlogPage({
             <h2>Nenhum artigo nesta página</h2>
             <p>Os artigos publicados pela organização aparecerão aqui.</p>
             {page > 1 ? (
-              <Link href="/blog">Voltar à primeira página</Link>
+              <Link className="home-button home-button-yellow" href="/blog">Voltar à primeira página <HomeArrow /></Link>
             ) : null}
           </section>
         )}

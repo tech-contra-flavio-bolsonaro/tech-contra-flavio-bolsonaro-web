@@ -81,7 +81,47 @@ it("provides mobile editorial copy and a featured label inside the article copy"
   vi.mocked(getBlogPage).mockResolvedValue({ status: "ok", articles: [article], hasNext: false });
   render(await BlogPage({ searchParams: Promise.resolve({}) }));
   expect(screen.getByText("Histórias para transformar boas ideias em ação coletiva.")).toBeInTheDocument();
-  expect(screen.getByText("TEM UMA IDEIA PARA CONTAR?").closest("a")).toHaveAttribute("href", "/enviar");
-  expect(screen.getByText("Compartilhe com a comunidade")).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Enviar uma ideia" })).toHaveAttribute("href", "/enviar");
   expect(document.querySelector(".blog-card-copy .blog-featured-label")).toHaveTextContent("EM DESTAQUE");
+});
+
+it("renders Home SVG actions throughout listing and pagination", async () => {
+  vi.mocked(getBlogPage).mockResolvedValue({ status: "ok", articles: [article], hasNext: true });
+  render(await BlogPage({ searchParams: Promise.resolve({ page: "2" }) }));
+  for (const name of [/Conheça no DEV.to/, /Ler artigo/, /Enviar uma ideia/, /Anterior/, /Próxima/]) {
+    const link = screen.getByRole("link", { name });
+    expect(link).toHaveClass("home-button");
+    expect(link.querySelector("svg.home-arrow")).toHaveAttribute("width", "24");
+    expect(link.textContent).not.toMatch(/[↗←→]/u);
+  }
+});
+
+it("uses the Home retry primitive for listing failure", async () => {
+  vi.mocked(getBlogPage).mockResolvedValue({ status: "unavailable", reason: "timeout" });
+  render(await BlogPage({ searchParams: Promise.resolve({}) }));
+  const retry = screen.getByRole("button", { name: "Tentar novamente" });
+  expect(retry).toHaveClass("home-button");
+  expect(retry.querySelector("svg.home-arrow")).toHaveAttribute("width", "24");
+});
+
+it("preserves featured media, mixed grid covers and every real permalink", async () => {
+  const articles = [
+    { ...article, coverImage: "https://media2.dev.to/featured.png" },
+    { ...article, id: 2, slug: "sem-capa", title: "História sem capa" },
+    { ...article, id: 3, slug: "com-capa", title: "História com capa", coverImage: "https://media2.dev.to/grid.png" },
+  ];
+  vi.mocked(getBlogPage).mockResolvedValue({ status: "ok", articles, hasNext: false });
+  render(await BlogPage({ searchParams: Promise.resolve({}) }));
+  const cards = document.querySelectorAll("article.blog-card");
+  expect(cards).toHaveLength(3);
+  expect(cards[0]).toHaveClass("blog-card-featured");
+  expect(cards[0].querySelector("img")).toHaveAttribute("src", articles[0].coverImage);
+  expect(cards[1]).toHaveClass("blog-card-no-cover");
+  expect(cards[1].querySelector("img")).toBeNull();
+  expect(cards[2].querySelector("img")).toHaveAttribute("src", articles[2].coverImage);
+  expect(document.querySelectorAll(".blog-grid article")).toHaveLength(2);
+  for (const [index, link] of screen.getAllByRole("link", { name: "Ler artigo" }).entries()) {
+    expect(link).toHaveAttribute("href", `/blog/${articles[index].id}/${articles[index].slug}`);
+    expect(link.querySelector("svg.home-arrow")).not.toBeNull();
+  }
 });
