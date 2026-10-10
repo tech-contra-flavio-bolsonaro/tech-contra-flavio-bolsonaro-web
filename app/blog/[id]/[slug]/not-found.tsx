@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { HomeArrow } from "@/app/components/home-arrow";
 import { DetailShell } from "./detail-shell";
+import { notFoundMetadata } from "@/app/lib/page-metadata";
+
+export const metadata = notFoundMetadata;
 
 export default function NotFound() {
   return (

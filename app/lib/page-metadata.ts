@@ -30,3 +30,8 @@ export function pageMetadata({
     },
   };
 }
+
+// Shared by every not-found.tsx; "absolute" keeps the "%s | Vira Voto" template out.
+export const notFoundMetadata: Metadata = {
+  title: { absolute: "Vira Voto - Página Não Encontrada" },
+};

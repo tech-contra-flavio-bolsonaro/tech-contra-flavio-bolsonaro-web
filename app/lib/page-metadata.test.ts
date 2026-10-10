@@ -23,3 +23,13 @@ it.each([
   expect(metadata.alternates).toEqual({ canonical: path });
   expect(metadata.openGraph).toMatchObject({ url: path, siteName: "Vira Voto", locale: "pt_BR" });
 });
+
+it.each([
+  ["app/not-found"],
+  ["app/ferramentas/[slug]/not-found"],
+  ["app/blog/not-found"],
+  ["app/blog/[id]/[slug]/not-found"],
+])("titles the %s page as not found, outside the site template", async (path) => {
+  const { metadata } = await import(`@/${path}`);
+  expect(metadata.title).toEqual({ absolute: "Vira Voto - Página Não Encontrada" });
+});
