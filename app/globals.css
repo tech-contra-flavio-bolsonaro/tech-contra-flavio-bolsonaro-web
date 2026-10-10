@@ -918,3 +918,17 @@ h1 span { color: var(--tech-yellow); }
   .home-blog .blog-card-copy { padding: 22px; }
   .home-blog-card h3 { font-size: 32px; }
 }
+
+
+/* Glyph advances are measured once after fonts load; transforms never reflow the title. */
+.home-hero h1 .home-hero-motion-letter {
+  display: inline-block;
+  vertical-align: baseline;
+  transform-origin: 50% 70%;
+}
+
+/* Preserve the original SVG's monospace fallback for its arrow glyph (U+2192),
+   which is absent from the embedded font subsets. No vector/text attributes change. */
+.home-hero-art text[style*="Hero IBM Plex Mono"] {
+  font-family: "Hero IBM Plex Mono", monospace !important;
+}

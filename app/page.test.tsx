@@ -2,6 +2,8 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
 import Home from "./page";
 
+vi.mock("server-only", () => ({}));
+
 vi.mock("@/app/components/home-blog", () => ({ HomeBlog: () => <section aria-labelledby="blog-title"><h2 id="blog-title">Blog</h2></section>, HomeBlogLoading: () => null }));
 
 afterEach(cleanup);
@@ -36,10 +38,11 @@ it("uses the Penpot network artwork for the hero decoration", () => {
   const decoration = container.querySelector('[data-testid="hero-decoration"]');
   expect(decoration).toBeInTheDocument();
   expect(decoration).toHaveAttribute("aria-hidden", "true");
-  const image = decoration?.querySelector("img");
-  expect(image).toHaveAttribute("src", "/images/hero-ideas-network.svg");
-  expect(image).toHaveAttribute("alt", "");
-  expect(decoration?.querySelectorAll("img")).toHaveLength(1);
+  const art = decoration?.querySelector("svg");
+  expect(art).toHaveAttribute("viewBox", "-5 0 471.116 520");
+  expect(art?.querySelectorAll("text").length).toBeGreaterThan(0);
+  expect(art?.querySelector("style")?.textContent).not.toContain("data:font");
+  expect(decoration?.querySelectorAll("img")).toHaveLength(0);
 });
 
 it("shows the collective invitation from the authoritative frame", () => {
@@ -69,4 +72,15 @@ it("places Blog between Ferramentas and Conteúdos before the final CTA", () => 
  const { container } = render(<Home />);
  const sections = [...container.querySelectorAll("main > section")].map(section => section.getAttribute("aria-labelledby"));
  expect(sections).toEqual(["hero-title", "manifesto-title", "tools-title", "blog-title", "content-title", "submit-title"]);
+});
+
+
+it("ships complete usable hero content without prototype or motion controls", () => {
+  const { container } = render(<Home />);
+  const hero = container.querySelector(".home-hero")!;
+  expect(hero.querySelectorAll("button")).toHaveLength(0);
+  expect(hero.querySelectorAll("h1")).toHaveLength(1);
+  expect(hero.querySelector("h1")).toHaveTextContent("IDEIAS GANHAM MOVIMENTO.");
+  expect(hero.querySelector(".home-hero-motion-letter")).toBeNull();
+  expect(hero).not.toHaveTextContent(/Replay|Pausar|Variante/);
 });
