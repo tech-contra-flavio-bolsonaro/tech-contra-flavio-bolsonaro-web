@@ -2,6 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { HomeArrow } from "@/app/components/home-arrow";
 import { SiteNav } from "@/app/components/site-nav";
+import { notFoundMetadata } from "@/app/lib/page-metadata";
+
+export const metadata = notFoundMetadata;
 
 export default function NotFound() {
   return (

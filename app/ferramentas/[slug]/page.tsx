@@ -11,13 +11,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const tool = await findTool(slug);
-
-  if (!tool) {
-    return {
-      title: "Ferramenta não encontrada",
-      description: "A ferramenta solicitada não foi encontrada no Vira Voto.",
-    };
-  }
+  if (!tool) notFound();
 
   return {
     title: tool.title,
