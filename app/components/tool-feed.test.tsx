@@ -114,3 +114,26 @@ it("does not show category filters on the homepage", async () => {
   await screen.findByText("Mapa 1");
   expect(screen.queryByRole("group", { name: "Filtrar ferramentas por categoria" })).not.toBeInTheDocument();
 });
+
+const initial = (ids: number[], category: string | null = null) => ({ items: ids.map((id) => item(id)), hasMore: false, categories, category });
+
+it("renders server-provided tools as links without fetching on mount", async () => {
+  const fetch = vi.fn();
+  vi.stubGlobal("fetch", fetch);
+  render(<ToolFeed initial={initial([1, 2])} />);
+  expect(screen.getAllByRole("link").map((link) => link.getAttribute("href"))).toEqual(["/ferramentas/mapa-1", "/ferramentas/mapa-2"]);
+  expect(screen.queryByText("Carregando ferramentas…")).not.toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /Todas/ })).toHaveAttribute("aria-pressed", "true");
+  await act(async () => {});
+  expect(fetch).not.toHaveBeenCalled();
+});
+
+it("keeps the server-selected category and filters through the API afterwards", async () => {
+  const fetch = vi.fn().mockResolvedValueOnce(withCategories([1, 2]));
+  vi.stubGlobal("fetch", fetch);
+  render(<ToolFeed initial={initial([3], "Jogos")} />);
+  expect(screen.getByRole("button", { name: /Jogos/ })).toHaveAttribute("aria-pressed", "true");
+  fireEvent.click(screen.getByRole("button", { name: /Todas/ }));
+  expect(await screen.findByText("Mapa 1")).toBeInTheDocument();
+  expect(fetch.mock.calls.map(([url]) => url)).toEqual(["/api/ferramentas?page=0"]);
+});
