@@ -89,24 +89,28 @@ export function SiteFooter() {
           <ArrowUp aria-hidden="true" />
         </Link>
       ) : null}
-      <div className="home-footer-credits">
-        <p>VIRA VOTO — IDEIAS EM MOVIMENTO.</p>
-        <p>CONSTRUÍDO EM REDE. PARA VIRAR O JOGO.</p>
-      </div>
-      <div className="home-footer-social">
-        {SOCIAL_MEDIA_LINKS.map((link) => (
-          <a
-            key={link.name}
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={link.name}
-            title={link.name}
-          >
-            <SharePlatformIcon platform={link.platform} />
-            <span className="sr-only">{link.name}</span>
-          </a>
-        ))}
+
+      <div className="flex justify-between flex-wrap flex-col items-center gap-4 md:flex-row md:items-end">
+        <div className="home-footer-credits">
+          <p>VIRA VOTO — IDEIAS EM MOVIMENTO.</p>
+          <p>CONSTRUÍDO EM REDE. PARA VIRAR O JOGO.</p>
+        </div>
+
+        <div className="home-footer-social">
+          {SOCIAL_MEDIA_LINKS.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={link.name}
+              title={link.name}
+            >
+              <SharePlatformIcon platform={link.platform} />
+              <span className="sr-only">{link.name}</span>
+            </a>
+          ))}
+        </div>
       </div>
     </footer>
   );

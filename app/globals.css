@@ -387,9 +387,10 @@ h1 span { color: var(--tech-yellow); }
 .home-submit-copy > p:last-child { margin: 12px 0 0; color: var(--vv-color-lilac); font-size: 16px; line-height: 1.5; }
 .home-footer.site-footer { display: flex; flex-direction: column; align-items: stretch; justify-content: start; min-height: 138px; gap: 28px; padding: 32px 80px; border: 0; box-shadow: inset 0 0 0 3px #000; background: #fff; color: var(--vv-color-blue); }
 .home-footer-main, .home-footer-credits { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.home-footer-credits { flex-wrap: wrap; }
 .home-footer .site-footer-brand { display: inline-flex; align-items: center; gap: 12px; font-size: 32px; font-weight: 800; letter-spacing: 0; line-height: 1; }
 .home-footer nav { display: flex; flex-wrap: wrap; gap: 32px; font: 600 14px/1.2 var(--vv-font-body); }
-.home-footer-credits p { margin: 0; font: 400 11px/14px var(--vv-font-mono); }
+.home-footer-credits p { margin: 0; font: 400 11px/14px var(--vv-font-mono); overflow-wrap: anywhere; }
 .home-footer nav a:hover { text-decoration: underline; }
 .home-footer-social { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
 .home-footer-social a { display: grid; width: 44px; height: 44px; place-items: center; border: 2px solid #000; border-radius: 4px; background: var(--vv-color-yellow); box-shadow: 3px 3px 0 #000; color: #000; }
@@ -447,6 +448,7 @@ h1 span { color: var(--tech-yellow); }
   .home-submit-panel .home-button { grid-column: 1; }
   .home-footer.site-footer { padding: 32px 22px; }
   .home-footer-main, .home-footer-credits { flex-direction: column; align-items: start; gap: 24px; }
+  .home-footer-credits { align-self: stretch; }
   .home-footer nav { justify-content: start; gap: 20px 24px; }
   .home-footer-social { justify-content: center; }
   .home-footer-credits { gap: 12px; }
