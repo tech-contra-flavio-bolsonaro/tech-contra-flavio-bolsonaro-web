@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { siteOpenGraph } from "@/app/lib/page-metadata";
+import { defaultShareImages, siteOpenGraph } from "@/app/lib/page-metadata";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteNav } from "@/app/components/site-nav";
@@ -23,8 +23,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       ...siteOpenGraph,
       title: tool.title,
       description: tool.description,
-      type: "article",
+      type: "website",
       url: `/ferramentas/${slug}`,
+      images: defaultShareImages,
     },
     twitter: {
       card: "summary_large_image",

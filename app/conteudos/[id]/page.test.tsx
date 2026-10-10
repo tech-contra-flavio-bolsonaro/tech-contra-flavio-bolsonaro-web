@@ -1,6 +1,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
 import ContentDetailPage, { generateMetadata } from "./page";
+import { defaultShareImages } from "@/app/lib/page-metadata";
 import { findPublishedContent } from "@/app/lib/published-content";
 
 vi.mock("@/app/lib/published-content", () => ({ findPublishedContent: vi.fn() }));
@@ -30,7 +31,7 @@ it("preserves a normalized HTTPS video link, uploaded media, and permalink metad
     title: item.title,
     description: item.description,
     alternates: { canonical: `/conteudos/${id}` },
-    openGraph: { siteName: "Vira Voto", locale: "pt_BR", title: item.title, description: item.description, type: "article", url: `/conteudos/${id}` },
-    twitter: { card: "summary", title: item.title, description: item.description },
+    openGraph: { siteName: "Vira Voto", locale: "pt_BR", title: item.title, description: item.description, type: "article", url: `/conteudos/${id}`, images: defaultShareImages },
+    twitter: { card: "summary_large_image", title: item.title, description: item.description },
   });
 });

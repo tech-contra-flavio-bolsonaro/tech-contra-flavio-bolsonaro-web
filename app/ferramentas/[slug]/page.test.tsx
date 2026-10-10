@@ -4,6 +4,7 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
 import { findTool, findToolEmbed } from "@/app/lib/tools-server";
 import ToolPage, { generateMetadata } from "./page";
+import { defaultShareImages } from "@/app/lib/page-metadata";
 
 vi.mock("next/navigation", () => ({
   usePathname: () => "/ferramentas/virada-no-bairro",
@@ -68,4 +69,20 @@ it("uses the shared Ferramentas header and detail-page button styles", async () 
   expect(screen.getByRole("heading", { name: "Virada no Bairro" })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: "← TODAS AS FERRAMENTAS" })).toHaveAttribute("href", "/ferramentas");
   expect(screen.getByRole("link", { name: "Abrir no site de origem (nova aba)" })).toHaveClass("action-link");
+});
+
+it("shares a tool as a website with the default image", async () => {
+  vi.mocked(findTool).mockResolvedValue({
+    id: "tool-1",
+    slug: "virada-no-bairro",
+    title: "Virada no Bairro",
+    description: "Encontre iniciativas para mobilização local.",
+    category: "Mapa da virada",
+    credit: "Comunidade Vira Voto",
+    url: "https://example.com/virada",
+  });
+
+  const metadata = await generateMetadata({ params: Promise.resolve({ slug: "virada-no-bairro" }) });
+
+  expect(metadata.openGraph).toMatchObject({ type: "website", images: defaultShareImages });
 });
