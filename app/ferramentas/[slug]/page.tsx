@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { siteOpenGraph } from "@/app/lib/page-metadata";
+import { defaultShareImages, siteOpenGraph } from "@/app/lib/page-metadata";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteNav } from "@/app/components/site-nav";
@@ -11,13 +11,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const tool = await findTool(slug);
-
-  if (!tool) {
-    return {
-      title: "Ferramenta não encontrada",
-      description: "A ferramenta solicitada não foi encontrada no Vira Voto.",
-    };
-  }
+  if (!tool) notFound();
 
   return {
     title: tool.title,
@@ -29,8 +23,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       ...siteOpenGraph,
       title: tool.title,
       description: tool.description,
-      type: "article",
+      type: "website",
       url: `/ferramentas/${slug}`,
+      images: defaultShareImages,
     },
     twitter: {
       card: "summary_large_image",

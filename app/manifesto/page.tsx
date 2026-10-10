@@ -14,6 +14,7 @@ export const metadata: Metadata = pageMetadata({
   description:
     "Entenda a proposta do Vira Voto: ideias ganham força quando circulam, encontram pessoas e viram ação coletiva.",
   path: "/manifesto",
+  ownShareImage: true,
 });
 
 const principles = [
