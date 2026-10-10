@@ -73,4 +73,13 @@ it("marks Ferramentas current on a tool detail route", () => {
 
   expect(screen.getByRole("link", { name: "Ferramentas" })).toHaveAttribute("aria-current", "page");
   expect(screen.getByRole("link", { name: "VIRA VOTO" })).toHaveAttribute("href", "/");
+  
+});
+  
+it("exposes Blog alongside existing destinations", () => {
+  render(<SiteNav />);
+  expect(screen.getByRole("link", { name: "Blog" })).toHaveAttribute(
+    "href",
+    "/blog",
+  );
 });

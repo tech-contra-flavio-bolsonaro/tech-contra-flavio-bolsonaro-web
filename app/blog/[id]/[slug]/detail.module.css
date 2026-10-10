@@ -1,0 +1,206 @@
+/* Issue 86: user supersedes Penpot mock typography/palette with Home/Manifesto.
+   Doubled local scope wins over legacy blog selectors without route leakage. */
+.detail.detail {
+  --blog-blue: var(--vv-color-blue);
+  --blog-yellow: var(--vv-color-yellow);
+  --blog-coral: var(--vv-color-coral);
+  --blog-ink: var(--vv-color-black);
+  background-color: var(--vv-color-blue);
+  background-image: linear-gradient(rgb(255 255 255 / 15%) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 15%) 1px, transparent 1px);
+  background-size: var(--vv-grid-unit) var(--vv-grid-unit);
+  font-family: var(--vv-font-body);
+}
+.detail.detail :global(.site-header) {
+  min-height: 112px;
+  padding: 0 80px;
+  box-shadow: inset 0 0 0 3px #000;
+  color: var(--vv-color-blue);
+}
+.detail.detail :global(.site-header-brand) {
+  gap: 12px;
+  font: 800 38px/1 var(--vv-font-display);
+}
+.detail.detail :global(.site-header-brand img) { width: 36px; height: 36px; }
+.detail.detail :global(.site-nav) { gap: 36px; font: 600 16px/1.5 var(--vv-font-body); }
+.detail.detail :global(.site-nav .site-nav-cta) {
+  gap: 24px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard);
+  background: var(--vv-color-yellow);
+  color: #000;
+  font: 700 15px/1.2 var(--vv-font-body);
+}
+.detail.detail :global(.site-nav-cta svg) { width: 24px; height: 24px; }
+.detail.detail :global(.blog-content) { padding-top: 32px; padding-bottom: 64px; }
+.detail.detail :global(.blog-back) { gap: 12px; font-size: 15px; }
+.backArrow { display: inline-flex; transform: rotate(-135deg); }
+.detail.detail :global(.blog-detail-hero h1) {
+  font: 800 clamp(44px, 5vw, 72px)/1.05 var(--vv-font-display);
+  letter-spacing: 0;
+  max-width: 1100px;
+}
+.detail.detail :global(.blog-detail-hero > p) { font-size: 20px; line-height: 1.5; max-width: 64ch; }
+.detail.detail :global(.blog-tags li), .detail.detail :global(.blog-label) {
+  border: 2px solid #000;
+  border-radius: 4px;
+  font: 500 12px/1.4 var(--vv-font-mono);
+}
+.detail.detail :global(.blog-byline) { gap: 24px; padding: 24px 32px; border: 3px solid #000; border-radius: 8px; }
+.detail.detail :global(.blog-byline p) { font-size: 14px; }
+/* ShareButton already renders the shared Button primitive and HomeArrow.
+   Restore Home geometry removed by legacy .blog-page .share-trigger. */
+.detail.detail :global(.share-trigger) {
+  height: 58px;
+  min-height: 58px;
+  gap: 24px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard);
+  background: var(--vv-color-yellow);
+  color: #000;
+  font: 700 17px/1.2 var(--vv-font-body);
+}
+.detail.detail :global(.home-button:hover), .detail.detail :global(.site-nav .site-nav-cta:hover) {
+  background: var(--vv-color-lilac); color: #000;
+}
+.detail.detail :global(a:focus-visible), .detail.detail :global(button:focus-visible) {
+  outline: 3px solid currentColor; outline-offset: 5px;
+}
+.detail.detail :global(.blog-reading-layout) {
+  grid-template-columns: minmax(0, 1fr) 350px;
+  gap: 40px;
+  margin: 40px 0 32px;
+}
+.detail.detail :global(.blog-prose) {
+  padding: 40px;
+  border: 3px solid #000;
+  border-radius: 8px;
+  font: 400 20px/1.75 var(--vv-font-body);
+  color: #000;
+  overflow-wrap: break-word;
+}
+.detail.detail :global(.blog-prose p) { font: inherit; margin: 0 0 28px; }
+.detail.detail :global(.blog-prose h1), .detail.detail :global(.blog-prose h2),
+.detail.detail :global(.blog-prose h3), .detail.detail :global(.blog-prose h4),
+.detail.detail :global(.blog-prose h5), .detail.detail :global(.blog-prose h6) {
+  max-width: none;
+  margin: 36px 0 20px;
+  font: 700 36px/1.2 var(--vv-font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  color: #000;
+  scroll-margin-top: 140px;
+}
+.detail.detail :global(.blog-prose h1), .detail.detail :global(.blog-prose h2) { font-size: 44px; }
+.detail.detail :global(.blog-prose > div > :first-child) { margin-top: 0; }
+.detail.detail :global(.blog-prose li) { margin-block: 12px; }
+.detail.detail :global(.blog-prose li p) { margin-bottom: 12px; }
+.detail.detail :global(.blog-prose code), .detail.detail :global(.blog-prose pre) {
+  font: 400 16px/1.6 var(--vv-font-mono);
+  background: var(--vv-color-lilac);
+}
+.detail.detail :global(.blog-prose code) { overflow-wrap: anywhere; }
+.detail.detail :global(.blog-prose pre) { border: 2px solid #000; border-radius: 4px; }
+.detail.detail :global(.blog-prose pre code) { overflow-wrap: normal; }
+.detail.detail :global(.blog-prose .blog-attribution) {
+  font: 400 14px/1.75 var(--vv-font-body);
+  border-top: 2px solid #000;
+  margin: 32px 0 0;
+}
+.detail.detail :global(.blog-attribution a) { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 12px; min-height: 44px; }
+.detail.detail :global(.blog-aside section) {
+  min-height: 0;
+  padding: 28px;
+  border: 3px solid #000;
+  border-radius: 8px;
+  box-shadow: var(--vv-shadow-hard);
+}
+.detail.detail :global(.blog-aside h2), .detail.detail :global(.blog-contribution-detail h2) {
+  font: 700 40px/1.05 var(--vv-font-display);
+  letter-spacing: 0;
+}
+.detail.detail :global(.blog-aside h2 .blog-aside-conversation) { font-size: inherit; }
+.detail.detail :global(.blog-aside p), .detail.detail :global(.blog-contribution-detail p) { font-size: 16px; line-height: 1.5; }
+.detail.detail :global(.blog-aside .home-button) {
+  height: auto;
+  min-height: 58px;
+  width: 100%;
+  padding-block: 12px;
+  gap: 16px;
+  color: #000;
+  font: 700 15px/1.4 var(--vv-font-body);
+  text-decoration: none;
+}
+.detail.detail :global(.blog-contribution-detail), .detail.detail :global(.blog-share-callout) {
+  padding: 32px;
+  border: 3px solid #000 !important;
+  border-radius: 8px;
+  box-shadow: var(--vv-shadow-hard);
+}
+.detail.detail :global(.blog-share-callout p) { font: 500 14px/1.5 var(--vv-font-mono); }
+@media (max-width: 1200px) {
+  .detail.detail :global(.site-header) { padding-inline: 40px; }
+  .detail.detail :global(.site-nav) { gap: 24px; }
+  .detail.detail :global(.blog-reading-layout) { grid-template-columns: minmax(0, 1fr) 300px; gap: 32px; }
+  .detail.detail :global(.blog-prose) { padding: 32px; }
+  .detail.detail :global(.blog-aside section) { padding: 22px; }
+}
+@media (max-width: 1024px) {
+  .detail.detail :global(.site-header) { min-height: 72px; padding-inline: 22px; }
+  .detail.detail :global(.site-header-brand) { font-size: 28px; }
+  .detail.detail :global(.site-header-brand img) { width: 28px; height: 28px; }
+  .detail.detail :global(.site-nav) { gap: 0; }
+  .detail.detail :global(.site-nav-toggle) { border-color: var(--vv-color-blue); }
+}
+@media (max-width: 900px) {
+  .detail.detail { background-size: 48px 48px; }
+  .detail.detail :global(.blog-reading-layout) { grid-template-columns: minmax(0, 1fr); }
+  .detail.detail :global(.blog-prose > div) { max-width: 70ch; margin-inline: auto; }
+  .detail.detail :global(.blog-contribution-detail) { flex-wrap: wrap; }
+}
+@media (max-width: 600px) {
+  .detail.detail :global(.blog-content) { padding: 24px 22px 40px; }
+  .detail.detail :global(.blog-detail-hero > p) { font-size: 18px; line-height: 1.75; }
+  .detail.detail :global(.blog-byline) { padding: 20px 16px; }
+  .detail.detail :global(.blog-reading-layout) { margin-top: 28px; }
+  .detail.detail :global(.blog-prose) { padding: 28px 20px; font-size: 18px; line-height: 1.75; }
+  .detail.detail :global(.blog-prose h1), .detail.detail :global(.blog-prose h2) { font-size: 36px; }
+  .detail.detail :global(.blog-prose h3), .detail.detail :global(.blog-prose h4), .detail.detail :global(.blog-prose h5), .detail.detail :global(.blog-prose h6) { font-size: 28px; }
+  .detail.detail :global(.blog-prose code), .detail.detail :global(.blog-prose pre) { font-size: 14px; }
+  .detail.detail :global(.blog-share-callout) { padding: 24px 20px; }
+  .detail.detail :global(.blog-share-callout p) { margin-bottom: 16px; }
+}
+
+/* Keep local unavailable/404/runtime fallback typography in the same identity. */
+.detail.detail :global(.blog-status) {
+  border: 3px solid #000;
+  border-radius: 8px;
+  padding: 32px;
+}
+.detail.detail :global(.blog-status h1), .detail.detail :global(.blog-status h2) {
+  font: 700 40px/1.1 var(--vv-font-display);
+  letter-spacing: 0;
+  color: #000;
+}
+.detail.detail :global(.blog-status p) { font: 400 18px/1.75 var(--vv-font-body); }
+@media (max-width: 600px) {
+  .detail.detail :global(.blog-status) { padding: 24px 20px; }
+  .detail.detail :global(.blog-status .home-button) { font-size: 15px; gap: 16px; }
+}
+.detail.detail :global(.blog-status .home-button) { color: #000; }
+
+/* Short fallbacks must fill their flex parent; otherwise its legacy canvas shows.
+   :has(local class) confines this parent rule to the active detail shell. */
+:global(.blog-page):has(.detail) {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--vv-color-blue);
+  background-image: linear-gradient(rgb(255 255 255 / 15%) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 15%) 1px, transparent 1px);
+  background-size: var(--vv-grid-unit) var(--vv-grid-unit);
+}
+.detail.detail { flex: 1; }

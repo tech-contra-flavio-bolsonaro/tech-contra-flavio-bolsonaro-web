@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { SharePlatformIcon, type SharePlatform } from "./share-platform-icon";
+import { ArrowUp } from "lucide-react";
 
 const VALID_PATHS = [
   "/",
@@ -12,8 +13,6 @@ const VALID_PATHS = [
   "/enviar",
   "/conteudos",
 ];
-
-const TOOL_DETAIL_PATH = /^\/ferramentas\/[^/]+$/;
 
 const SOCIAL_MEDIA_LINKS = [
   {
@@ -37,7 +36,30 @@ const SOCIAL_MEDIA_LINKS = [
 export function SiteFooter() {
   const pathname = usePathname();
 
-  if (!VALID_PATHS.includes(pathname) && !TOOL_DETAIL_PATH.test(pathname))
+  if (pathname === "/blog")
+    return (
+      <footer className="site-footer blog-footer">
+        <Link className="site-footer-brand" href="/">
+          ⚑ VIRA VOTO
+        </Link>
+        <nav aria-label="Navegação do rodapé">
+          <Link href="/manifesto">Manifesto</Link>
+          <Link href="/ferramentas">Ferramentas</Link>
+          <Link href="/conteudos">Conteúdos</Link>
+          <Link href="/blog">Blog</Link>
+        </nav>
+        <Link className="site-footer-top" href="#top">
+          <span>Voltar ao topo</span>
+          <ArrowUp aria-hidden="true" />
+        </Link>
+      </footer>
+    );
+
+  if (
+    !VALID_PATHS.includes(pathname) &&
+    !pathname?.startsWith("/blog/") &&
+    !pathname?.startsWith("/ferramentas/")
+  )
     return null;
 
   return (
@@ -57,9 +79,16 @@ export function SiteFooter() {
           <Link href="/manifesto">Manifesto</Link>
           <Link href="/ferramentas">Ferramentas</Link>
           <Link href="/conteudos">Conteúdos</Link>
+          <Link href="/blog">Blog</Link>
           <Link href="/enviar">Enviar conteúdo</Link>
         </nav>
       </div>
+      {pathname?.startsWith("/blog/") ? (
+        <Link className="site-footer-top" href="#top">
+          <span>Voltar ao topo</span>
+          <ArrowUp aria-hidden="true" />
+        </Link>
+      ) : null}
       <div className="home-footer-credits">
         <p>VIRA VOTO — IDEIAS EM MOVIMENTO.</p>
         <p>CONSTRUÍDO EM REDE. PARA VIRAR O JOGO.</p>

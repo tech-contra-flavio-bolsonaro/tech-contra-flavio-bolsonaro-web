@@ -11,6 +11,7 @@ const links = [
   ["/manifesto", "Manifesto"],
   ["/ferramentas", "Ferramentas"],
   ["/conteudos", "Conteúdos"],
+  ["/blog", "Blog"],
 ] as const;
 
 export function SiteNav({ variant = "default" }: { variant?: "default" | "home" }) {
@@ -41,7 +42,7 @@ export function SiteNav({ variant = "default" }: { variant?: "default" | "home" 
 
   const close = () => setIsOpen(false);
   const current = (href: string) =>
-    pathname === href || (href === "/ferramentas" && pathname.startsWith(`${href}/`))
+    pathname === href || (href === "/ferramentas" && pathname.startsWith(`${href}/`) || (href === "/blog" && pathname?.startsWith("/blog/")))
       ? "page"
       : undefined;
 
