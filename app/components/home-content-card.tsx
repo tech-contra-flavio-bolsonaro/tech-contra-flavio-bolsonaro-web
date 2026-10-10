@@ -17,7 +17,7 @@ export function HomeContentCard({ item }: { item: ContentItem }) {
       <div className="home-content-info">
         <div className="home-content-meta"><p className="home-content-credit">{item.credit}</p><p className="home-content-highlight">EM DESTAQUE <HomeArrow /></p></div>
         <div className="home-content-description"><h3>{item.title}</h3><p>{item.description}</p></div>
-        <ShareButton variant="home" title={item.title} description={item.description} credit={item.credit} url={contentPermalink(item.id)} imageUrl={isVideo ? undefined : mediaUrl ?? undefined} videoUrl={isVideo ? mediaUrl ?? undefined : undefined} associatedVideoUrl={videoLink && videoLink !== mediaUrl ? videoLink : undefined} />
+        <ShareButton variant="listing" title={item.title} description={item.description} credit={item.credit} url={contentPermalink(item.id)} imageUrl={isVideo ? undefined : mediaUrl ?? undefined} videoUrl={isVideo ? mediaUrl ?? undefined : undefined} associatedVideoUrl={videoLink && videoLink !== mediaUrl ? videoLink : undefined} />
       </div>
     </article>
   );
