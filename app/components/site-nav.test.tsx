@@ -16,7 +16,10 @@ it("keeps the brand and a closed menu toggle on a single header row", () => {
   const toggle = screen.getByRole("button", { name: /menu/i });
   expect(toggle).toHaveAttribute("aria-expanded", "false");
   expect(toggle).toHaveAttribute("aria-controls", "site-nav-links");
-  expect(screen.getByRole("link", { name: "TECH CONTRA BOLSONARO" })).toHaveAttribute("href", "/");
+  const brand = screen.getByRole("link", { name: "Tech Contra Bolsonaro" });
+  expect(brand).toHaveAttribute("href", "/");
+  expect(brand.querySelector("img")).toHaveAttribute("src", "/images/home-pixel-logo.svg");
+  expect(brand.querySelector("span")).toHaveTextContent("TECH CONTRA BOLSONARO");
   expect(document.getElementById("site-nav-links")).toHaveAttribute("data-open", "false");
 });
 
@@ -59,9 +62,16 @@ it("closes the panel when a link is chosen or the page outside is tapped", () =>
 it("lists every destination, marks the current page and highlights the send action", () => {
   render(<SiteNav />);
 
+  const links = document.querySelector(".site-nav-links");
+  const nav = document.getElementById("site-nav-links");
   for (const name of ["Manifesto", "Ferramentas", "Conteúdos", "Enviar conteúdo"]) {
     expect(screen.getByRole("link", { name })).toBeInTheDocument();
   }
+  expect(links).toContainElement(screen.getByRole("link", { name: "Manifesto" }));
+  expect(links).toContainElement(screen.getByRole("link", { name: "Ferramentas" }));
+  expect(links).toContainElement(screen.getByRole("link", { name: "Conteúdos" }));
+  expect(nav).toContainElement(screen.getByRole("link", { name: "Enviar conteúdo" }));
+  expect(links).not.toContainElement(screen.getByRole("link", { name: "Enviar conteúdo" }));
   expect(screen.getByRole("link", { name: "Manifesto" })).toHaveAttribute("aria-current", "page");
   expect(screen.getByRole("link", { name: "Ferramentas" })).not.toHaveAttribute("aria-current");
   expect(screen.getByRole("link", { name: "Enviar conteúdo" })).toHaveClass("site-nav-cta");
@@ -72,10 +82,11 @@ it("marks Ferramentas current on a tool detail route", () => {
   render(<SiteNav variant="home" />);
 
   expect(screen.getByRole("link", { name: "Ferramentas" })).toHaveAttribute("aria-current", "page");
-  expect(screen.getByRole("link", { name: "TECH CONTRA BOLSONARO" })).toHaveAttribute("href", "/");
-  
+  const brand = screen.getByRole("link", { name: "Tech Contra Bolsonaro" });
+  expect(brand).toHaveAttribute("href", "/");
+  expect(brand.querySelector("img")).toHaveAttribute("src", "/images/home-pixel-logo.svg");
 });
-  
+
 it("exposes Blog alongside existing destinations", () => {
   render(<SiteNav />);
   expect(screen.getByRole("link", { name: "Blog" })).toHaveAttribute(

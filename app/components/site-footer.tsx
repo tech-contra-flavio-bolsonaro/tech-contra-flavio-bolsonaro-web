@@ -74,8 +74,9 @@ export function SiteFooter() {
 
       <div className="flex justify-between flex-wrap flex-col items-center gap-4 md:flex-row md:items-end">
         <div className="home-footer-credits">
-          <p>TECH CONTRA BOLSONARO — IDEIAS EM MOVIMENTO.</p>
-          <p>CONSTRUÍDO EM REDE. PARA VIRAR O JOGO.</p>
+          <p>IDEIAS EM MOVIMENTO.</p>
+          <p>CONSTRUÍDO EM REDE.</p>
+          <p>PARA VIRAR O JOGO.</p>
         </div>
 
         <div className="home-footer-social">

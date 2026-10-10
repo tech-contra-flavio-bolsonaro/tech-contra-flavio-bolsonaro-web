@@ -293,12 +293,16 @@ h1 span { color: var(--tech-yellow); }
 /* Shared shell measured from Figma Home: navigation 112px desktop / 72px mobile. */
 .site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; display: flex; width: 100vw; max-width: 100vw; min-height: 112px; align-items: center; justify-content: space-between; gap: 2rem; margin-left: calc(50% - 50vw); padding: 0 var(--vv-space-10); border-bottom: 3px solid #000; background: #fff; color: var(--vv-color-blue); }
 .site-header a { color: inherit; text-decoration: none; }
-.site-header-brand { font-family: var(--vv-font-display); font-size: 38px; font-weight: 800; letter-spacing: -.04em; line-height: 1; white-space: nowrap; }
-.site-nav { display: flex; align-items: center; justify-content: flex-end; gap: var(--vv-space-7); font-family: var(--vv-font-body); font-size: 16px; font-weight: 600; }
+.site-header-brand { display: inline-flex; align-items: center; font-family: var(--vv-font-display); font-size: 38px; font-weight: 800; letter-spacing: -.04em; line-height: 1; white-space: nowrap; }
+.site-header-brand > span { min-width: 0; white-space: normal; }
+.site-header-brand:not(.site-header-brand-home) img { display: none; }
+.site-nav { display: flex; flex-wrap: nowrap; align-items: center; justify-content: flex-end; gap: var(--vv-space-7); min-width: 0; font-family: var(--vv-font-body); font-size: 16px; font-weight: 600; }
+.site-nav-links { display: flex; flex: 0 1 auto; flex-wrap: wrap; justify-content: flex-end; gap: 0; min-width: 0; margin: -6px -18px; }
+.site-nav-links a { padding: 6px 18px; }
 .site-nav a { white-space: nowrap; }
 .site-nav a:hover { color: var(--vv-color-coral); }
 .site-nav a[aria-current="page"]:not(.site-nav-cta) { text-decoration: underline 3px var(--vv-color-yellow); text-underline-offset: .45em; }
-.site-nav .site-nav-cta { display: inline-flex; min-height: 48px; align-items: center; padding: 0 22px; border: 3px solid #000; border-radius: 4px; background: var(--vv-color-yellow); color: #000; box-shadow: var(--vv-shadow-hard); font-size: 15px; font-weight: 700; }
+.site-nav .site-nav-cta { display: inline-flex; flex: 0 0 auto; min-height: 48px; align-items: center; padding: 0 22px; border: 3px solid #000; border-radius: 4px; background: var(--vv-color-yellow); color: #000; box-shadow: var(--vv-shadow-hard); font-size: 15px; font-weight: 700; white-space: nowrap; }
 .site-nav .site-nav-cta:hover { background: #fff; color: #000; }
 .site-nav-toggle { display: none; min-height: 48px; align-items: center; gap: .75rem; padding: 0 1rem; border: 3px solid #000; border-radius: 4px; background: #fff; color: var(--vv-color-blue); font: inherit; font-weight: 700; letter-spacing: .02em; cursor: pointer; }
 .site-nav-toggle svg { width: 1.5rem; height: 1.5rem; }
@@ -315,6 +319,8 @@ h1 span { color: var(--tech-yellow); }
   .site-header-brand { font-size: 26px; }
   .site-nav-toggle { display: inline-flex; min-height: 44px; }
   .site-nav { position: absolute; top: 100%; right: 0; left: 0; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 12px 22px 24px; border-block: 3px solid #000; background: #fff; box-shadow: 0 10px 0 rgb(0 0 0 / 16%); }
+  .site-nav-links { flex-direction: column; gap: 0; margin: 0; }
+  .site-nav-links a { padding: 0; }
   .site-nav[data-open="true"] { display: flex; }
   .site-nav a { display: flex; min-height: 52px; align-items: center; border-bottom: 1px solid rgb(25 0 208 / 16%); font-size: 16px; }
   .site-nav .site-nav-cta { justify-content: center; margin-top: 16px; border-bottom: 3px solid #000; }
@@ -431,6 +437,10 @@ h1 span { color: var(--tech-yellow); }
   .home-footer nav { justify-content: end; gap: 20px; }
 }
 @media (max-width: 600px) { .home-page .site-header { gap: 12px; padding: 0 16px; }
+  .site-header-brand > span { display: none; }
+  .site-header-brand:not(.site-header-brand-home) img { display: block; }
+  .site-header-brand { display: inline-flex; gap: 0; align-items: center; }
+  .site-header-brand img { width: 28px; height: 28px; }
   .home-page .site-header-brand { gap: 8px; font-size: 22px; }
   .home-page .site-header-brand img { width: 24px; height: 24px; }
   .home-manifesto { padding: 32px 22px; }
