@@ -10,6 +10,7 @@ it('shows the "Compartilhar" label on the home content card', () => {
         title: "Ideias em movimento",
         description: "Descrição do conteúdo.",
         credit: "Crédito original",
+        priority: 0,
         media_path: null,
         mediaUrl: null,
         video_url: null,
