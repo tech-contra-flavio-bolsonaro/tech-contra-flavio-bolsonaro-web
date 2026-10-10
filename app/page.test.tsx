@@ -3,6 +3,7 @@ import { afterEach, expect, it, vi } from "vitest";
 import Home from "./page";
 
 vi.mock("@/app/components/home-blog", () => ({ HomeBlog: () => <section aria-labelledby="blog-title"><h2 id="blog-title">Blog</h2></section>, HomeBlogLoading: () => null }));
+vi.mock("@/app/components/home-tools", () => ({ HomeTools: () => <p data-testid="home-tools">Ferramentas do servidor</p> }));
 
 afterEach(cleanup);
 
@@ -69,4 +70,9 @@ it("places Blog between Ferramentas and Conteúdos before the final CTA", () => 
  const { container } = render(<Home />);
  const sections = [...container.querySelectorAll("main > section")].map(section => section.getAttribute("aria-labelledby"));
  expect(sections).toEqual(["hero-title", "manifesto-title", "tools-title", "blog-title", "content-title", "submit-title"]);
+});
+
+it("renders the tools preview from the server component", () => {
+  const { container } = render(<Home />);
+  expect(container.querySelector(".home-tools .home-preview-feed [data-testid='home-tools']")).toBeInTheDocument();
 });
