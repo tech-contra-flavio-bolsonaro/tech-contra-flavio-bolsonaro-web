@@ -2,6 +2,10 @@ import ListingLayout from "./(listing)/layout";
 import { HomeArrow } from "@/app/components/home-arrow";
 import Link from "next/link";
 import { SiteNav } from "@/app/components/site-nav";
+import { notFoundMetadata } from "@/app/lib/page-metadata";
+
+export const metadata = notFoundMetadata;
+
 export default function NotFound() {
   return (
     <ListingLayout>

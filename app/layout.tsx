@@ -52,10 +52,6 @@ export const metadata: Metadata = {
     description:
       "Ferramentas e conteúdos para transformar ideias em ação coletiva.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
