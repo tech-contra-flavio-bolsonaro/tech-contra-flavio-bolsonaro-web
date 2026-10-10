@@ -28,10 +28,14 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v4
 
-      - name: Set up Bun
-        uses: oven-sh/setup-bun@v2
+      # The repository only allows GitHub-owned actions, so Bun comes from npm.
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          bun-version: 1.3.10
+          node-version: 22
+
+      - name: Set up Bun
+        run: npm install --global bun@1.3.10
 
       - name: Check preview prerequisites
         run: |
