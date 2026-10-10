@@ -30,6 +30,8 @@ const tool = {
   category: "Mapa da virada",
   credit: "Comunidade Vira Voto",
   url: "https://example.com/virada",
+  priority: 0,
+  is_internal: false,
 };
 const props = (slug: string) => ({ params: Promise.resolve({ slug }) });
 
@@ -78,6 +80,8 @@ it("shares a tool as a website with the default image", async () => {
     category: "Mapa da virada",
     credit: "Comunidade Vira Voto",
     url: "https://example.com/virada",
+    priority: 0,
+    is_internal: false,
   });
 
   const metadata = await generateMetadata({ params: Promise.resolve({ slug: "virada-no-bairro" }) });

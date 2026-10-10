@@ -3,7 +3,7 @@ import { resolveServerSupabaseUrl } from "./supabase-url";
 import { httpsUrl, type PublishedTool, type ToolCategory } from "./tools";
 
 
-const fields = "id,slug,title,description,category,credit,url";
+const fields = "id,slug,title,description,category,credit,url,priority,is_internal";
 const pageSize = 10;
 
 function database() {
@@ -17,7 +17,7 @@ export async function listTools(page: number, category?: string) {
   let query = database().from("tool_submissions").select(fields).eq("status", "approved");
   if (category) query = query.eq("category", category);
   const { data, error } = await query
-    .order("created_at", { ascending: false }).order("id", { ascending: false })
+    .order("priority", { ascending: false }).order("created_at", { ascending: false }).order("id", { ascending: false })
     .range(page * pageSize, page * pageSize + pageSize);
   if (error) throw error;
   return { items: (data ?? []).slice(0, pageSize) as PublishedTool[], hasMore: (data ?? []).length > pageSize };
@@ -29,7 +29,7 @@ export async function listAllTools(category?: string): Promise<PublishedTool[]> 
   let query = database().from("tool_submissions").select(fields).eq("status", "approved");
   if (category) query = query.eq("category", category);
   const { data, error } = await query
-    .order("created_at", { ascending: false }).order("id", { ascending: false })
+    .order("priority", { ascending: false }).order("created_at", { ascending: false }).order("id", { ascending: false })
     .limit(500);
   if (error) throw error;
   return (data ?? []) as PublishedTool[];
@@ -47,7 +47,8 @@ export async function listToolCategories(): Promise<ToolCategory[]> {
 
 export async function listToolSlugs(): Promise<string[]> {
   const { data, error } = await database().from("tool_submissions")
-    .select("slug").eq("status", "approved").order("created_at", { ascending: false });
+    .select("slug").eq("status", "approved")
+    .order("priority", { ascending: false }).order("created_at", { ascending: false }).order("id", { ascending: false });
   if (error) throw error;
   return ((data ?? []) as { slug: string }[]).map(({ slug }) => slug);
 }

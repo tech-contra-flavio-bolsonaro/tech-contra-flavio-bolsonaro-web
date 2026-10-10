@@ -22,6 +22,8 @@ const publishedTool = {
   category: "Mobilização",
   credit: "Rede Vira Voto",
   url: "https://example.com/mapa",
+  priority: 0,
+  is_internal: false,
 };
 const categories = [{ name: "Mobilização", count: 1 }, { name: "Organização", count: 2 }];
 const page = (searchParams: Record<string, string> = {}) => FerramentasPage({ searchParams: Promise.resolve(searchParams) });

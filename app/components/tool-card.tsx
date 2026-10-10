@@ -31,7 +31,7 @@ export function ToolCard({ tool, variant = "default", index = 0 }: { tool: Publi
     const tones = ["yellow", "coral", "white"];
     return (
       <article className="home-tool-card" data-tone={tones[index % tones.length]}>
-        <div className="home-tool-identity">{action ? <Image src={action.icon} alt="" width={56} height={56} unoptimized /> : <Wrench className="home-tool-fallback-icon" aria-hidden="true" />}<p>{tool.category}</p></div>
+        <div className="home-tool-identity">{action ? <Image src={action.icon} alt="" width={56} height={56} unoptimized /> : <Wrench className="home-tool-fallback-icon" aria-hidden="true" />}<div className="home-tool-labels"><p>{tool.category}</p>{tool.is_internal ? <span className="tool-internal-badge">Ferramenta interna</span> : null}</div></div>
         <h3>{tool.title}</h3>
         <p className="home-tool-description">{tool.description}</p>
         <p className="sr-only">Crédito: {tool.credit}</p>
@@ -44,7 +44,7 @@ export function ToolCard({ tool, variant = "default", index = 0 }: { tool: Publi
     <Card className="tool-card">
       <CardHeader>
         <div className="tool-card-icon" data-tone={tone}><Icon aria-hidden="true" /></div>
-        <div className="tool-card-heading"><CardTitle>{tool.title}</CardTitle><p>{tool.category}</p></div>
+        <div className="tool-card-heading"><CardTitle>{tool.title}</CardTitle><p>{tool.category}</p>{tool.is_internal ? <span className="tool-internal-badge">Ferramenta interna</span> : null}</div>
       </CardHeader>
       <CardContent><p>{tool.description}</p><small>Crédito: {tool.credit}</small></CardContent>
       <CardFooter><Link href={`/ferramentas/${tool.slug}`} className="text-link">Conhecer ferramenta</Link></CardFooter>

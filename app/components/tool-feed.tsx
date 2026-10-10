@@ -45,9 +45,12 @@ export function ToolFeed({ limit, variant = "default", initial }: { limit?: numb
       if (signal?.aborted || selected !== current.current) return;
       if (result.categories) setCategories(result.categories);
       setItems((loaded) => {
-        if (next === 0) return result.items;
-        const ids = new Set(loaded.map((tool) => tool.id));
-        return [...loaded, ...result.items.filter((tool) => !ids.has(tool.id))];
+        let items = result.items;
+        if (next !== 0) {
+          const ids = new Set(loaded.map((tool) => tool.id));
+          items = [...loaded, ...result.items.filter((tool) => !ids.has(tool.id))];
+        }
+        return items.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
       });
       setPage(next);
       setHasMore(result.hasMore);

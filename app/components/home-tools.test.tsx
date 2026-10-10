@@ -12,7 +12,7 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-const tool = (id: number) => ({ id: String(id), slug: `mapa-${id}`, title: `Mapa ${id}`, description: "Caminhos", category: "Mapa da virada", credit: "Comunidade", url: "https://example.com" });
+const tool = (id: number) => ({ id: String(id), slug: `mapa-${id}`, title: `Mapa ${id}`, description: "Caminhos", category: "Mapa da virada", credit: "Comunidade", url: "https://example.com", priority: 0, is_internal: false });
 
 it("renders the three latest tools as links on the server", async () => {
   vi.mocked(listTools).mockResolvedValue({ items: [1, 2, 3, 4].map(tool), hasMore: false });
