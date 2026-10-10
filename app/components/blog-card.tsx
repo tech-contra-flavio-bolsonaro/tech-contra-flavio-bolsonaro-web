@@ -1,3 +1,4 @@
+import { PressSurface } from "@/components/ui/press-surface";
 import { HomeArrow } from "./home-arrow";
 import Image from "next/image";
 import Link from "next/link";
@@ -53,9 +54,9 @@ export function BlogCard({
               {blogDate(article.publishedAt)}
             </time>
           </p>
-          <Link className="blog-read home-button home-button-white" href={blogPermalink(article)}>
+          <Link className="blog-read home-button home-button-white" href={blogPermalink(article)}><PressSurface>
             Ler artigo <HomeArrow />
-          </Link>
+          </PressSurface></Link>
         </div>
       </div>
     </article>

@@ -1,3 +1,4 @@
+import { PressSurface } from "@/components/ui/press-surface";
 import ListingLayout from "./(listing)/layout";
 import { HomeArrow } from "@/app/components/home-arrow";
 import Link from "next/link";
@@ -14,9 +15,9 @@ export default function NotFound() {
         <section className="blog-status">
           <h1>Artigo não encontrado</h1>
           <p>Esta publicação não está disponível no Blog da comunidade.</p>
-          <Link className="home-button home-button-yellow" href="/blog">
+          <Link className="home-button home-button-yellow" href="/blog"><PressSurface>
             Voltar para o Blog <HomeArrow />
-          </Link>
+          </PressSurface></Link>
         </section>
       </main>
     </ListingLayout>

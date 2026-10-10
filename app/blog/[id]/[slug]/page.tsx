@@ -1,3 +1,4 @@
+import { PressSurface } from "@/components/ui/press-surface";
 import styles from "./detail.module.css";
 import { HomeArrow } from "@/app/components/home-arrow";
 import type { Metadata } from "next";
@@ -146,7 +147,7 @@ export default async function BlogDetailPage({ params }: Props) {
                 <br />
                 PARADAS.
               </h2>
-              <Link className="home-button home-button-white" href="/blog">Conheça mais histórias <HomeArrow /></Link>
+              <Link className="home-button home-button-white" href="/blog"><PressSurface>Conheça mais histórias <HomeArrow /></PressSurface></Link>
             </section>
             <section>
               <h2>
@@ -155,9 +156,9 @@ export default async function BlogDetailPage({ params }: Props) {
                 <span className="blog-aside-conversation">DESSA CONVERSA.</span>
               </h2>
               <p>Tem uma ideia ou experiência?</p>
-              <Link className="home-button home-button-yellow" href="/enviar">
+              <Link className="home-button home-button-yellow" href="/enviar"><PressSurface>
                 Compartilhar ideia <HomeArrow />
-              </Link>
+              </PressSurface></Link>
             </section>
           </aside>
         </div>

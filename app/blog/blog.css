@@ -47,12 +47,9 @@
 .blog-page .site-nav .site-nav-cta {
   min-height: 36px;
   font-size: 12px;
-  padding: 0 15px;
-  border: 2px solid var(--blog-ink);
-  border-radius: 2px;
-  box-shadow: none;
-  color: var(--blog-ink);
-  background: var(--blog-yellow);
+  padding: 0 15px; --press-border-width: 2px; --press-border-color: var(--blog-ink); border: 2px solid var(--blog-ink);
+  border-radius: 2px; --press-shadow: none; box-shadow: none;
+  color: var(--blog-ink); --press-bg: var(--blog-yellow); background: var(--blog-yellow);
 }
 .blog-page .site-nav-cta svg {
   width: 12px;
@@ -450,10 +447,7 @@
 :where(.blog-page) .blog-byline a {
   color: var(--blog-blue);
 }
-.blog-page .share-trigger {
-  background: transparent;
-  border: 0;
-  box-shadow: none;
+.blog-page .share-trigger { --press-bg: transparent; background: transparent; --press-border-width: 0px; --press-border-color: transparent; border: 0; --press-shadow: none; box-shadow: none;
   color: var(--blog-blue);
   min-height: 44px;
   font:

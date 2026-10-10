@@ -1,3 +1,4 @@
+import { PressSurface } from "@/components/ui/press-surface";
 import Link from "next/link";
 import Image from "next/image";
 import { HomeArrow } from "./home-arrow";
@@ -35,7 +36,7 @@ export function ToolCard({ tool, variant = "default", index = 0 }: { tool: Publi
         <h3>{tool.title}</h3>
         <p className="home-tool-description">{tool.description}</p>
         <p className="sr-only">Crédito: {tool.credit}</p>
-        <Link href={`/ferramentas/${tool.slug}`} className="home-button home-tool-action">{action?.label ?? "Abrir ferramenta"} <HomeArrow /></Link>
+        <Link href={`/ferramentas/${tool.slug}`} className="home-button home-tool-action"><PressSurface>{action?.label ?? "Abrir ferramenta"} <HomeArrow /></PressSurface></Link>
       </article>
     );
   }

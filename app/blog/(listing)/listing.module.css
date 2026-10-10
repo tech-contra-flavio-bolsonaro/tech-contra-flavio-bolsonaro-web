@@ -17,7 +17,7 @@
 .listing.listing :global(.site-header-brand) { gap: 12px; font: 800 38px/1 var(--vv-font-display); letter-spacing: 0; }
 .listing.listing :global(.site-header-brand img) { width: 36px; height: 36px; }
 .listing.listing :global(.site-nav) { gap: 36px; font: 600 16px/1.5 var(--vv-font-body); }
-.listing.listing :global(.site-nav .site-nav-cta) { height: 48px; min-height: 48px; gap: 24px; padding: 0 22px; border: 0; border-radius: var(--vv-radius-control); box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); background: var(--vv-color-yellow); color: #000; font: 700 15px/1.2 var(--vv-font-body); }
+.listing.listing :global(.site-nav .site-nav-cta) { height: 48px; min-height: 48px; gap: 24px; padding: 0 22px; --press-border-width: 0px; --press-border-color: transparent; border: 0; border-radius: var(--vv-radius-control); --press-shadow: inset 0 0 0 3px #000, calc(7px - var(--press-shift, 0px)) calc(7px - var(--press-shift, 0px)) 0 #000; box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); --press-bg: var(--vv-color-yellow); background: var(--vv-color-yellow); color: #000; font: 700 15px/1.2 var(--vv-font-body); }
 .listing.listing :global(.site-nav-cta svg) { width: 24px; height: 24px; }
 .listing.listing :global(.blog-content) { max-width: 1440px; padding: 64px 80px 80px; }
 .listing.listing :global(h1), .listing.listing :global(h2) { font-family: var(--vv-font-display); font-weight: 800; letter-spacing: 0; }
@@ -35,9 +35,11 @@
 .listing.listing :global(.blog-source-bar) { gap: 24px; margin: 48px 0; padding: 28px; border: 3px solid #000; border-radius: var(--vv-radius-card); box-shadow: var(--vv-shadow-hard); }
 .listing.listing :global(.blog-source-bar b) { font: 600 12px/1.5 var(--vv-font-mono); }
 .listing.listing :global(.blog-source-bar p) { font-size: 16px; line-height: 1.5; }
-.listing.listing :global(.home-button) { flex-shrink: 0; width: fit-content; max-width: 100%; min-height: 58px; height: auto; gap: 24px; padding: 16px 22px; border: 0; border-radius: var(--vv-radius-control); box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); background: var(--vv-color-yellow); color: #000; font: 700 17px/1.2 var(--vv-font-body); text-decoration: none; cursor: pointer; }
-.listing.listing :global(.home-button-white) { background: #fff; }
-.listing.listing :global(.home-button:hover), .listing.listing :global(.site-nav .site-nav-cta:hover) { background: var(--vv-color-lilac); color: #000; }
+.listing.listing :global(.home-button) { flex-shrink: 0; width: fit-content; max-width: 100%; min-height: 58px; height: auto; gap: 24px; padding: 16px 22px; --press-border-width: 0px; --press-border-color: transparent; border: 0; border-radius: var(--vv-radius-control); --press-shadow: inset 0 0 0 3px #000, calc(7px - var(--press-shift, 0px)) calc(7px - var(--press-shift, 0px)) 0 #000; box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); --press-bg: var(--vv-color-yellow); background: var(--vv-color-yellow); color: #000; font: 700 17px/1.2 var(--vv-font-body); text-decoration: none; cursor: pointer; }
+.listing.listing :global(.home-button-white) { --press-bg: #fff; background: #fff; }
+@media (hover: hover) and (pointer: fine) {
+.listing.listing :global(.home-button:hover), .listing.listing :global(.site-nav .site-nav-cta:hover) { --press-bg: var(--vv-color-lilac); background: var(--vv-color-lilac); color: #000; }
+}
 .listing.listing :global(.home-button:disabled) { opacity: .65; cursor: wait; }
 .listing.listing :global(a:focus-visible), .listing.listing :global(button:focus-visible) { outline: 3px solid currentColor; outline-offset: 5px; }
 .listing.listing :global(.blog-card) { display: flex; flex-direction: column; overflow: hidden; border: 3px solid #000; border-radius: var(--vv-radius-card); background: #fff; color: #000; box-shadow: var(--vv-shadow-hard); }

@@ -1,3 +1,4 @@
+import { PressSurface } from "@/components/ui/press-surface";
 import { HomeArrow } from "./home-arrow";
 import type { BlogFailure } from "@/app/lib/blog/types";
 import { BlogRetry } from "./blog-retry";
@@ -31,9 +32,9 @@ export function BlogContribution({ detail = false }: { detail?: boolean }) {
             : "Compartilhe sua experiência e inspire outras pessoas a agir."}
         </p>
       </div>
-      <a className="home-button home-button-yellow" href="/enviar">
+      <a className="home-button home-button-yellow" href="/enviar"><PressSurface>
         Enviar uma ideia <HomeArrow />
-      </a>
+      </PressSurface></a>
     </section>
   );
 }

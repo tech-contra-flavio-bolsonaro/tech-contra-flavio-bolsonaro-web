@@ -1,5 +1,6 @@
 "use client";
 
+import { PressSurface } from "@/components/ui/press-surface";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ImageIcon, UserRound } from "lucide-react";
@@ -119,10 +120,10 @@ export function ContentFeed({ limit, variant = "default" }: { limit?: number; va
           </Card>
         ))}
       </div>
-      {error ? <div className="content-feed-error"><p role="alert">Não foi possível carregar conteúdos. Tente novamente.</p><button ref={retryControl} aria-disabled={isLoading} aria-busy={isLoading} className="home-button home-button-white" type="button" onClick={(event) => void loadPage(items.length ? page + 1 : 0, event.currentTarget)}>Tentar novamente</button></div> : null}
+      {error ? <div className="content-feed-error"><p role="alert">Não foi possível carregar conteúdos. Tente novamente.</p><button ref={retryControl} aria-disabled={isLoading} aria-busy={isLoading} className="home-button home-button-white" type="button" onClick={(event) => void loadPage(items.length ? page + 1 : 0, event.currentTarget)}><PressSurface>Tentar novamente</PressSurface></button></div> : null}
       {!limit ? <><div ref={sentinel} className="scroll-sentinel" aria-hidden="true" />
       {isLoading ? <p role="status">Carregando conteúdos…</p> : null}
-      {hasMore && (items.length > 0 || !isLoading) && !error ? <button ref={moreControl} aria-disabled={isLoading} aria-busy={isLoading} className={variant === "listing" ? "home-button home-button-yellow content-list-more" : "load-more"} type="button" onClick={(event) => void loadPage(page + 1, event.currentTarget)}>Carregar mais</button> : null}</> : null}
+      {hasMore && (items.length > 0 || !isLoading) && !error ? <button ref={moreControl} aria-disabled={isLoading} aria-busy={isLoading} className={variant === "listing" ? "home-button home-button-yellow content-list-more" : "load-more"} type="button" onClick={(event) => void loadPage(page + 1, event.currentTarget)}><PressSurface>Carregar mais</PressSurface></button> : null}</> : null}
       {variant === "listing" && !hasMore ? <p id="content-list-end" className="sr-only" role="status" tabIndex={-1}>Todos os conteúdos foram carregados.</p> : null}
       {variant === "listing" ? <ContentListContribution /> : null}
     </>

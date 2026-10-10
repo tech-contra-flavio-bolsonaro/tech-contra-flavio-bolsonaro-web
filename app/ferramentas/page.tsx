@@ -1,3 +1,4 @@
+import { PressSurface } from "@/components/ui/press-surface";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -93,10 +94,10 @@ export default async function FerramentasPage({ searchParams }: { searchParams: 
           <p className="tools-suggestion-eyebrow">CONSTRUÇÃO COLETIVA</p>
           <h2 id="tools-suggestion-title">O PRÓXIMO PASSO É NOSSO.</h2>
         </div>
-        <Link className="tools-suggestion-link" href="/ferramentas/enviar">
+        <Link className="tools-suggestion-link" href="/ferramentas/enviar"><PressSurface>
           Sugerir uma ferramenta
           <HomeArrow />
-        </Link>
+        </PressSurface></Link>
       </section>
     </main>
   );

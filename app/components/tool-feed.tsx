@@ -1,5 +1,6 @@
 "use client";
 
+import { PressSurface } from "@/components/ui/press-surface";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Wrench } from "lucide-react";
@@ -106,13 +107,13 @@ export function ToolFeed({ limit, variant = "default", initial }: { limit?: numb
       {filterable && categories.length > 1 ? (
         <div className="tool-filters">
           <div className="tool-filter-list" role="group" aria-label="Filtrar ferramentas por categoria">
-            <button type="button" aria-pressed={category === null} onClick={() => choose(null)}>
+            <button type="button" aria-pressed={category === null} onClick={() => choose(null)}><PressSurface>
               Todas <span aria-hidden="true">{total}</span><span className="sr-only">, {total} ferramentas</span>
-            </button>
+            </PressSurface></button>
             {categories.map((item) => (
-              <button key={item.name} type="button" aria-pressed={category === item.name} onClick={() => choose(item.name)}>
+              <button key={item.name} type="button" aria-pressed={category === item.name} onClick={() => choose(item.name)}><PressSurface>
                 {item.name} <span aria-hidden="true">{item.count}</span><span className="sr-only">, {item.count} {item.count === 1 ? "ferramenta" : "ferramentas"}</span>
-              </button>
+              </PressSurface></button>
             ))}
           </div>
           {settled && items.length > 0 ? (
@@ -143,9 +144,9 @@ export function ToolFeed({ limit, variant = "default", initial }: { limit?: numb
       ) : null}
       {items.length > 0 ? <div className="card-grid">{items.slice(0, limit).map((tool, index) => <ToolCard key={tool.id} tool={tool} variant={variant} index={index} />)}</div> : null}
       {loading ? <p role="status">Carregando ferramentas…</p> : null}
-      {error ? <div role="alert"><p>Não foi possível carregar ferramentas.</p><button className="load-more" onClick={() => void loadPage(page + 1, category ?? null)}>Tentar novamente</button></div> : null}
+      {error ? <div role="alert"><p>Não foi possível carregar ferramentas.</p><button className="load-more" onClick={() => void loadPage(page + 1, category ?? null)}><PressSurface>Tentar novamente</PressSurface></button></div> : null}
       {!limit ? <div ref={sentinel} className="scroll-sentinel" aria-hidden="true" /> : null}
-      {!limit && hasMore && !loading && !error ? <button className="load-more" onClick={() => void loadPage(page + 1, category ?? null)}>Carregar mais ferramentas</button> : null}
+      {!limit && hasMore && !loading && !error ? <button className="load-more" onClick={() => void loadPage(page + 1, category ?? null)}><PressSurface>Carregar mais ferramentas</PressSurface></button> : null}
     </div>
   );
 }

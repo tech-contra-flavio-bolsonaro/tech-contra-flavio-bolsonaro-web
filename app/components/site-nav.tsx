@@ -1,5 +1,6 @@
 "use client";
 
+import { PressSurface } from "@/components/ui/press-surface";
 import Link from "next/link";
 import Image from "next/image";
 import { HomeArrow } from "./home-arrow";
@@ -62,7 +63,7 @@ export function SiteNav({ variant = "default" }: { variant?: "default" | "home" 
       </button>
       <nav id="site-nav-links" className="site-nav" aria-label="Navegação principal" data-open={isOpen}>
         {links.map(([href, label]) => <Link href={href} key={href} aria-current={current(href)} onClick={close}>{label}</Link>)}
-        <Link className="site-nav-cta" href="/enviar" aria-current={current("/enviar")} onClick={close}>Enviar conteúdo{variant === "home" ? <HomeArrow /> : null}</Link>
+        <Link className="site-nav-cta" href="/enviar" aria-current={current("/enviar")} onClick={close}><PressSurface>Enviar conteúdo{variant === "home" ? <HomeArrow /> : null}</PressSurface></Link>
       </nav>
     </header>
   );

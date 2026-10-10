@@ -30,3 +30,30 @@ describe("interface primitives", () => {
     expect(screen.getByLabelText("Título")).toHaveAttribute("aria-invalid", "true");
   });
 });
+
+it("keeps the primitive ref and native disabled semantics on the stable outer button", () => {
+  let control: HTMLButtonElement | null = null;
+  render(<Button ref={(node) => { control = node; }} disabled type="submit" aria-label="Confirmar">Confirmar</Button>);
+  const button = screen.getByRole("button", { name: "Confirmar" });
+  expect(control).toBe(button);
+  expect(button).toBeDisabled();
+  expect(button).toHaveAttribute("type", "submit");
+  expect(button.querySelector("[data-press-content]")).toHaveTextContent("Confirmar");
+  expect(button.querySelectorAll("button")).toHaveLength(0);
+});
+
+it("preserves BaseUI anchor rendering and names without nesting interactive controls", () => {
+  render(<Button nativeButton={false} render={<a href="#destino" />}>Abrir destino</Button>);
+  const anchor = screen.getByRole("button", { name: "Abrir destino" });
+  expect(anchor.tagName).toBe("A");
+  expect(anchor).toHaveAttribute("href", "#destino");
+  expect(anchor.querySelector("[data-press-content]")).toHaveTextContent("Abrir destino");
+});
+
+it("keeps editorial link and ghost variants outside the 3D surface recipe", () => {
+  render(<><Button variant="link">Editorial</Button><Button variant="ghost">Fechar</Button></>);
+  for (const name of ["Editorial", "Fechar"]) {
+    expect(screen.getByRole("button", { name })).not.toHaveAttribute("data-press");
+    expect(screen.getByRole("button", { name }).querySelector("[data-press-content]")).toBeNull();
+  }
+});
