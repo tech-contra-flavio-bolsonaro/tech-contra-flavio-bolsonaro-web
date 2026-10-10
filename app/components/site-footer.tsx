@@ -11,29 +11,12 @@ const VALID_PATHS = [
   "/ferramentas",
   "/enviar",
   "/conteudos",
+  "/blog",
 ];
 
 export function SiteFooter() {
   const pathname = usePathname();
 
-  if (pathname === "/blog")
-    return (
-      <footer className="site-footer blog-footer">
-        <Link className="site-footer-brand" href="/">
-          ⚑ VIRA VOTO
-        </Link>
-        <nav aria-label="Navegação do rodapé">
-          <Link href="/manifesto">Manifesto</Link>
-          <Link href="/ferramentas">Ferramentas</Link>
-          <Link href="/conteudos">Conteúdos</Link>
-          <Link href="/blog">Blog</Link>
-        </nav>
-        <Link className="site-footer-top" href="#top">
-          <span>Voltar ao topo</span>
-          <ArrowUp aria-hidden="true" />
-        </Link>
-      </footer>
-    );
   if (!VALID_PATHS.includes(pathname) && !pathname?.startsWith("/blog/")) return null;
 
   return (
@@ -62,17 +45,6 @@ export function SiteFooter() {
         <p>VIRA VOTO — IDEIAS EM MOVIMENTO.</p>
         <p>CONSTRUÍDO EM REDE. PARA VIRAR O JOGO.</p>
       </div>
-    </footer>
-  );
-  return (
-    <footer className="site-footer">
-      <Link className="site-footer-brand" href="/">
-        VIRA VOTO
-      </Link>
-      <Link className="site-footer-top" href="#top">
-        <span>Voltar ao topo</span>
-        <ArrowUp aria-hidden="true" />
-      </Link>
     </footer>
   );
 }

@@ -53,8 +53,8 @@ export function BlogCard({
               {blogDate(article.publishedAt)}
             </time>
           </p>
-          <Link className={variant === "home" ? "blog-read home-button home-button-white" : "blog-read"} href={blogPermalink(article)}>
-            {variant === "home" ? <>Ler artigo <HomeArrow /></> : "Ler artigo ↗"}
+          <Link className="blog-read home-button home-button-white" href={blogPermalink(article)}>
+            Ler artigo <HomeArrow />
           </Link>
         </div>
       </div>
