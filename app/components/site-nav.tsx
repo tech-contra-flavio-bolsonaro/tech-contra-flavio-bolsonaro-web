@@ -42,7 +42,7 @@ export function SiteNav({ variant = "default" }: { variant?: "default" | "home" 
 
   const close = () => setIsOpen(false);
   const current = (href: string) =>
-    pathname === href || (href === "/ferramentas" && pathname.startsWith(`${href}/`) || (href === "/blog" && pathname?.startsWith("/blog/")))
+    pathname === href || (href === "/ferramentas" && pathname?.startsWith(`${href}/`) || (href === "/blog" && pathname?.startsWith("/blog/")))
       ? "page"
       : undefined;
 
