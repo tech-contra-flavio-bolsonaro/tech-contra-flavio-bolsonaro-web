@@ -1,3 +1,4 @@
+import { PressSurface } from "@/components/ui/press-surface";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HomeArrow } from "@/app/components/home-arrow";
@@ -54,9 +55,9 @@ export default async function BlogPage({
             href="https://dev.to/techcontrabolsonaro"
             target="_blank"
             rel="noopener noreferrer"
-          >
+          ><PressSurface>
             Conheça no DEV.to <HomeArrow />
-          </a>
+          </PressSurface></a>
         </div>
         {result.status === "unavailable" ? (
           <BlogUnavailable reason={result.reason} />
@@ -88,13 +89,13 @@ export default async function BlogPage({
                 aria-label="Paginação dos artigos"
               >
                 {page > 1 ? (
-                  <Link className="home-button home-button-white" href={`/blog?page=${page - 1}`}><span className="blog-arrow-previous"><HomeArrow /></span> Anterior</Link>
+                  <Link className="home-button home-button-white" href={`/blog?page=${page - 1}`}><PressSurface><span className="blog-arrow-previous"><HomeArrow /></span> Anterior</PressSurface></Link>
                 ) : (
                   <span />
                 )}
                 <span aria-current="page">Página {page}</span>
                 {result.hasNext ? (
-                  <Link className="home-button home-button-white" href={`/blog?page=${page + 1}`}>Próxima <span className="blog-arrow-next"><HomeArrow /></span></Link>
+                  <Link className="home-button home-button-white" href={`/blog?page=${page + 1}`}><PressSurface>Próxima <span className="blog-arrow-next"><HomeArrow /></span></PressSurface></Link>
                 ) : (
                   <span />
                 )}
@@ -106,7 +107,7 @@ export default async function BlogPage({
             <h2>Nenhum artigo nesta página</h2>
             <p>Os artigos publicados pela organização aparecerão aqui.</p>
             {page > 1 ? (
-              <Link className="home-button home-button-yellow" href="/blog">Voltar à primeira página <HomeArrow /></Link>
+              <Link className="home-button home-button-yellow" href="/blog"><PressSurface>Voltar à primeira página <HomeArrow /></PressSurface></Link>
             ) : null}
           </section>
         )}

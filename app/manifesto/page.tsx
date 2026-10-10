@@ -1,3 +1,4 @@
+import { PressSurface } from "@/components/ui/press-surface";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -113,9 +114,9 @@ export default function ManifestoPage() {
         </div>
         <div className="manifesto-next">
           <p>DA IDEIA AO PRÓXIMO PASSO.</p>
-          <Link href="/ferramentas" className="home-button home-button-yellow">
+          <Link href="/ferramentas" className="home-button home-button-yellow"><PressSurface>
             Conheça as ferramentas <HomeArrow />
-          </Link>
+          </PressSurface></Link>
         </div>
       </section>
       <section

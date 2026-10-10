@@ -1,3 +1,4 @@
+import { PressSurface } from "@/components/ui/press-surface";
 import Image from "next/image";
 import Link from "next/link";
 import { HomeArrow } from "@/app/components/home-arrow";
@@ -22,10 +23,10 @@ export default function NotFound() {
             lugar. Vamos encontrar outro caminho?
           </p>
           <div className="not-found-actions">
-            <Link className="not-found-home-link" href="/">
+            <Link className="not-found-home-link" href="/"><PressSurface>
               Voltar para o início
               <HomeArrow />
-            </Link>
+            </PressSurface></Link>
           </div>
         </div>
         <Image

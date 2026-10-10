@@ -1,3 +1,4 @@
+import { PressSurface } from "@/components/ui/press-surface";
 import Link from "next/link";
 import { HomeArrow } from "@/app/components/home-arrow";
 import { DetailShell } from "./detail-shell";
@@ -12,7 +13,7 @@ export default function NotFound() {
         <section className="blog-status">
           <h1>Artigo não encontrado</h1>
           <p>Esta publicação não está disponível no Blog da comunidade.</p>
-          <Link className="home-button home-button-yellow" href="/blog">Voltar para o Blog <HomeArrow /></Link>
+          <Link className="home-button home-button-yellow" href="/blog"><PressSurface>Voltar para o Blog <HomeArrow /></PressSurface></Link>
         </section>
       </main>
     </DetailShell>

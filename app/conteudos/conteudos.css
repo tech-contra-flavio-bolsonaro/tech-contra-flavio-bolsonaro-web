@@ -7,7 +7,7 @@
 .content-list-page .site-nav { gap: 36px; }
 .content-list-page .site-nav a:not(.site-nav-cta) { line-height: 1.2; }
 .content-list-page .site-nav a[aria-current="page"]:not(.site-nav-cta) { text-decoration-color: var(--vv-color-blue); }
-.content-list-page .site-nav .site-nav-cta { gap: 24px; height: 48px; border: 0; box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); }
+.content-list-page .site-nav .site-nav-cta { gap: 24px; height: 48px; --press-border-width: 0px; --press-border-color: transparent; border: 0; --press-shadow: inset 0 0 0 3px #000, calc(7px - var(--press-shift, 0px)) calc(7px - var(--press-shift, 0px)) 0 #000; box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); }
 .content-list-hero { display: flex; flex-direction: column; gap: 28px; padding: 88px 80px 64px; background-image: linear-gradient(rgb(25 0 208 / 12%) .5325px, transparent .5325px), linear-gradient(90deg,rgb(25 0 208 / 12%) 1px,transparent 1px); background-size: 90px 83.8px; }
 .content-list-page h1, .content-list-page h2 { max-width: none; margin: 0; color: inherit; font-family: var(--vv-font-display); font-weight: 800; letter-spacing: 0; }
 .content-list-hero h1 { max-width: 1100px; min-height: 125px; font-size: 132px; line-height: .94; }
@@ -52,8 +52,10 @@
 .listing-content-description > p { margin: 12px 0 0; font-size: 16px; line-height: 1.6; white-space: pre-wrap; }
 .listing-content-link { display: inline-flex; gap: 12px; align-items: center; color: var(--vv-color-blue); font-size: 14px; font-weight: 600; }
 .listing-content-link .home-arrow { width: 16px; height: 16px; flex-basis: 16px; }
-.listing-content-info .share-trigger { flex-shrink: 0; min-height: 48px; height: auto; margin-top: auto; padding: 12px 16px; gap: 20px; border: 0; border-radius: 4px; background: var(--vv-color-yellow); color: #000; box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); font-size: 15px; font-weight: 700; }
-.listing-content-info .share-trigger:hover { background: #fff; }
+.listing-content-info .share-trigger { flex-shrink: 0; min-height: 48px; height: auto; margin-top: auto; padding: 12px 16px; gap: 20px; --press-border-width: 0px; --press-border-color: transparent; border: 0; border-radius: 4px; --press-bg: var(--vv-color-yellow); background: var(--vv-color-yellow); color: #000; --press-shadow: inset 0 0 0 3px #000, calc(7px - var(--press-shift, 0px)) calc(7px - var(--press-shift, 0px)) 0 #000; box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); font-size: 15px; font-weight: 700; }
+@media (hover: hover) and (pointer: fine) {
+.listing-content-info .share-trigger:hover { --press-bg: #fff; background: #fff; }
+}
 .content-list-page :focus-visible { outline: 3px solid var(--vv-color-blue); outline-offset: 5px; }
 .content-list-page .content-list-more { display: flex; margin: 28px auto; }
 .content-list-acervo > .content-list-contribution { margin-top: 56px; }

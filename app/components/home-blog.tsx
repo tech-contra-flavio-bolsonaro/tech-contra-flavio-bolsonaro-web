@@ -1,3 +1,4 @@
+import { PressSurface } from "@/components/ui/press-surface";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { BlogCard } from "./blog-card";
@@ -12,7 +13,7 @@ function HomeBlogSection({ children }: { children: ReactNode }) {
         <p>Inspiração, ferramentas e histórias reais para transformar boas ideias em ação coletiva.</p>
       </header>
       {children}
-      <Link className="home-button home-button-yellow home-blog-all" href="/blog">Ver todos os artigos <HomeArrow /></Link>
+      <Link className="home-button home-button-yellow home-blog-all" href="/blog"><PressSurface>Ver todos os artigos <HomeArrow /></PressSurface></Link>
     </section>
   );
 }

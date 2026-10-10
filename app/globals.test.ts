@@ -40,12 +40,12 @@ it("preserves the Figma dialog frame after global styles are applied", () => {
 });
 
 it("keeps the content-card share trigger legible on hover", () => {
-  expect(styles).toContain('.share-trigger:hover { background: var(--tech-yellow); color: var(--tech-blue); }');
+  expect(styles).toContain('.share-trigger:hover { --press-bg: var(--tech-yellow); background: var(--tech-yellow); color: var(--tech-blue); }');
 });
 
 it("applies home colors to the default share trigger presentation", () => {
-  expect(styles).toContain(".share-trigger.share-trigger-home-colors { border-color: #000; background: var(--vv-color-yellow); color: #000; }");
-  expect(styles).toContain(".share-trigger.share-trigger-home-colors:hover { background: var(--vv-color-coral); color: #000; }");
+  expect(styles).toContain(".share-trigger.share-trigger-home-colors { --press-border-color: #000; border-color: #000; --press-bg: var(--vv-color-yellow); background: var(--vv-color-yellow); color: #000; }");
+  expect(styles).toContain(".share-trigger.share-trigger-home-colors:hover { --press-bg: var(--vv-color-coral); background: var(--vv-color-coral); color: #000; }");
   expect(styles).toContain(".share-trigger.share-trigger-home-colors:focus-visible { outline-color: var(--vv-color-blue); }");
 });
 
@@ -89,7 +89,7 @@ it("renders the home content highlight as the Penpot horizontal editorial card",
 it("keeps portrait previews and sharing controls readable in the home highlight", () => {
   expect(styles).toContain("height: 350px;");
   expect(styles).toContain("object-fit: cover;");
-  expect(styles).toContain(".home-content-info .share-trigger:hover { background: var(--vv-color-coral); color: #000; }");
+  expect(styles).toContain(".home-content-info .share-trigger:hover { --press-bg: var(--vv-color-coral); background: var(--vv-color-coral); color: #000; }");
   expect(styles).toContain(".home-content-info .share-trigger:focus-visible { outline-color: var(--vv-color-blue); }");
   expect(styles).toContain(".home-share-dialog .share-preview { width: 100%; height: auto; max-height: 40vh; object-fit: contain; }");
 });

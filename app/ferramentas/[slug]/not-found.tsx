@@ -1,3 +1,4 @@
+import { PressSurface } from "@/components/ui/press-surface";
 import Link from "next/link";
 import { SiteNav } from "@/app/components/site-nav";
 import { notFoundMetadata } from "@/app/lib/page-metadata";
@@ -12,7 +13,7 @@ export default function ToolNotFound() {
         <p className="tool-detail-eyebrow">FERRAMENTAS / 404</p>
         <h1 id="tool-title">Ferramenta não encontrada.</h1>
         <p>Ela pode não estar publicada ou o endereço pode estar incorreto.</p>
-        <Link className="tool-detail-action" href="/ferramentas">Ver ferramentas disponíveis</Link>
+        <Link className="tool-detail-action" href="/ferramentas"><PressSurface>Ver ferramentas disponíveis</PressSurface></Link>
       </section>
     </main>
   );

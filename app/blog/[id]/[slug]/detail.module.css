@@ -26,11 +26,8 @@
   gap: 24px;
   height: 48px;
   min-height: 48px;
-  padding: 0 22px;
-  border: 0;
-  border-radius: 4px;
-  box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard);
-  background: var(--vv-color-yellow);
+  padding: 0 22px; --press-border-width: 0px; --press-border-color: transparent; border: 0;
+  border-radius: 4px; --press-shadow: inset 0 0 0 3px #000, calc(7px - var(--press-shift, 0px)) calc(7px - var(--press-shift, 0px)) 0 #000; box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); --press-bg: var(--vv-color-yellow); background: var(--vv-color-yellow);
   color: #000;
   font: 700 15px/1.2 var(--vv-font-body);
 }
@@ -57,17 +54,14 @@
   height: 58px;
   min-height: 58px;
   gap: 24px;
-  padding: 0 22px;
-  border: 0;
-  border-radius: 4px;
-  box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard);
-  background: var(--vv-color-yellow);
+  padding: 0 22px; --press-border-width: 0px; --press-border-color: transparent; border: 0;
+  border-radius: 4px; --press-shadow: inset 0 0 0 3px #000, calc(7px - var(--press-shift, 0px)) calc(7px - var(--press-shift, 0px)) 0 #000; box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); --press-bg: var(--vv-color-yellow); background: var(--vv-color-yellow);
   color: #000;
   font: 700 17px/1.2 var(--vv-font-body);
 }
-.detail.detail :global(.home-button:hover), .detail.detail :global(.site-nav .site-nav-cta:hover) {
-  background: var(--vv-color-lilac); color: #000;
-}
+@media (hover: hover) and (pointer: fine) {
+.detail.detail :global(.home-button:hover), .detail.detail :global(.site-nav .site-nav-cta:hover) { --press-bg: var(--vv-color-lilac); background: var(--vv-color-lilac); color: #000;
+}}
 .detail.detail :global(a:focus-visible), .detail.detail :global(button:focus-visible) {
   outline: 3px solid currentColor; outline-offset: 5px;
 }

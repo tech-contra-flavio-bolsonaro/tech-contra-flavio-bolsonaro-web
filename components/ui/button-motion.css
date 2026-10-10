@@ -1,0 +1,69 @@
+/* Stable native hitbox; only the pointer-inert paint and content move.
+   Existing route rules supply paint variables at their original specificity. */
+@layer components {
+[data-press] {
+  --press-bg: var(--vv-color-yellow);
+  --press-border-color: #000;
+  --press-border-width: 3px;
+  --press-shadow: calc(7px - var(--press-shift, 0px)) calc(7px - var(--press-shift, 0px)) 0 #000;
+}
+[data-press][data-variant="coral"], [data-press][data-variant="secondary"], [data-press][data-variant="destructive"] { --press-bg: var(--vv-color-coral); }
+[data-press][data-variant="white"] { --press-bg: #fff; }
+[data-press][data-variant="outline"] { --press-bg: transparent; --press-border-color: #fff; }
+[data-press][data-variant="outline"][aria-expanded="true"] { --press-bg: #fff; }
+[data-press][data-variant="secondary"][aria-expanded="true"] { --press-bg: var(--vv-color-yellow); }
+}
+[data-press][data-variant][aria-invalid="true"] { --press-border-color: var(--vv-color-coral); }
+:is([data-press], .home-button, .site-nav-cta, .tools-suggestion-link, .tool-detail-action, .tool-access .action-link, .not-found-home-link, .tool-filter-list button, .tools-categories .load-more):has(> [data-press-content]) {
+  position: relative;
+  isolation: isolate;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+  translate: none !important;
+  overflow: visible;
+  border-radius: 0 !important;
+}
+:is([data-press], .home-button, .site-nav-cta, .tools-suggestion-link, .tool-detail-action, .tool-access .action-link, .not-found-home-link, .tool-filter-list button, .tools-categories .load-more):has(> [data-press-content])::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--press-border-width, 0px));
+  z-index: -1;
+  pointer-events: none;
+  border: inherit;
+  border-color: var(--press-border-color, #000);
+  border-radius: var(--press-radius, 4px);
+  background: var(--press-bg, transparent);
+  box-shadow: var(--press-shadow, none);
+  transform: translate(var(--press-shift, 0px), var(--press-shift, 0px));
+  transition: transform 140ms ease-out, box-shadow 140ms ease-out;
+}
+[data-press-content] {
+  display: inline-flex;
+  min-width: 0;
+  align-items: inherit;
+  justify-content: inherit;
+  gap: inherit;
+  pointer-events: none;
+  transform: translate(var(--press-shift, 0px), var(--press-shift, 0px));
+  transition: transform 140ms ease-out;
+}
+/* Inline-block icon actions need their original block SVG baseline. */
+.inline-block > [data-press-content] { display: block; }
+@media (hover: hover) and (pointer: fine) {
+  :is([data-press], .home-button, .site-nav-cta, .tools-suggestion-link, .tool-detail-action, .tool-access .action-link, .not-found-home-link, .tool-filter-list button, .tools-categories .load-more):has(> [data-press-content]):where(:hover):not(:disabled, [aria-disabled="true"], [data-disabled]) { --press-shift: var(--press-hover-shift, 2px); }
+  @layer components {
+  [data-press][data-variant="default"]:hover, [data-press][data-variant="destructive"]:hover { --press-bg: #fff; }
+  [data-press][data-variant="coral"]:hover, [data-press][data-variant="secondary"]:hover { --press-bg: var(--vv-color-yellow); }
+  [data-press][data-variant="white"]:hover { --press-bg: var(--vv-color-lilac); }
+  [data-press][data-variant="outline"]:hover { --press-bg: #fff; color: var(--vv-color-blue); }
+  }
+}
+:is([data-press], .home-button, .site-nav-cta, .tools-suggestion-link, .tool-detail-action, .tool-access .action-link, .not-found-home-link, .tool-filter-list button, .tools-categories .load-more):has(> [data-press-content]):active:not(:disabled, [aria-disabled="true"], [data-disabled]) { --press-shift: var(--press-active-shift, 3px); }
+:is([data-press], .home-button):where(:disabled, [aria-disabled="true"], [data-disabled]) { --press-shift: 0px !important; }
+[data-press]:disabled { --press-shadow: none; }
+@media (prefers-reduced-motion: reduce) {
+  :is([data-press], .home-button, .site-nav-cta, .tools-suggestion-link, .tool-detail-action, .tool-access .action-link, .not-found-home-link, .tool-filter-list button, .tools-categories .load-more):has(> [data-press-content]) { --press-shift: var(--press-rest-shift, 0px) !important; }
+  [data-press-content], :is([data-press], .home-button, .site-nav-cta, .tools-suggestion-link, .tool-detail-action, .tool-access .action-link, .not-found-home-link, .tool-filter-list button, .tools-categories .load-more):has(> [data-press-content])::before { transition: none; }
+}
