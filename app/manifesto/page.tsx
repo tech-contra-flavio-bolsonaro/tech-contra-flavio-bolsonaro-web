@@ -12,7 +12,7 @@ import { pageMetadata } from "@/app/lib/page-metadata";
 export const metadata: Metadata = pageMetadata({
   title: "Manifesto",
   description:
-    "Entenda a proposta do Vira Voto: ideias ganham força quando circulam, encontram pessoas e viram ação coletiva.",
+    "Entenda a proposta do Tech Contra Bolsonaro: ideias ganham força quando circulam, encontram pessoas e viram ação coletiva.",
   path: "/manifesto",
   ownShareImage: true,
 });

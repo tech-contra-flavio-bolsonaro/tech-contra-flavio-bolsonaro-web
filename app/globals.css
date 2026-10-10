@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Vira Voto primitives, measured from Figma Home (node 2:1815). */
+/* Shared visual-system primitives, measured from Figma Home (node 2:1815). */
 :root {
   --vv-color-blue: #1900d0;
   --vv-color-yellow: #fcf050;
@@ -165,7 +165,7 @@ section > p:not(:first-child) { max-width: 36rem; font-size: 1.2rem; line-height
   html {
     @apply font-sans; } }
 
-/* Keep shadcn primitives inside the Vira Voto visual system. */
+/* Keep shadcn primitives inside the site's visual system. */
 :root {
   --font-sans: var(--vv-font-body);
   --font-heading: var(--vv-font-display);
@@ -430,7 +430,9 @@ h1 span { color: var(--tech-yellow); }
   .home-footer-main { align-items: start; }
   .home-footer nav { justify-content: end; gap: 20px; }
 }
-@media (max-width: 600px) { .home-page .site-header { padding: 0 22px; }
+@media (max-width: 600px) { .home-page .site-header { gap: 12px; padding: 0 16px; }
+  .home-page .site-header-brand { gap: 8px; font-size: 22px; }
+  .home-page .site-header-brand img { width: 24px; height: 24px; }
   .home-manifesto { padding: 32px 22px; }
   .home-manifesto h2 { font-size: 36px; }
   .home-preview, .home-content { padding: 48px 22px 56px; }
@@ -449,11 +451,17 @@ h1 span { color: var(--tech-yellow); }
   .home-submit h2 { font-size: 40px; }
   .home-submit-panel .home-button { grid-column: 1; }
   .home-footer.site-footer { padding: 32px 22px; }
+  .home-footer .site-footer-brand { font-size: 24px; }
   .home-footer-main, .home-footer-credits { flex-direction: column; align-items: start; gap: 24px; }
   .home-footer-credits { align-self: stretch; }
   .home-footer nav { justify-content: start; gap: 20px 24px; }
   .home-footer-social { justify-content: center; }
   .home-footer-credits { gap: 12px; }
+  .site-header-brand, .site-footer-brand { font-size: 22px; }
+  .tools-page .site-header-brand, .not-found-page .site-header-brand { font-size: 22px; }
+  .content-submission-page .site-header-brand { gap: 8px; font-size: 22px; }
+  .content-submission-page .site-header-brand img, .manifesto-page .site-header-brand img { width: 24px; height: 24px; }
+  .manifesto-page .site-header-brand { gap: 8px; }
 }
 
 .tools-list h1 { max-width: 20ch; font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.05; letter-spacing: -.035em; overflow-wrap: anywhere; }

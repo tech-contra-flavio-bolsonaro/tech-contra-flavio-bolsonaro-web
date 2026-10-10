@@ -17,7 +17,7 @@ it("shows tools from the API in the community tools page", async () => {
     title: "Mapa da comunidade",
     description: "Encontre ações e iniciativas próximas.",
     category: "Mobilização",
-    credit: "Rede Vira Voto",
+    credit: "Rede Tech Contra Bolsonaro",
     url: "https://example.com/mapa",
     priority: 0,
     is_internal: false,

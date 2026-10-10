@@ -1,3 +1,5 @@
+import { absoluteUrl } from "./site-url";
+
 export type Content = {
   id: string;
   title: string;
@@ -16,27 +18,27 @@ export const contents: Content[] = [
     title: "Toda conversa pode abrir caminho",
     description: "Card para usar quando você quiser começar por escuta e presença.",
     kind: "image",
-    credit: "Acervo Vira Voto",
+    credit: "Acervo Tech Contra Bolsonaro",
     tags: ["conversa", "escuta"],
     accent: "rose",
-    url: "https://vira-voto.vercel.app/#conteudos",
+    url: absoluteUrl("/conteudos"),
   },
   {
     id: "card-cuidado",
     title: "Cuidar também é mobilizar",
     description: "Imagem para lembrar que mudança se faz em rede, todos os dias.",
     kind: "image",
-    credit: "Acervo Vira Voto",
+    credit: "Acervo Tech Contra Bolsonaro",
     tags: ["comunidade", "cuidado"],
     accent: "sage",
-    url: "https://vira-voto.vercel.app/#conteudos",
+    url: absoluteUrl("/conteudos"),
   },
   {
     id: "video-exemplo",
     title: "Roda de conversa em movimento",
     description: "Vídeo de referência para compartilhar junto de um convite de ação.",
     kind: "video",
-    credit: "Acervo Vira Voto",
+    credit: "Acervo Tech Contra Bolsonaro",
     tags: ["vídeo", "ação"],
     accent: "sky",
     url: "https://www.youtube.com/",

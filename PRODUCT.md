@@ -1,4 +1,4 @@
-# Vira Voto
+# Tech Contra Bolsonaro
 
 <!-- impeccable:product-schema 1 -->
 
@@ -20,4 +20,4 @@ Ferramentas têm páginas próprias, com incorporação autorizada pela curadori
 
 ## Brand Commitments
 
-Preservar o nome Vira Voto, a interface em português e as convenções visuais existentes. Esta entrega amplia os fluxos atuais.
+Usar a marca Tech Contra Bolsonaro, manter a interface em português e preservar as convenções visuais existentes. Esta entrega amplia os fluxos atuais.

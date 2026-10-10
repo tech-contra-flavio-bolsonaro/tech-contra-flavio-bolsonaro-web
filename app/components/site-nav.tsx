@@ -48,7 +48,7 @@ export function SiteNav({ variant = "default" }: { variant?: "default" | "home" 
 
   return (
     <header className="site-header" ref={header}>
-      <Link className="site-header-brand" href="/" onClick={close}>{variant === "home" ? <Image src="/images/home-pixel-logo.svg" alt="" width={36} height={36} unoptimized /> : null}VIRA VOTO</Link>
+      <Link className="site-header-brand" href="/" onClick={close}>{variant === "home" ? <Image src="/images/home-pixel-logo.svg" alt="" width={36} height={36} unoptimized /> : null}TECH CONTRA BOLSONARO</Link>
       <button
         ref={toggle}
         className="site-nav-toggle"

@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const siteOpenGraph = {
-  siteName: "Vira Voto",
+  siteName: "Tech Contra Bolsonaro",
   locale: "pt_BR",
 } as const;
 
 // app/opengraph-image.png. Pages that override openGraph lose the inherited file
 // image (shallow merge), so they reference it explicitly.
 export const defaultShareImages = [
-  { url: "/opengraph-image.png", width: 1200, height: 630, alt: "Vira Voto" },
+  { url: "/opengraph-image.png", width: 1200, height: 630, alt: "Tech Contra Bolsonaro" },
 ];
 
 // Next merges metadata shallowly, so a page that omits openGraph inherits the
@@ -42,7 +42,7 @@ export function pageMetadata({
   };
 }
 
-// Shared by every not-found.tsx; "absolute" keeps the "%s | Vira Voto" template out.
+// Shared by every not-found.tsx; "absolute" keeps the site title template out.
 export const notFoundMetadata: Metadata = {
-  title: { absolute: "Vira Voto - Página Não Encontrada" },
+  title: { absolute: "Tech Contra Bolsonaro - Página Não Encontrada" },
 };

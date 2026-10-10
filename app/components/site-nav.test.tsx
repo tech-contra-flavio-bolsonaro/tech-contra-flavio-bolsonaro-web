@@ -16,7 +16,7 @@ it("keeps the brand and a closed menu toggle on a single header row", () => {
   const toggle = screen.getByRole("button", { name: /menu/i });
   expect(toggle).toHaveAttribute("aria-expanded", "false");
   expect(toggle).toHaveAttribute("aria-controls", "site-nav-links");
-  expect(screen.getByRole("link", { name: "VIRA VOTO" })).toHaveAttribute("href", "/");
+  expect(screen.getByRole("link", { name: "TECH CONTRA BOLSONARO" })).toHaveAttribute("href", "/");
   expect(document.getElementById("site-nav-links")).toHaveAttribute("data-open", "false");
 });
 
@@ -72,7 +72,7 @@ it("marks Ferramentas current on a tool detail route", () => {
   render(<SiteNav variant="home" />);
 
   expect(screen.getByRole("link", { name: "Ferramentas" })).toHaveAttribute("aria-current", "page");
-  expect(screen.getByRole("link", { name: "VIRA VOTO" })).toHaveAttribute("href", "/");
+  expect(screen.getByRole("link", { name: "TECH CONTRA BOLSONARO" })).toHaveAttribute("href", "/");
   
 });
   
