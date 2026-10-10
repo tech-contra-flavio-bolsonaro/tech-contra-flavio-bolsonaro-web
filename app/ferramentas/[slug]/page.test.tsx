@@ -24,6 +24,7 @@ it("uses the shared Ferramentas header and detail-page button styles", async () 
     credit: "Comunidade Vira Voto",
     url: "https://example.com/virada",
     priority: 0,
+    is_internal: false,
   });
   vi.mocked(findToolEmbed).mockResolvedValue(null);
 

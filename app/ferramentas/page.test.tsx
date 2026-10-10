@@ -19,6 +19,8 @@ it("shows tools from the API in the community tools page", async () => {
     category: "Mobilização",
     credit: "Rede Vira Voto",
     url: "https://example.com/mapa",
+    priority: 0,
+    is_internal: false,
   };
   const fetch = vi.fn().mockResolvedValue({
     ok: true,

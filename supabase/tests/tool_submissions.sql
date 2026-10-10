@@ -18,8 +18,11 @@ begin
     values ('Calculadora de Impostos', 'Simula impostos pagos.', 'Economia', 'Maria', 'https://example.com') returning slug into a;
   assert a = 'calculadora-de-impostos', 'slug from title: ' || a;
   assert (select priority from tool_submissions where slug = a) = 0, 'tool priority defaults to zero';
+  assert (select is_internal from tool_submissions where slug = a) = false, 'internal flag defaults to false';
   update tool_submissions set priority = 5 where slug = a;
   assert (select priority from tool_submissions where slug = a) = 5, 'tool priority can be updated';
+  update tool_submissions set is_internal = true where slug = a;
+  assert (select is_internal from tool_submissions where slug = a) = true, 'internal flag can be enabled';
 
   insert into tool_submissions (title, description, category, credit, url)
     values ('Calculadora de Impostos', 'Outra ferramenta igual.', 'Economia', 'Joao', 'https://example.com') returning slug into b;

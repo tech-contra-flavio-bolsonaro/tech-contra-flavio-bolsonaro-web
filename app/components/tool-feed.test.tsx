@@ -2,7 +2,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-libra
 import { afterEach, expect, it, vi } from "vitest";
 import { ToolFeed } from "./tool-feed";
 
-const item = (id: number, priority = 0) => ({ id: String(id), slug: `mapa-${id}`, title: `Mapa ${id}`, description: "Caminhos disponíveis", category: "Planejamento", credit: "Comunidade", url: "https://example.com", priority });
+const item = (id: number, priority = 0) => ({ id: String(id), slug: `mapa-${id}`, title: `Mapa ${id}`, description: "Caminhos disponíveis", category: "Planejamento", credit: "Comunidade", url: "https://example.com", priority, is_internal: false });
 const response = (ids: number[], hasMore = false) => ({ ok: true, json: async () => ({ items: ids.map((id) => item(id)), hasMore }) });
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); window.history.replaceState(null, "", "/"); });
 

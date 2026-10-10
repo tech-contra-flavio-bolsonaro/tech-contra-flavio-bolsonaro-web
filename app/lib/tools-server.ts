@@ -3,7 +3,7 @@ import { resolveServerSupabaseUrl } from "./supabase-url";
 import { httpsUrl, type PublishedTool, type ToolCategory } from "./tools";
 
 
-const fields = "id,slug,title,description,category,credit,url,priority";
+const fields = "id,slug,title,description,category,credit,url,priority,is_internal";
 const pageSize = 10;
 
 function database() {
