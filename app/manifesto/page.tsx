@@ -7,12 +7,14 @@ import { ManifestoSignLink } from "@/app/components/manifesto-sign-link";
 import { ManifestoReadLink } from "@/app/components/manifesto-read-link";
 import { ManifestoFullText } from "@/app/components/manifesto-full-text";
 import { ManifestoSignatureForm } from "@/app/components/manifesto-signature-form";
+import { pageMetadata } from "@/app/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Manifesto",
   description:
     "Entenda a proposta do Vira Voto: ideias ganham força quando circulam, encontram pessoas e viram ação coletiva.",
-};
+  path: "/manifesto",
+});
 
 const principles = [
   {

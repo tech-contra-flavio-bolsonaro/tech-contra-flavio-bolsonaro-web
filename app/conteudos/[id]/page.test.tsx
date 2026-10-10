@@ -30,7 +30,7 @@ it("preserves a normalized HTTPS video link, uploaded media, and permalink metad
     title: item.title,
     description: item.description,
     alternates: { canonical: `/conteudos/${id}` },
-    openGraph: { title: item.title, description: item.description, type: "article", url: `/conteudos/${id}` },
+    openGraph: { siteName: "Vira Voto", locale: "pt_BR", title: item.title, description: item.description, type: "article", url: `/conteudos/${id}` },
     twitter: { card: "summary", title: item.title, description: item.description },
   });
 });

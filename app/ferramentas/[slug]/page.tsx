@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { siteOpenGraph } from "@/app/lib/page-metadata";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteNav } from "@/app/components/site-nav";
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       canonical: `/ferramentas/${slug}`,
     },
     openGraph: {
+      ...siteOpenGraph,
       title: tool.title,
       description: tool.description,
       type: "article",

@@ -4,12 +4,14 @@ import type { Metadata } from "next";
 import { HomeArrow } from "@/app/components/home-arrow";
 import { SiteNav } from "@/app/components/site-nav";
 import { ToolFeed } from "@/app/components/tool-feed";
+import { pageMetadata } from "@/app/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Ferramentas",
   description:
     "Explore ferramentas da comunidade para planejar, criar e colocar ideias em movimento.",
-};
+  path: "/ferramentas",
+});
 
 export default function FerramentasPage() {
   return (

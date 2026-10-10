@@ -33,6 +33,13 @@ export async function listToolCategories(): Promise<ToolCategory[]> {
     .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, "pt-BR"));
 }
 
+export async function listToolSlugs(): Promise<string[]> {
+  const { data, error } = await database().from("tool_submissions")
+    .select("slug").eq("status", "approved").order("created_at", { ascending: false });
+  if (error) throw error;
+  return ((data ?? []) as { slug: string }[]).map(({ slug }) => slug);
+}
+
 export async function findTool(slug: string): Promise<PublishedTool | null> {
   const { data, error } = await database().from("tool_submissions")
     .select(fields).eq("status", "approved").eq("slug", slug).maybeSingle();

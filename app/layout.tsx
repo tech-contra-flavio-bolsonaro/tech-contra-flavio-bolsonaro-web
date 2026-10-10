@@ -3,6 +3,8 @@ import { Barlow_Condensed, IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toast";
 import { SiteFooter } from "@/app/components/site-footer";
+import { siteOpenGraph } from "@/app/lib/page-metadata";
+import { siteUrl } from "@/app/lib/site-url";
 
 const barlowCondensed = Barlow_Condensed({
   variable: "--font-barlow-condensed",
@@ -20,9 +22,6 @@ const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
-
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://techcontraflaviobolsonaro.dev/";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -44,9 +43,7 @@ export const metadata: Metadata = {
     title: "Vira Voto",
     description:
       "Ferramentas e conteúdos para transformar ideias em ação coletiva.",
-    url: siteUrl,
-    siteName: "Vira Voto",
-    locale: "pt_BR",
+    ...siteOpenGraph,
     type: "website",
   },
   twitter: {
