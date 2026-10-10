@@ -1,0 +1,356 @@
+{
+  "summary": {
+    "health_score": 49,
+    "language": "pt-BR",
+    "business_type": "Hub de mobilização cívica e política (publicação/comunidade), em português, voltado ao segundo turno de 2026",
+    "audit_date": "2026-10-10",
+    "top_findings": [
+      "Não há páginas de quem somos, contato, privacidade ou termos; ninguém aparece como responsável pelo site",
+      "As listas de ferramentas, conteúdos e blog só são renderizadas no cliente; o HTML da home tem 0 links para páginas de ferramenta",
+      "Cerca de 28 páginas de ferramenta são resumos de 50 a 70 palavras que só levam para outro site",
+      "Nenhum dado estruturado no site",
+      "A imagem de /conteudos é servida por uma URL assinada do Supabase, em pending/, que expira"
+    ],
+    "quick_wins": [
+      "notFound() para /ferramentas/[slug] inexistente",
+      "JSON-LD de Organization + WebSite",
+      "Carregamento prioritário do hero e do logo; pré-carregar só 1 ou 2 fontes",
+      "noindex ou metadados próprios para /enviar",
+      "Enviar o sitemap ao GSC e ao Bing; ativar o IndexNow"
+    ]
+  },
+  "categories": [
+    {
+      "name": "SEO técnico",
+      "score": 72,
+      "what_works": [
+        "Todas as URLs retornam 200",
+        "Canônicas próprias",
+        "index,follow",
+        "lang=pt-BR",
+        "https com 308",
+        "404 de verdade na raiz",
+        "Sitemap válido",
+        "Cabeçalhos de segurança presentes"
+      ],
+      "findings": [
+        {
+          "title": "As listas dependem de renderização no cliente",
+          "severity": "Alta",
+          "description": "O HTML bruto de /, /ferramentas, /conteudos e /blog mostra 'Carregando…'. A home tem 0 links para páginas de ferramenta e /ferramentas tem 2.",
+          "recommendation": "Buscar as listas em Server Components/ISR para o HTML ter links <a href>."
+        },
+        {
+          "title": "Soft 404 em ferramentas inexistentes",
+          "severity": "Alta",
+          "description": "/ferramentas/xyz retorna 200 com noindex e index,follow ao mesmo tempo.",
+          "recommendation": "Chamar notFound() e remover a meta robots duplicada."
+        },
+        {
+          "title": "Metadados fracos em /enviar e /ferramentas/enviar",
+          "severity": "Média",
+          "description": "Título e descrição genéricos da raiz, sem canônica, fora do sitemap.",
+          "recommendation": "Metadados próprios + canônica, ou noindex."
+        },
+        {
+          "title": "A canônica do blog aponta para o dev.to",
+          "severity": "Média",
+          "description": "Correto para conteúdo republicado, mas o blog nunca vai ranquear.",
+          "recommendation": "Canônica própria em posts originais, ou tratar /blog como página de links."
+        },
+        {
+          "title": "Sitemap sem lastmod",
+          "severity": "Média",
+          "description": "0 de 35 URLs.",
+          "recommendation": "Usar as datas reais de alteração do conteúdo."
+        },
+        {
+          "title": "CSP fraca",
+          "severity": "Média",
+          "description": "unsafe-inline, unsafe-eval; curinga https: em connect-src/frame-src.",
+          "recommendation": "Nonces/hashes; tirar o unsafe-eval."
+        },
+        {
+          "title": "O redirecionamento do www é 307",
+          "severity": "Baixa",
+          "description": "Redirecionamento temporário.",
+          "recommendation": "Usar 308."
+        }
+      ]
+    },
+    {
+      "name": "Qualidade do conteúdo",
+      "score": 30,
+      "what_works": [
+        "Títulos e descrições únicos, escritos à mão",
+        "O manifesto tem conteúdo e é renderizado no servidor",
+        "Algumas ferramentas citam fontes primárias"
+      ],
+      "findings": [
+        {
+          "title": "Falta identificação e transparência",
+          "severity": "Crítica",
+          "description": "/quem-somos, /contato, /privacidade e /termos retornam 404; perfis sociais com nomes diferentes; o formulário de assinatura coleta dados pessoais sem política de privacidade.",
+          "recommendation": "Criar páginas de quem somos e de privacidade (LGPD) e uma linha de responsável no rodapé; revisão jurídica das regras de identificação do TSE."
+        },
+        {
+          "title": "Afirmações políticas sem autoria",
+          "severity": "Crítica",
+          "description": "Ferramentas que fazem afirmações sobre candidatos têm o crédito 'Iniciativa independente'.",
+          "recommendation": "Responsável, fontes, data da última checagem e canal para relatar erros em cada página de ferramenta."
+        },
+        {
+          "title": "Páginas de ferramenta rasas",
+          "severity": "Alta",
+          "description": "De 48 a 69 palavras cada: uma frase, crédito e link de saída.",
+          "recommendation": "Reescrever as ferramentas duradouras como páginas de 500 a 900 palavras; noindex ou consolidar as demais."
+        },
+        {
+          "title": "Blog fora do tema",
+          "severity": "Alta",
+          "description": "O único post é um tutorial de JS de 2025 vindo do dev.to, destacado na home.",
+          "recommendation": "Filtrar o feed por tag ou esconder a seção."
+        },
+        {
+          "title": "Nome da marca indefinido",
+          "severity": "Alta",
+          "description": "Vira Voto / Tech Contra Bolsonaro / techcontraflaviobolsonaro / 3 variações de perfil.",
+          "recommendation": "Escolher um nome principal e explicar a relação entre eles."
+        },
+        {
+          "title": "A imagem de /conteudos expira",
+          "severity": "Alta",
+          "description": "URL assinada do Supabase em community-submissions/pending/, com validade de ~15 min.",
+          "recommendation": "Servir a mídia aprovada de uma URL pública estável."
+        },
+        {
+          "title": "Manifesto difícil de ler e sem data",
+          "severity": "Média",
+          "description": "Flesch-pt ~27; sem data nem número de assinaturas.",
+          "recommendation": "Resumo, um H3 por reivindicação, data e número de assinaturas."
+        }
+      ]
+    },
+    {
+      "name": "SEO on-page",
+      "score": 46,
+      "what_works": [
+        "Títulos e descrições únicos",
+        "Um único H1 na maioria das páginas"
+      ],
+      "findings": [
+        {
+          "title": "Os títulos das ferramentas não correspondem às buscas",
+          "severity": "Média",
+          "description": "'Prensa', 'Fura Bolha', 'Bora Lula', 'Diretório 13'.",
+          "recommendation": "'Nome: palavras-chave descritivas | Vira Voto'."
+        },
+        {
+          "title": "mapa-do-segundo-turno atrai a intenção errada",
+          "severity": "Alta",
+          "description": "Quem busca quer um mapa de resultados; a ferramenta são páginas de fatos.",
+          "recommendation": "Renomear ou reposicionar."
+        },
+        {
+          "title": "H1 e descrição da home vagos",
+          "severity": "Média",
+          "description": "Não citam a eleição, 2026 nem o segundo turno.",
+          "recommendation": "Dizer claramente o que o site é."
+        },
+        {
+          "title": "Não há links entre ferramentas",
+          "severity": "Baixa",
+          "description": "Sem links de ferramentas relacionadas nem de categoria.",
+          "recommendation": "Acrescentar 'ferramentas relacionadas'."
+        },
+        {
+          "title": "Descrições com mais de 160 caracteres",
+          "severity": "Baixa",
+          "description": "o-que-esta-em-jogo-na-sua-cidade, prensa.",
+          "recommendation": "Encurtar para ~155."
+        }
+      ]
+    },
+    {
+      "name": "Schema / dados estruturados",
+      "score": 12,
+      "what_works": [],
+      "findings": [
+        {
+          "title": "Nenhum dado estruturado",
+          "severity": "Crítica",
+          "description": "Nenhum JSON-LD, microdata ou RDFa nas 9 páginas verificadas.",
+          "recommendation": "Injetar o JSON-LD no servidor; os trechos estão em findings/schema.md."
+        },
+        {
+          "title": "Não há entidade Organization/WebSite",
+          "severity": "Alta",
+          "description": "Faltam logo e sameAs.",
+          "recommendation": "Organization com alternateName + sameAs."
+        },
+        {
+          "title": "Sem BreadcrumbList / WebApplication / ItemList",
+          "severity": "Média",
+          "description": "As páginas internas e as ferramentas não têm marcação.",
+          "recommendation": "Trechos por página em findings/schema.md."
+        }
+      ]
+    },
+    {
+      "name": "Performance (CWV)",
+      "score": 86,
+      "what_works": [
+        "Desktop 99-100",
+        "CLS 0",
+        "TBT 0-40 ms",
+        "TTFB 20-250 ms"
+      ],
+      "findings": [
+        {
+          "title": "LCP mobile de 3,8 a 4,4 s",
+          "severity": "Média",
+          "description": "Home com 4,4 s (SVG do hero com lazy); 1,1 a 1,5 s de atraso de renderização por 6 fontes pré-carregadas e 23 KB de CSS bloqueante.",
+          "recommendation": "Prioridade no hero; pré-carregar 1 ou 2 fontes; embutir o CSS crítico."
+        },
+        {
+          "title": "Sem dados de campo",
+          "severity": "Baixa",
+          "description": "API do PSI com 429; sem CrUX.",
+          "recommendation": "Configurar uma chave de API / RUM."
+        }
+      ]
+    },
+    {
+      "name": "Preparo para busca com IA",
+      "score": 39,
+      "what_works": [
+        "Todos os rastreadores de IA recebem 200",
+        "Páginas principais renderizadas no servidor",
+        "Heurística de experiência para agentes 100/100"
+      ],
+      "findings": [
+        {
+          "title": "O site não aparece no Bing",
+          "severity": "Alta",
+          "description": "A busca site: no Bing não retornou nada; isso bloqueia o ChatGPT Search e o Copilot.",
+          "recommendation": "Bing Webmaster Tools + IndexNow."
+        },
+        {
+          "title": "Entidade pouco clara",
+          "severity": "Alta",
+          "description": "Seis variações de nome e perfil; 'vira voto' é uma expressão genérica.",
+          "recommendation": "Um único nome + JSON-LD de Organization."
+        },
+        {
+          "title": "Pouco conteúdo citável",
+          "severity": "Média",
+          "description": "No manifesto, a posição só aparece no 4º parágrafo, sem fontes.",
+          "recommendation": "Resumo de 40 a 60 palavras; citar fontes."
+        },
+        {
+          "title": "Sem llms.txt",
+          "severity": "Baixa",
+          "description": "404.",
+          "recommendation": "Opcional; publicar um arquivo curto."
+        }
+      ]
+    },
+    {
+      "name": "Imagens",
+      "score": 72,
+      "what_works": [
+        "H1 e botão principal visíveis no mobile sem rolar",
+        "Nada transborda para os lados",
+        "og:image na home"
+      ],
+      "findings": [
+        {
+          "title": "O link do logo não tem nome acessível",
+          "severity": "Alta",
+          "description": "alt='' é o único conteúdo do link.",
+          "recommendation": "alt='Vira Voto'."
+        },
+        {
+          "title": "Áreas de toque pequenas",
+          "severity": "Alta",
+          "description": "Links do rodapé com 17 px; chips de filtro com 40 px.",
+          "recommendation": "min-height de 44 px."
+        },
+        {
+          "title": "Imagens do topo com carregamento adiado",
+          "severity": "Média",
+          "description": "Logo e hero com loading=lazy.",
+          "recommendation": "priority / fetchpriority=high."
+        },
+        {
+          "title": "Sem og:image nas páginas de ferramenta",
+          "severity": "Média",
+          "description": "Prejudica o compartilhamento no WhatsApp.",
+          "recommendation": "Imagem de compartilhamento por ferramenta."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Fase 1: correções críticas",
+        "timeframe": "Esta semana",
+        "items": [
+          "Renderizar as listas no servidor",
+          "404 de verdade para ferramentas inexistentes",
+          "/quem-somos + /privacidade",
+          "URLs estáveis para a mídia de /conteudos",
+          "JSON-LD de Organization/WebSite/Breadcrumb",
+          "Enviar ao GSC e ao Bing; IndexNow"
+        ]
+      },
+      {
+        "name": "Fase 2: melhorias de alto impacto",
+        "timeframe": "Semanas 1 e 2",
+        "items": [
+          "Reescrever Do Seu Bolso, Voto Lá Fora e o calendário de protestos",
+          "Responsável, fontes e data em toda ferramenta",
+          "Títulos descritivos",
+          "Reposicionar mapa-do-segundo-turno",
+          "Definir o nome da marca e reescrever o H1 da home",
+          "Schema WebApplication + Event",
+          "Metadados de /enviar",
+          "Filtrar o feed do blog",
+          "Correções de LCP no mobile"
+        ]
+      },
+      {
+        "name": "Fase 3: conteúdo e acabamento",
+        "timeframe": "Em até um mês",
+        "items": [
+          "noindex ou consolidação das páginas rasas",
+          "Resumo, data e fontes no manifesto",
+          "og:image por ferramenta",
+          "Correções de acessibilidade",
+          "lastmod no sitemap",
+          "Links entre ferramentas"
+        ]
+      },
+      {
+        "name": "Fase 4: backlog",
+        "timeframe": "Contínuo",
+        "items": [
+          "www com 308",
+          "HSTS preload",
+          "Endurecer a CSP",
+          "CORS no HTML",
+          "llms.txt",
+          "Presença fora do site"
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "evidence_dir": "evidence/",
+    "screenshots_dir": "screenshots/",
+    "page_metadata": "evidence/metadata.json",
+    "english_version": "en/"
+  }
+}

@@ -5,6 +5,7 @@ import Home from "./page";
 vi.mock("server-only", () => ({}));
 
 vi.mock("@/app/components/home-blog", () => ({ HomeBlog: () => <section aria-labelledby="blog-title"><h2 id="blog-title">Blog</h2></section>, HomeBlogLoading: () => null }));
+vi.mock("@/app/components/home-tools", () => ({ HomeTools: () => <p data-testid="home-tools">Ferramentas do servidor</p> }));
 
 afterEach(cleanup);
 
@@ -74,7 +75,6 @@ it("places Blog between Ferramentas and Conteúdos before the final CTA", () => 
  expect(sections).toEqual(["hero-title", "manifesto-title", "tools-title", "blog-title", "content-title", "submit-title"]);
 });
 
-
 it("ships complete usable hero content without prototype or motion controls", () => {
   const { container } = render(<Home />);
   const hero = container.querySelector(".home-hero")!;
@@ -83,4 +83,9 @@ it("ships complete usable hero content without prototype or motion controls", ()
   expect(hero.querySelector("h1")).toHaveTextContent("IDEIAS GANHAM MOVIMENTO.");
   expect(hero.querySelector(".home-hero-motion-letter")).toBeNull();
   expect(hero).not.toHaveTextContent(/Replay|Pausar|Variante/);
+});
+
+it("renders the tools preview from the server component", () => {
+  const { container } = render(<Home />);
+  expect(container.querySelector(".home-tools .home-preview-feed [data-testid='home-tools']")).toBeInTheDocument();
 });

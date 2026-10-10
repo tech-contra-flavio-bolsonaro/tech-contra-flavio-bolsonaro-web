@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
-import { findTool, findToolEmbed, listToolCategories, listTools } from "./tools-server";
+import { findTool, findToolEmbed, listAllTools, listToolCategories, listTools } from "./tools-server";
 import { resolveServerSupabaseUrl } from "./supabase-url";
 
 beforeEach(() => {
@@ -26,10 +26,10 @@ it("requests only approved public fields with stable ordering and a pagination l
   expect(result.hasMore).toBe(true);
   const query = new URL(fetch.mock.calls[0][0]).searchParams;
   expect(query.get("status")).toBe("eq.approved");
-  expect(query.get("select")).toBe("id,slug,title,description,category,credit,url");
+  expect(query.get("select")).toBe("id,slug,title,description,category,credit,url,priority,is_internal");
   expect(query.get("offset")).toBe("20");
   expect(query.get("limit")).toBe("11");
-  expect(query.get("order")).toBe("created_at.desc,id.desc");
+  expect(query.get("order")).toBe("priority.desc,created_at.desc,id.desc");
 });
 
 it("uses the internal Supabase URL for server-side tool queries when configured", async () => {
@@ -93,4 +93,16 @@ it("counts categories from approved tools only, largest first", async () => {
   const query = new URL(fetch.mock.calls[0][0]).searchParams;
   expect(query.get("status")).toBe("eq.approved");
   expect(query.get("select")).toBe("category");
+});
+
+it("lists every approved tool for server rendering, optionally by category", async () => {
+  const fetch = vi.fn().mockResolvedValue(json([{ id: "1" }, { id: "2" }]));
+  vi.stubGlobal("fetch", fetch);
+  expect(await listAllTools("Jogos")).toEqual([{ id: "1" }, { id: "2" }]);
+  const query = new URL(fetch.mock.calls[0][0]).searchParams;
+  expect(query.get("status")).toBe("eq.approved");
+  expect(query.get("category")).toBe("eq.Jogos");
+  expect(query.get("select")).toBe("id,slug,title,description,category,credit,url,priority,is_internal");
+  expect(query.get("order")).toBe("priority.desc,created_at.desc,id.desc");
+  expect(query.get("limit")).toBe("500");
 });

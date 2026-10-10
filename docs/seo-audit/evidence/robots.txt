@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://techcontraflaviobolsonaro.dev
+Sitemap: https://techcontraflaviobolsonaro.dev/sitemap.xml

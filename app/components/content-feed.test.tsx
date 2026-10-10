@@ -6,7 +6,7 @@ afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 it("loads approved content in batches of ten", async () => {
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
     ok: true,
-    json: async () => ({ items: [{ id: "1", title: "Card", description: "Conteúdo aprovado", credit: "Vira Voto", media_path: null, mediaUrl: null, video_url: null }], hasMore: true }),
+    json: async () => ({ items: [{ id: "1", title: "Card", description: "Conteúdo aprovado", credit: "Vira Voto", priority: 0, media_path: null, mediaUrl: null, video_url: null }], hasMore: true }),
   }));
   vi.stubGlobal("IntersectionObserver", undefined);
 
@@ -33,7 +33,7 @@ it("shares the selected content's permanent detail link from the feed", async ()
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
     ok: true,
     json: async () => ({
-      items: [{ id, title: "Card", description: "Descrição do card", credit: "Vira Voto", media_path: null, mediaUrl: null, video_url: null }],
+      items: [{ id, title: "Card", description: "Descrição do card", credit: "Vira Voto", priority: 0, media_path: null, mediaUrl: null, video_url: null }],
       hasMore: false,
     }),
   }));
@@ -49,7 +49,7 @@ it("shares the selected content's permanent detail link from the feed", async ()
 });
 
 it("keeps real Home content and its complete media in the sharing dialog", async () => {
-  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ items: [{ id: "home", title: "Passagem real", description: "Descrição completa do item aprovado", credit: "Coletivo real", media_path: "real.png", mediaUrl: "https://example.com/real.png", video_url: "https://example.com/associated.mp4" }], hasMore: false }) }));
+  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ items: [{ id: "home", title: "Passagem real", description: "Descrição completa do item aprovado", credit: "Coletivo real", priority: 0, media_path: "real.png", mediaUrl: "https://example.com/real.png", video_url: "https://example.com/associated.mp4" }], hasMore: false }) }));
   render(<ContentFeed limit={1} variant="home" />);
   expect(await screen.findByText("Coletivo real")).toBeInTheDocument();
   expect(screen.getByRole("img", { name: "Passagem real" })).toHaveAttribute("src", "https://example.com/real.png");
@@ -67,7 +67,7 @@ it.each([
   [null, "https://example.com/external.mp4", "https://example.com/external.mp4"],
   ["https://example.com/upload.mp4", "https://example.com/external.mp4", "https://example.com/upload.mp4"],
 ])("keeps the uploaded video primary and falls back to the external video only without an upload", async (mediaUrl, video_url, expected) => {
-  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ items: [{ id: "video", title: "Vídeo real", description: "Descrição real", credit: "Coletivo", media_path: null, mediaUrl, video_url }], hasMore: false }) }));
+  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ items: [{ id: "video", title: "Vídeo real", description: "Descrição real", credit: "Coletivo", priority: 0, media_path: null, mediaUrl, video_url }], hasMore: false }) }));
   const { container } = render(<ContentFeed limit={1} variant="home" />);
   await screen.findByRole("heading", { name: "Vídeo real" });
   expect(container.querySelector("video")).toHaveAttribute("src", expected);
@@ -77,7 +77,17 @@ it.each([
   expect(screen.getByRole("button", { name: "Copiar link" })).toBeInTheDocument();
 });
 
-const approvedItem = (id: string) => ({ id, title: `Conteúdo ${id}`, description: "Descrição aprovada completa", credit: "Crédito original", media_path: null, mediaUrl: null, video_url: null });
+const approvedItem = (id: string, priority = 0) => ({ id, title: `Conteúdo ${id}`, description: "Descrição aprovada completa", credit: "Crédito original", priority, media_path: null, mediaUrl: null, video_url: null });
+
+it("keeps submissions in descending priority order in the feed", async () => {
+  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({ items: [approvedItem("1", 2), approvedItem("2", 8), approvedItem("3", 0)], hasMore: false }),
+  }));
+  render(<ContentFeed limit={3} variant="listing" />);
+  await screen.findByRole("heading", { name: "Conteúdo 1" });
+  expect(screen.getAllByRole("heading").map((heading) => heading.textContent)).toEqual(["Conteúdo 2", "Conteúdo 1", "Conteúdo 3"]);
+});
 
 it("uses the Penpot preparation only for an empty listing", async () => {
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ items: [], hasMore: false }) }));

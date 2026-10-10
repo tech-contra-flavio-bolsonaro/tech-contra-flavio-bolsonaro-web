@@ -3,8 +3,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { HomeArrow } from "@/app/components/home-arrow";
 import { SiteNav } from "@/app/components/site-nav";
-import { ToolFeed } from "@/app/components/tool-feed";
+import { ToolFeed, type InitialTools } from "@/app/components/tool-feed";
 import { pageMetadata } from "@/app/lib/page-metadata";
+import { listAllTools, listToolCategories } from "@/app/lib/tools-server";
 
 export const metadata: Metadata = pageMetadata({
   title: "Ferramentas",
@@ -13,7 +14,24 @@ export const metadata: Metadata = pageMetadata({
   path: "/ferramentas",
 });
 
-export default function FerramentasPage() {
+// Every approved tool is rendered on the server so crawlers find the links without
+// JavaScript (issue #102). A database failure falls back to the browser fetch.
+async function loadCatalog(category: string | null): Promise<InitialTools | undefined> {
+  try {
+    const [items, categories] = await Promise.all([listAllTools(category ?? undefined), listToolCategories()]);
+    return { items, hasMore: false, categories, category };
+  } catch (error) {
+    console.error("ferramentas: falha ao listar ferramentas", error);
+    return undefined;
+  }
+}
+
+export default async function FerramentasPage({ searchParams }: { searchParams: Promise<{ categoria?: string | string[] }> }) {
+  const requested = (await searchParams).categoria;
+  const category = (Array.isArray(requested) ? requested[0] : requested)?.trim() || null;
+  // Same limit as /api/ferramentas; anything longer cannot be a real category.
+  const initial = await loadCatalog(category && category.length <= 60 ? category : null);
+
   return (
     <main className="tools-page">
       <SiteNav variant="home" />
@@ -59,7 +77,7 @@ export default function FerramentasPage() {
             <h2 id="tools-categories-title">RECURSOS DA COMUNIDADE</h2>
             <p>PUBLICADAS PELA COMUNIDADE</p>
           </div>
-          <ToolFeed variant="home" />
+          <ToolFeed variant="home" initial={initial} />
         </section>
       </div>
 

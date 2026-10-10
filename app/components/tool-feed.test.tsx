@@ -2,8 +2,8 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-libra
 import { afterEach, expect, it, vi } from "vitest";
 import { ToolFeed } from "./tool-feed";
 
-const item = (id: number) => ({ id: String(id), slug: `mapa-${id}`, title: `Mapa ${id}`, description: "Caminhos disponíveis", category: "Planejamento", credit: "Comunidade", url: "https://example.com" });
-const response = (ids: number[], hasMore = false) => ({ ok: true, json: async () => ({ items: ids.map(item), hasMore }) });
+const item = (id: number, priority = 0) => ({ id: String(id), slug: `mapa-${id}`, title: `Mapa ${id}`, description: "Caminhos disponíveis", category: "Planejamento", credit: "Comunidade", url: "https://example.com", priority, is_internal: false });
+const response = (ids: number[], hasMore = false) => ({ ok: true, json: async () => ({ items: ids.map((id) => item(id)), hasMore }) });
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); window.history.replaceState(null, "", "/"); });
 
 it("loads later pages, retains existing tools on failure, and retries the same page", async () => {
@@ -19,7 +19,7 @@ it("loads later pages, retains existing tools on failure, and retries the same p
   expect(await screen.findByText("Mapa 2")).toBeInTheDocument();
   expect(screen.getAllByText("Mapa 1")).toHaveLength(1);
   expect(fetch.mock.calls.map(([url]) => url)).toEqual(["/api/ferramentas?page=0", "/api/ferramentas?page=1", "/api/ferramentas?page=1"]);
-  expect(screen.getAllByRole("link")[0]).toHaveAttribute("href", "/ferramentas/mapa-1");
+  expect(screen.getAllByRole("link", { name: "Conhecer ferramenta" })[0]).toHaveAttribute("href", "/ferramentas/mapa-1");
   await waitFor(() => expect(screen.queryByRole("button")).not.toBeInTheDocument());
 });
 
@@ -56,6 +56,20 @@ it("limits homepage tools to four without fetching extra pages", async () => {
   expect(screen.queryByText("Mapa 5")).not.toBeInTheDocument();
   expect(screen.queryByRole("button")).not.toBeInTheDocument();
   expect(fetch).toHaveBeenCalledTimes(1);
+});
+
+it("keeps tools in descending priority order in the feed", async () => {
+  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({ items: [item(1, 2), item(2, 8), item(3, 0)], hasMore: false }),
+  }));
+  render(<ToolFeed limit={3} />);
+  await screen.findByText("Mapa 1");
+  expect(screen.getAllByRole("link", { name: "Conhecer ferramenta" }).map((link) => link.getAttribute("href"))).toEqual([
+    "/ferramentas/mapa-2",
+    "/ferramentas/mapa-1",
+    "/ferramentas/mapa-3",
+  ]);
 });
 
 it("invites submissions when the approved collection is empty", async () => {
@@ -99,4 +113,27 @@ it("does not show category filters on the homepage", async () => {
   render(<ToolFeed limit={4} />);
   await screen.findByText("Mapa 1");
   expect(screen.queryByRole("group", { name: "Filtrar ferramentas por categoria" })).not.toBeInTheDocument();
+});
+
+const initial = (ids: number[], category: string | null = null) => ({ items: ids.map((id) => item(id)), hasMore: false, categories, category });
+
+it("renders server-provided tools as links without fetching on mount", async () => {
+  const fetch = vi.fn();
+  vi.stubGlobal("fetch", fetch);
+  render(<ToolFeed initial={initial([1, 2])} />);
+  expect(screen.getAllByRole("link").map((link) => link.getAttribute("href"))).toEqual(["/ferramentas/mapa-1", "/ferramentas/mapa-2"]);
+  expect(screen.queryByText("Carregando ferramentas…")).not.toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /Todas/ })).toHaveAttribute("aria-pressed", "true");
+  await act(async () => {});
+  expect(fetch).not.toHaveBeenCalled();
+});
+
+it("keeps the server-selected category and filters through the API afterwards", async () => {
+  const fetch = vi.fn().mockResolvedValueOnce(withCategories([1, 2]));
+  vi.stubGlobal("fetch", fetch);
+  render(<ToolFeed initial={initial([3], "Jogos")} />);
+  expect(screen.getByRole("button", { name: /Jogos/ })).toHaveAttribute("aria-pressed", "true");
+  fireEvent.click(screen.getByRole("button", { name: /Todas/ }));
+  expect(await screen.findByText("Mapa 1")).toBeInTheDocument();
+  expect(fetch.mock.calls.map(([url]) => url)).toEqual(["/api/ferramentas?page=0"]);
 });
