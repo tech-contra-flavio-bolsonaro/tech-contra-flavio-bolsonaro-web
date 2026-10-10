@@ -21,6 +21,16 @@ function database() {
   return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
 }
 
+export async function listPublishedContentIds(): Promise<string[]> {
+  const { data, error } = await database()
+    .from("submissions")
+    .select("id")
+    .eq("status", "approved")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return ((data ?? []) as { id: string }[]).map(({ id }) => id);
+}
+
 export const findPublishedContent = cache(async (id: string): Promise<PublishedContent | null> => {
   if (!uuidPattern.test(id)) return null;
 

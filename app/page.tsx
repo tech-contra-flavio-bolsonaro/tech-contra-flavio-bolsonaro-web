@@ -7,12 +7,14 @@ import { SiteNav } from "@/app/components/site-nav";
 import { ToolFeed } from "@/app/components/tool-feed";
 import { ContentFeed } from "@/app/components/content-feed";
 import { HomeArrow } from "@/app/components/home-arrow";
+import { pageMetadata } from "@/app/lib/page-metadata";
 
-export const metadata: Metadata = {
-  title: "Início",
+export const metadata: Metadata = pageMetadata({
+  title: { absolute: "Vira Voto – Tech Contra Bolsonaro" },
   description:
     "Vira Voto reúne ferramentas, conteúdos e referências para transformar ideias em ação coletiva.",
-};
+  path: "/",
+});
 
 export default function Home() {
   return (

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { siteOpenGraph } from "@/app/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     description: content.description,
     alternates: { canonical },
     openGraph: {
+      ...siteOpenGraph,
       title: content.title,
       description: content.description,
       type: "article",

@@ -2,12 +2,14 @@ import "./conteudos.css";
 import type { Metadata } from "next";
 import { SiteNav } from "@/app/components/site-nav";
 import { ContentFeed } from "@/app/components/content-feed";
+import { pageMetadata } from "@/app/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Conteúdos",
   description:
     "Acesse referências, vídeos e materiais que ajudam a informar, inspirar e ampliar a conversa pública.",
-};
+  path: "/conteudos",
+});
 
 export default function ConteudosPage() {
   return (

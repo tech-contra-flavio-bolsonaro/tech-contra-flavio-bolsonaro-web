@@ -10,12 +10,13 @@ import {
 } from "@/app/components/blog-status";
 import { getBlogPage } from "@/app/lib/blog/server";
 import { blogPageNumber } from "@/app/lib/blog/urls";
-export const metadata: Metadata = {
+import { pageMetadata } from "@/app/lib/page-metadata";
+export const metadata: Metadata = pageMetadata({
   title: "Blog",
   description:
     "Inspiração, ferramentas e histórias reais da comunidade Tech Contra Bolsonaro.",
-  alternates: { canonical: "/blog" },
-};
+  path: "/blog",
+});
 export default async function BlogPage({
   searchParams,
 }: {
