@@ -18,7 +18,7 @@ function fixture() {
   });
   return document.querySelector("section")!;
 }
-afterEach(() => { reduced = false; animations.length = 0; visibility = undefined; onReducedChange = undefined; vi.unstubAllGlobals(); document.body.innerHTML = ""; });
+afterEach(() => { reduced = false; animations.length = 0; visibility = undefined; onReducedChange = undefined; vi.useRealTimers(); vi.unstubAllGlobals(); document.body.innerHTML = ""; });
 
 it("keeps the complete static artwork and single semantic heading when reduced motion is requested", () => {
   reduced = true; const root = fixture(); const before = root.innerHTML;
@@ -50,7 +50,7 @@ it("immediately restores the complete static hero when reduced motion changes at
   expect(root.innerHTML).toBe(before);
   expect(animations.every(a => a.cancel.mock.calls.length === 1)).toBe(true);
   reduced = false; onReducedChange!();
-  expect(root.querySelectorAll(".home-hero-motion-letter")).toHaveLength(10);
+  expect(root.querySelectorAll(".home-hero-motion-letter")).toHaveLength(0);
   motion.dispose();
   expect(root.innerHTML).toBe(before);
 });
@@ -58,8 +58,8 @@ it("immediately restores the complete static hero when reduced motion changes at
 it("keeps every finite entrance within the same 2200ms timeline and defers loops until it ends", () => {
   const root = fixture(); const motion = createHeroMotion(root);
   const options = vi.mocked(Element.prototype.animate).mock.calls.map(call => call[1] as KeyframeAnimationOptions);
-  const finite = options.filter(option => option.iterations !== Infinity);
-  const loops = options.filter(option => option.iterations === Infinity);
+  const finite = options.filter(option => Number(option.delay) < 2200);
+  const loops = options.filter(option => Number(option.delay) >= 2200);
   expect(Math.max(...finite.map(option => Number(option.duration) + Number(option.delay)))).toBeCloseTo(2200);
   expect(loops.length).toBe(16);
   expect(loops.every(option => Number(option.delay) >= 2200)).toBe(true);
@@ -89,4 +89,99 @@ it("restores the approved title fade while leaving the SSR text complete", () =>
   motion.dispose();
   expect(root.querySelector("h1")).toHaveTextContent("IDEIAS GANHAM MOVIMENTO.");
   expect(root.querySelector("h1")!.getAnimations?.() ?? []).toHaveLength(0);
+});
+
+it("freezes the entrance and clock manually, then spends only the remaining budget", () => {
+  vi.useFakeTimers();
+  const root = fixture(); const before = root.innerHTML; const state = vi.fn();
+  const motion = createHeroMotion(root, state);
+  vi.advanceTimersByTime(1000); motion.togglePause();
+  expect(state).toHaveBeenLastCalledWith("paused");
+  expect(animations.every(a => a.playState === "paused")).toBe(true);
+  vi.advanceTimersByTime(20000);
+  expect(root.querySelectorAll(".home-hero-motion-letter")).toHaveLength(10);
+  motion.togglePause();
+  expect(state).toHaveBeenLastCalledWith("running");
+  vi.advanceTimersByTime(6199);
+  expect(root.querySelectorAll(".home-hero-motion-letter")).toHaveLength(10);
+  vi.advanceTimersByTime(1);
+  expect(root.innerHTML).toBe(before);
+  expect(state).toHaveBeenLastCalledWith("completed");
+  motion.togglePause();
+  root.dispatchEvent(new Event("pointerdown"));
+  expect(state).toHaveBeenLastCalledWith("completed");
+  expect(animations.every(a => a.cancel.mock.calls.length === 1)).toBe(true);
+  motion.dispose();
+});
+
+it("keeps the full five-second loop budget after the 2200ms entrance", () => {
+  vi.useFakeTimers();
+  const root = fixture(); const before = root.innerHTML;
+  const motion = createHeroMotion(root);
+  vi.advanceTimersByTime(2200 + 2400); motion.togglePause();
+  vi.advanceTimersByTime(30000); motion.togglePause();
+  vi.advanceTimersByTime(2599);
+  expect(root.innerHTML).not.toBe(before);
+  vi.advanceTimersByTime(1);
+  expect(root.innerHTML).toBe(before);
+  expect(vi.getTimerCount()).toBe(0);
+  motion.dispose();
+});
+
+it("preserves manual pause through offscreen and hidden-tab changes", () => {
+  vi.useFakeTimers();
+  const root = fixture(); const before = root.innerHTML;
+  const motion = createHeroMotion(root);
+  vi.advanceTimersByTime(3000);
+  visibility!([{ isIntersecting: false }]);
+  vi.advanceTimersByTime(10000);
+  motion.togglePause(); visibility!([{ isIntersecting: true }]);
+  expect(animations.every(a => a.playState === "paused")).toBe(true);
+  Object.defineProperty(document, "hidden", { configurable: true, value: true });
+  document.dispatchEvent(new Event("visibilitychange"));
+  motion.togglePause(); vi.advanceTimersByTime(10000);
+  expect(animations.every(a => a.playState === "paused")).toBe(true);
+  Object.defineProperty(document, "hidden", { configurable: true, value: false });
+  document.dispatchEvent(new Event("visibilitychange"));
+  vi.advanceTimersByTime(4199); expect(root.innerHTML).not.toBe(before);
+  vi.advanceTimersByTime(1); expect(root.innerHTML).toBe(before);
+  motion.dispose();
+});
+
+it("has finite loop keyframes settling exactly at identity within the final budget", () => {
+  const root = fixture(); const motion = createHeroMotion(root);
+  const calls = vi.mocked(Element.prototype.animate).mock.calls;
+  expect(calls.every(call => (call[1] as KeyframeAnimationOptions).iterations !== Infinity)).toBe(true);
+  const loops = calls.filter(call => Number((call[1] as KeyframeAnimationOptions).delay) >= 2200);
+  expect(loops).toHaveLength(16);
+  loops.forEach(([frames, options]) => {
+    expect(Number((options as KeyframeAnimationOptions).delay) + Number((options as KeyframeAnimationOptions).duration)).toBe(7200);
+    expect((frames as Keyframe[]).at(-1)!.transform).toBe("none");
+  });
+  motion.dispose();
+});
+
+it("cleans timers on dispose and reduced motion without restarting completed motion", () => {
+  vi.useFakeTimers();
+  const root = fixture(); const before = root.innerHTML; const state = vi.fn();
+  const motion = createHeroMotion(root, state);
+  vi.advanceTimersByTime(1000); reduced = true; onReducedChange!();
+  expect(root.innerHTML).toBe(before); expect(vi.getTimerCount()).toBe(0);
+  expect(state).toHaveBeenLastCalledWith("unavailable");
+  reduced = false; onReducedChange!();
+  expect(root.innerHTML).toBe(before);
+  motion.dispose(); expect(vi.getTimerCount()).toBe(0);
+});
+
+it("still reports completion if WAAPI effects finish before the deadline task runs", async () => {
+  vi.useFakeTimers(); const root = fixture(); const before = root.innerHTML; const state = vi.fn();
+  vi.mocked(Element.prototype.animate).mockImplementation(() => ({
+    playState: "running", cancel: vi.fn(), pause: vi.fn(), play: vi.fn(), finished: Promise.resolve(),
+  } as unknown as Animation));
+  const motion = createHeroMotion(root, state);
+  await Promise.resolve(); await Promise.resolve();
+  vi.advanceTimersByTime(7200);
+  expect(root.innerHTML).toBe(before);
+  expect(state).toHaveBeenLastCalledWith("completed");
+  motion.dispose();
 });

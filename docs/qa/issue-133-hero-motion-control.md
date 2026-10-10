@@ -1,0 +1,23 @@
+# Issue 133 / PR135 — controle e movimento finito
+
+O steering anterior sem controles e com loops contínuos foi substituído por autorização explícita do usuário. Entrada compartilhada de2200ms preservada, seguida por5000ms ativos de loop. O assentamento suave ocupa os últimos500ms desse orçamento, sem tempo extra. Ao concluir, wrappers e glifos temporários são removidos e SVG/título retornam ao DOM estático original; parallax e ripple ficam inativos.
+
+Um Button ghost com ícones Lucide e nomes “Pausar animação” / “Retomar animação” fica disponível desde o início do movimento. Pausa manual congela entrada, loops, interações e relógio; retomar consome somente o restante. Offscreen e aba oculta também congelam esse orçamento e respeitam a pausa manual. Ao terminar, o mesmo botão fica disabled com nome “Animação concluída”; não há Replay. O controle ocupa espaço reservado no padding existente, sem sobreposição ou mudança da geometria.
+
+Reduced motion inicial permanece estático e sem controle. Ativá-lo durante a execução restaura imediatamente a composição e encerra essa execução; desativá-lo novamente não reinicia. O carregamento lazy após fonts.ready e a entrada por montagem continuam como antes; não foi adicionado replay em montagem, visibilidade ou retomada. Uma nova montagem por navegação continua criando uma execução, como no comportamento anterior.
+
+A duração automática total é7200ms, incluindo a entrada. A WCAG2.2.2 exige mecanismo para movimento automático que dure mais de5segundos em paralelo com outro conteúdo: o orçamento de5000ms do loop não exclui os2200ms de entrada do critério. O mecanismo manual substitui a limitação anterior de loops sem pausa. Reduced motion e suspensão automática sozinhos não substituem esse mecanismo. Esta validação é restrita ao Hero e não declara conformidade WCAG global.
+
+Referência: https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide
+
+Plano/testes/evidências do delta: /private/tmp/hero-pause-plan.md e /private/tmp/hero-pause-evidence. Publicação fica com o root, somente na mesma PR135 depois de QA independente. Implementer não executa commit/push/PR/merge.
+
+Validação do implementer: 308 testes em 43 arquivos, lint, TypeScript, build de produção e diff-check passaram. Os testes novos foram executados em RED antes da implementação. Browser Chromium em 1440/900/390 confirma pausa estável durante entrada e loop, 16 loops finitos com deadline compartilhado 7200ms e frame final identity, zero animações do Hero após conclusão, SVG/título e geometria exatamente iguais ao estado reduced estático, zero CLS/overflow/violações CSP. Controle 224×44px, teclado Space/Enter e touch; zoom nativo 200% confirmado com chrome.tabs.getZoom=2, viewport/scrollWidth720/720, DPR2 e CSS zoom1. Offscreen e o handler de visibilitychange foram validados; hidden no harness do implementer foi simulado, sem alegação de troca real de abas. Build mostra estados existentes de falha/empty nos feeds porque este checkout não tem backend configurado.
+
+QA independente solicitado via skill Maestri, preview exclusivo http://localhost:3216; parecer final GO recebido após correção do foco. Sem publicação pelo implementer.
+
+
+QA encontrou P2 no foco visual: a medição inicial de outlineWidth3px era insuficiente, porque outlineStyle estava none. O reteste RED com Tab/ShiftTab reproduziu a ausência de contorno. Correção restrita a .home-hero-motion-button:focus-visible define outline completo de3px solid var(--vv-color-yellow), offset4px; a primitive global permanece intacta. Novo build passou e o reteste visual independente confirmou contorno pintado nas três larguras e zoom nativo 200%. A troca real de abas no runner QA não gerou document.hidden; a validação do handler com hidden controlado passou independentemente, e a troca real permanece uma limitação da evidência, não alegada como PASS.
+
+
+QA independente: GO final visual/funcional do delta, relatório /private/tmp/hero-pause-qa/review.md. 308 testes em 43 arquivos, lint, TypeScript e diff-check independentes passaram; o build de produção foi executado pelo implementer e exercitado pelo QA, sem alegar segundo build independente. Foco sólido amarelo de 3px/offset4px confirmado com Tab/ShiftTab/Space/Enter em 1440/900/390 e zoom nativo 200%; capturas integrais finais e inspeção CDP das16faces do SVG confirmam preservação visual/fontes. Parallax/ripple assentam dentro dos500ms finais e não deixam resíduos. GO restrito a este delta; sem alegação de troca real de abas no runner, integração de backend, conformidade WCAG global ou release global. Publicação continua sob responsabilidade do root na mesma PR135, identidade exclusivamente zurgfather.

@@ -1,4 +1,7 @@
 const ENTRANCE_MS = 2200;
+const LOOP_MS = 5000;
+const TOTAL_MS = ENTRANCE_MS + LOOP_MS;
+const SETTLE_MS = 500;
 const SCALE = ENTRANCE_MS / 3600;
 const SVG_NS = "http://www.w3.org/2000/svg";
 const LAYERS = {
@@ -15,8 +18,10 @@ const REVEALS = [
   "1b9fb1ff-a702-5670-b200-e0cc2f227a0b", "c042a21d-550e-5941-909e-d2acacc3b110", "fc411d58-da32-5b5e-a8b2-6ec3f924470f", "8c1ff2d8-1cf1-511c-a15a-9f63279be025",
 ];
 
+export type HeroMotionState = "unavailable" | "running" | "paused" | "completed";
+
 /** Optional enhancement: DOM is complete before this module is downloaded. */
-export function createHeroMotion(root: HTMLElement) {
+export function createHeroMotion(root: HTMLElement, onState: (state: HeroMotionState) => void = () => {}) {
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const finePointer = matchMedia("(hover: hover) and (pointer: fine)");
   const animations = new Set<Animation>();
@@ -25,15 +30,28 @@ export function createHeroMotion(root: HTMLElement) {
   const ripples: SVGGElement[] = [];
   const waves = new Set<Animation>();
   let disposed = false;
+  let completed = false;
+  let started = false;
+  let manualPause = false;
+  let settling = false;
+  let elapsed = 0;
+  let runningSince: number | null = null;
+  let clockTimer: ReturnType<typeof setTimeout> | undefined;
   let visible = true;
   let ready = false;
   let pointerFrame = 0;
   let pointerX = 0;
   let pointerY = 0;
   let origin = document.timeline?.currentTime;
-  const shouldPause = () => reduced.matches || !visible || document.hidden;
+  const shouldPause = () => manualPause || reduced.matches || !visible || document.hidden;
 
+  function clearClock() {
+    if (clockTimer !== undefined) clearTimeout(clockTimer);
+    clockTimer = undefined;
+    runningSince = null;
+  }
   function cancelMotion() {
+    clearClock();
     cancelAnimationFrame(pointerFrame);
     pointerFrame = 0;
     animations.forEach(animation => animation.cancel());
@@ -46,6 +64,17 @@ export function createHeroMotion(root: HTMLElement) {
     ready = false;
   }
   function syncPause() {
+    if (disposed || completed || !started) return;
+    const now = performance.now();
+    if (runningSince !== null) elapsed += now - runningSince;
+    clearClock();
+    if (elapsed >= TOTAL_MS) {
+      completed = true;
+      cancelMotion();
+      onState("completed");
+      return;
+    }
+    if (!settling && elapsed >= TOTAL_MS - SETTLE_MS) settleInteractions();
     animations.forEach(animation => {
       if (shouldPause()) {
         if (animation.playState === "running" || animation.pending) animation.pause();
@@ -54,7 +83,40 @@ export function createHeroMotion(root: HTMLElement) {
     if (shouldPause()) {
       cancelAnimationFrame(pointerFrame);
       pointerFrame = 0;
+    } else {
+      runningSince = now;
+      const boundary = settling ? TOTAL_MS : TOTAL_MS - SETTLE_MS;
+      clockTimer = setTimeout(syncPause, Math.max(0, boundary - elapsed));
     }
+  }
+  function settleInteractions() {
+    settling = true;
+    ready = false;
+    cancelAnimationFrame(pointerFrame);
+    pointerFrame = 0;
+    // Freeze the current interactive transforms before returning to the static art.
+    const transforms = [...pointers, ...ripples].map(element => getComputedStyle(element).transform);
+    waves.forEach(animation => { animations.delete(animation); animation.cancel(); });
+    waves.clear();
+    [...pointers, ...ripples].forEach((element, index) => {
+      element.style.transform = "none";
+      if (transforms[index] && transforms[index] !== "none") {
+        animate(element, [{ transform: transforms[index] }, { transform: "none" }], {
+          duration: TOTAL_MS - elapsed, easing: "ease-out",
+        }, false);
+      }
+    });
+  }
+  // The last 500ms of the loop budget gently settle all idle layers to identity.
+  function finiteLoop(framesAt: (time: number, envelope: number) => Keyframe, delay = 0) {
+    const duration = LOOP_MS - delay;
+    return Array.from({ length: 101 }, (_, step) => {
+      const time = duration * step / 100;
+      const remaining = LOOP_MS - delay - time;
+      const progress = Math.max(0, Math.min(1, remaining / SETTLE_MS));
+      const envelope = progress * progress * (3 - 2 * progress);
+      return step === 100 ? { transform: "none" } : framesAt(time, envelope);
+    });
   }
   function animate(element: Element, frames: Keyframe[], options: KeyframeAnimationOptions, shared = true) {
     const animation = element.animate(frames, options);
@@ -84,7 +146,7 @@ export function createHeroMotion(root: HTMLElement) {
     ], { duration: 650 * SCALE, delay: delay * SCALE, easing: "cubic-bezier(.2,.75,.25,1)", fill: "backwards" });
   }
   function start() {
-    if (disposed || reduced.matches || typeof Element.prototype.animate !== "function") return;
+    if (disposed || completed || reduced.matches || typeof Element.prototype.animate !== "function") return;
     const svg = root.querySelector(".home-hero-art");
     const heading = root.querySelector("h1");
     if (!svg || !heading) return;
@@ -111,7 +173,7 @@ export function createHeroMotion(root: HTMLElement) {
         { opacity: 1, transform: "translate(-100px,-70px)", offset: .3 },
         { transform: "translate(-55px,-25px)", offset: .7 }, { opacity: 1, transform: "none" },
       ], { duration: 760 * SCALE, delay: 2840 * SCALE, fill: "backwards", easing: "ease-in-out" });
-      lastEntrance.finished.then(() => { if (!disposed && !reduced.matches) ready = true; }).catch(() => {});
+      lastEntrance.finished.then(() => { if (!disposed && !completed && !settling && !reduced.matches) ready = true; }).catch(() => {});
       const floatNames = ["window", "sticker", "star", "banner", "cursor", "footer"] as const;
       floatNames.forEach((name, index) => {
         // Separate transforms compose without altering the original shape attributes.
@@ -122,14 +184,14 @@ export function createHeroMotion(root: HTMLElement) {
         ripples.push(ripple);
         const x = [3, -6, 7, -3, 4, -2][index];
         const y = [4, -7, -9, 6, -5, 2][index];
-        const frames = Array.from({ length: 65 }, (_, step) => {
-          const t = step / 64 * Math.PI * 2;
+        const frames = finiteLoop((time, envelope) => {
+          const t = time / (2900 + index * 380) * Math.PI * 2;
           const dx = x * (.8 * Math.sin(t) + .16 * Math.sin(2 * t));
           const dy = y * (.55 * (1 - Math.cos(t)) + .18 * Math.sin(t));
           const rotation = (index % 2 ? -1 : 1) * (1.15 * Math.sin(t) + .22 * Math.sin(2 * t));
-          return { transform: `translate(${dx}px,${dy}px) rotate(${rotation}deg)` };
+          return { transform: `translate(${dx * envelope}px,${dy * envelope}px) rotate(${rotation * envelope}deg)` };
         });
-        animate(idle, frames, { duration: 2900 + index * 380, delay: ENTRANCE_MS, iterations: Infinity, easing: "linear" });
+        animate(idle, frames, { duration: LOOP_MS, delay: ENTRANCE_MS, easing: "linear" });
       });
       const words = [...heading.children];
       words.forEach((word, index) => animate(word, [
@@ -166,42 +228,51 @@ export function createHeroMotion(root: HTMLElement) {
           return span;
         });
         accent.replaceChildren(...letters);
-        letters.forEach((letter, index) => animate(letter, Array.from({ length: 65 }, (_, step) => {
-          const t = step / 64 * Math.PI * 2;
+        letters.forEach((letter, index) => animate(letter, finiteLoop((time, envelope) => {
+          const t = time / 2800 * Math.PI * 2;
           const lift = (1 - Math.cos(t)) / 2;
-          return { transform: `translateY(${- .055 * lift}em) rotate(${- .9 * Math.sin(t) * lift}deg)` };
-        }), { duration: 2800, delay: ENTRANCE_MS + index * 100, iterations: Infinity, easing: "linear" }));
+          return { transform: `translateY(${- .055 * lift * envelope}em) rotate(${- .9 * Math.sin(t) * lift * envelope}deg)` };
+        }, index * 100), { duration: LOOP_MS - index * 100, delay: ENTRANCE_MS + index * 100, easing: "linear" }));
       }
+      started = true;
+      onState("running");
       syncPause();
     } catch {
-      cancelMotion(); // Every partial enhancement rolls back to the complete SSR art.
+      completed = true;
+      cancelMotion();
+      onState("unavailable"); // Every partial enhancement rolls back to the complete SSR art.
     }
   }
   function pointerMove(event: PointerEvent) {
-    if (!ready || shouldPause() || !finePointer.matches || event.pointerType === "touch") return;
+    if (completed || settling || !ready || shouldPause() || !finePointer.matches || event.pointerType === "touch") return;
     const bounds = root.getBoundingClientRect();
     pointerX = Math.max(-1, Math.min(1, (event.clientX - bounds.left) / bounds.width * 2 - 1));
     pointerY = Math.max(-1, Math.min(1, (event.clientY - bounds.top) / bounds.height * 2 - 1));
     if (!pointerFrame) pointerFrame = requestAnimationFrame(() => {
       pointerFrame = 0;
-      if (shouldPause()) return;
+      if (completed || settling || shouldPause()) return;
       pointers.forEach((pointer, index) => { pointer.style.transform = `translate(${pointerX * (index + 1) * 1.1}px,${pointerY * (index + 1) * .8}px)`; });
     });
   }
   function pointerLeave() {
     cancelAnimationFrame(pointerFrame);
     pointerFrame = 0;
-    if (!shouldPause()) pointers.forEach(pointer => { pointer.style.transform = "none"; });
+    if (!completed && !settling && !shouldPause()) pointers.forEach(pointer => { pointer.style.transform = "none"; });
   }
   function wave(event: Event) {
-    if (!ready || shouldPause() || waves.size || (event.target instanceof Element && event.target.closest("a,button,input,textarea,select"))) return;
+    if (completed || settling || !ready || shouldPause() || waves.size || (event.target instanceof Element && event.target.closest("a,button,input,textarea,select"))) return;
     ripples.forEach((ripple, index) => {
       const animation = animate(ripple, [{ transform: "none" }, { transform: `translateY(${index % 2 ? -14 : 12}px) rotate(${index % 2 ? -2 : 2}deg)`, offset: .45 }, { transform: "none" }], { duration: 800, delay: index * 85, easing: "ease-in-out" }, false);
       waves.add(animation);
       animation.finished.then(() => waves.delete(animation)).catch(() => waves.delete(animation));
     });
   }
-  function onReducedChange() { cancelMotion(); if (!reduced.matches) start(); }
+  function onReducedChange() {
+    if (!reduced.matches) return;
+    completed = true;
+    cancelMotion();
+    onState("unavailable");
+  }
   const observer = typeof IntersectionObserver === "function" ? new IntersectionObserver(entries => { visible = entries.some(entry => entry.isIntersecting); syncPause(); }) : null;
   observer?.observe(root);
   reduced.addEventListener("change", onReducedChange);
@@ -210,8 +281,15 @@ export function createHeroMotion(root: HTMLElement) {
   root.addEventListener("pointerleave", pointerLeave, { passive: true });
   root.addEventListener("pointerdown", wave, { passive: true });
   root.addEventListener("focusin", wave);
+  if (reduced.matches) completed = true;
   start();
   return {
+    togglePause() {
+      if (disposed || completed || reduced.matches || !started) return;
+      manualPause = !manualPause;
+      syncPause();
+      if (!completed) onState(manualPause ? "paused" : "running");
+    },
     dispose() {
       disposed = true;
       observer?.disconnect();
