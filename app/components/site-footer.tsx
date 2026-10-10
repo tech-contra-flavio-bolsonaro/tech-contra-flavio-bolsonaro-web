@@ -12,6 +12,7 @@ const VALID_PATHS = [
   "/ferramentas",
   "/enviar",
   "/conteudos",
+  "/blog",
 ];
 
 const SOCIAL_MEDIA_LINKS = [
@@ -35,25 +36,6 @@ const SOCIAL_MEDIA_LINKS = [
 
 export function SiteFooter() {
   const pathname = usePathname();
-
-  if (pathname === "/blog")
-    return (
-      <footer className="site-footer blog-footer">
-        <Link className="site-footer-brand" href="/">
-          ⚑ VIRA VOTO
-        </Link>
-        <nav aria-label="Navegação do rodapé">
-          <Link href="/manifesto">Manifesto</Link>
-          <Link href="/ferramentas">Ferramentas</Link>
-          <Link href="/conteudos">Conteúdos</Link>
-          <Link href="/blog">Blog</Link>
-        </nav>
-        <Link className="site-footer-top" href="#top">
-          <span>Voltar ao topo</span>
-          <ArrowUp aria-hidden="true" />
-        </Link>
-      </footer>
-    );
 
   if (
     !VALID_PATHS.includes(pathname) &&

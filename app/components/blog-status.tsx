@@ -1,7 +1,7 @@
 import { HomeArrow } from "./home-arrow";
 import type { BlogFailure } from "@/app/lib/blog/types";
 import { BlogRetry } from "./blog-retry";
-export function BlogUnavailable({ reason, detail = false }: { reason: BlogFailure["reason"]; detail?: boolean }) {
+export function BlogUnavailable({ reason }: { reason: BlogFailure["reason"]; detail?: boolean }) {
   const message =
     reason === "rate-limit"
       ? "O DEV.to atingiu o limite de solicitações. Aguarde um pouco e tente novamente."
@@ -12,7 +12,7 @@ export function BlogUnavailable({ reason, detail = false }: { reason: BlogFailur
     <section className="blog-status" role="status">
       <h2>Artigos temporariamente indisponíveis</h2>
       <p>{message}</p>
-      <BlogRetry home={detail} />
+      <BlogRetry home />
     </section>
   );
 }
@@ -31,9 +31,8 @@ export function BlogContribution({ detail = false }: { detail?: boolean }) {
             : "Compartilhe sua experiência e inspire outras pessoas a agir."}
         </p>
       </div>
-      {!detail ? <a className="blog-contribution-mobile" href="/enviar"><strong>TEM UMA IDEIA PARA CONTAR?</strong><span>Compartilhe com a comunidade</span></a> : null}
-      <a className={detail ? "home-button home-button-yellow" : "blog-button"} href="/enviar">
-        Enviar uma ideia {detail ? <HomeArrow /> : "↗"}
+      <a className="home-button home-button-yellow" href="/enviar">
+        Enviar uma ideia <HomeArrow />
       </a>
     </section>
   );

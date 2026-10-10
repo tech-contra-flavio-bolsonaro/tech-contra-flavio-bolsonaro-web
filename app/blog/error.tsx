@@ -1,18 +1,20 @@
 "use client";
+import ListingLayout from "./(listing)/layout";
+import { HomeArrow } from "@/app/components/home-arrow";
 import { SiteNav } from "@/app/components/site-nav";
 export default function BlogError({ retry }: { retry: () => void }) {
   return (
-    <>
+    <ListingLayout>
       <SiteNav variant="home" />
       <main className="blog-content">
         <section className="blog-status" role="alert">
           <h1>Não foi possível carregar o Blog</h1>
           <p>Tente novamente em instantes.</p>
-          <button className="blog-button" onClick={() => retry()}>
-            Tentar novamente
+          <button className="home-button home-button-yellow" onClick={() => retry()}>
+            Tentar novamente <HomeArrow />
           </button>
         </section>
       </main>
-    </>
+    </ListingLayout>
   );
 }

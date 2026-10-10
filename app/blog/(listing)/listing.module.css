@@ -1,0 +1,138 @@
+/* Listing only: Home identity, including loading and expected failure states.
+   Double local scope wins over the retained article's legacy stylesheet. */
+.listing.listing {
+  --blog-blue: var(--vv-color-blue);
+  --blog-yellow: var(--vv-color-yellow);
+  --blog-coral: var(--vv-color-coral);
+  --blog-ink: var(--vv-color-black);
+  flex: 1;
+  min-height: 100%;
+  color: var(--vv-color-white);
+  background: var(--vv-color-blue);
+  background-image: linear-gradient(rgb(255 255 255 / 15%) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 15%) 1px, transparent 1px);
+  background-size: var(--vv-grid-unit) var(--vv-grid-unit);
+  font-family: var(--vv-font-body);
+}
+.listing.listing :global(.site-header) { min-height: 112px; padding: 0 80px; border: 0; box-shadow: inset 0 0 0 3px #000; }
+.listing.listing :global(.site-header-brand) { gap: 12px; font: 800 38px/1 var(--vv-font-display); letter-spacing: 0; }
+.listing.listing :global(.site-header-brand img) { width: 36px; height: 36px; }
+.listing.listing :global(.site-nav) { gap: 36px; font: 600 16px/1.5 var(--vv-font-body); }
+.listing.listing :global(.site-nav .site-nav-cta) { height: 48px; min-height: 48px; gap: 24px; padding: 0 22px; border: 0; border-radius: var(--vv-radius-control); box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); background: var(--vv-color-yellow); color: #000; font: 700 15px/1.2 var(--vv-font-body); }
+.listing.listing :global(.site-nav-cta svg) { width: 24px; height: 24px; }
+.listing.listing :global(.blog-content) { max-width: 1440px; padding: 64px 80px 80px; }
+.listing.listing :global(h1), .listing.listing :global(h2) { font-family: var(--vv-font-display); font-weight: 800; letter-spacing: 0; }
+.listing.listing :global(.blog-hero) { grid-template-columns: minmax(0, 1fr) 385px; gap: 48px; }
+.listing.listing :global(.blog-hero h1) { margin: 20px 0 24px; font-size: clamp(64px, 6.4vw, 92px); line-height: 1; }
+.listing.listing :global(.blog-intro) { max-width: 56ch; font-size: 20px; line-height: 1.5; }
+.listing.listing :global(.blog-label) { width: auto; padding: 8px 12px; border: 2px solid #000; border-radius: var(--vv-radius-control); font: 500 12px/1.4 var(--vv-font-mono); }
+.listing.listing :global(.blog-art) { width: 100%; margin: 0; padding: 24px; border: 3px solid #000; border-radius: var(--vv-radius-card); box-shadow: var(--vv-shadow-hard); }
+.listing.listing :global(.blog-art-frame) { height: 100%; padding: 20px; border-radius: var(--vv-radius-control); }
+.listing.listing :global(.blog-art-inner) { position: static; min-height: 200px; padding: 16px; gap: 16px; }
+.listing.listing :global(.blog-art-idea), .listing.listing :global(.blog-art-together) { position: static; flex-shrink: 0; border-radius: var(--vv-radius-control); font-family: var(--vv-font-display); font-weight: 800; }
+.listing.listing :global(.blog-art-idea) { width: 135px; height: 130px; font-size: 32px; }
+.listing.listing :global(.blog-art-idea small) { font: 500 12px/1.4 var(--vv-font-mono); }
+.listing.listing :global(.blog-art-together) { width: 81px; height: 94px; font-size: 22px; }
+.listing.listing :global(.blog-source-bar) { gap: 24px; margin: 48px 0; padding: 28px; border: 3px solid #000; border-radius: var(--vv-radius-card); box-shadow: var(--vv-shadow-hard); }
+.listing.listing :global(.blog-source-bar b) { font: 600 12px/1.5 var(--vv-font-mono); }
+.listing.listing :global(.blog-source-bar p) { font-size: 16px; line-height: 1.5; }
+.listing.listing :global(.home-button) { flex-shrink: 0; width: fit-content; max-width: 100%; min-height: 58px; height: auto; gap: 24px; padding: 16px 22px; border: 0; border-radius: var(--vv-radius-control); box-shadow: inset 0 0 0 3px #000, var(--vv-shadow-hard); background: var(--vv-color-yellow); color: #000; font: 700 17px/1.2 var(--vv-font-body); text-decoration: none; cursor: pointer; }
+.listing.listing :global(.home-button-white) { background: #fff; }
+.listing.listing :global(.home-button:hover), .listing.listing :global(.site-nav .site-nav-cta:hover) { background: var(--vv-color-lilac); color: #000; }
+.listing.listing :global(.home-button:disabled) { opacity: .65; cursor: wait; }
+.listing.listing :global(a:focus-visible), .listing.listing :global(button:focus-visible) { outline: 3px solid currentColor; outline-offset: 5px; }
+.listing.listing :global(.blog-card) { display: flex; flex-direction: column; overflow: hidden; border: 3px solid #000; border-radius: var(--vv-radius-card); background: #fff; color: #000; box-shadow: var(--vv-shadow-hard); }
+.listing.listing :global(.blog-card::before) { display: none; }
+.listing.listing :global(.blog-card-copy) { display: flex; flex: 1; flex-direction: column; padding: 28px; }
+.listing.listing :global(.blog-card-cover) { display: block; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 3px solid #000; }
+.listing.listing :global(.blog-card-featured) { display: grid; grid-template-columns: 43.3% minmax(0, 1fr); }
+.listing.listing :global(.blog-card-featured .blog-card-cover) { height: 100%; min-height: 350px; aspect-ratio: auto; border-bottom: 0; border-right: 3px solid #000; }
+.listing.listing :global(.blog-card-featured .blog-card-copy) { padding: 40px; }
+.listing.listing :global(.blog-card-featured.blog-card-no-cover) { grid-template-columns: minmax(0, 1fr); }
+.listing.listing :global(.blog-tags) { gap: 8px; margin: 0 0 20px; }
+.listing.listing :global(.blog-tags li) { padding: 6px 10px; border: 2px solid #000; border-radius: 3px; font: 500 11px/1.3 var(--vv-font-mono); }
+.listing.listing :global(.blog-card h2) { font-size: 38px; font-weight: 700; line-height: 1.1; text-transform: none; }
+.listing.listing :global(.blog-card-featured h2) { font-size: 56px; }
+.listing.listing :global(.blog-card h2 a:hover) { color: inherit; text-decoration: underline; }
+.listing.listing :global(.blog-card-description) { display: block; margin: 20px 0 0; color: #000; font-size: 16px; line-height: 1.5; overflow-wrap: anywhere; }
+.listing.listing :global(.blog-card-featured .blog-card-description) { font-size: 18px; }
+.listing.listing :global(.blog-card-author) { margin: 20px 0; font: 500 12px/1.5 var(--vv-font-mono); overflow-wrap: anywhere; }
+.listing.listing :global(.blog-card-bottom) { align-items: end; gap: 20px; margin-top: auto; padding-top: 8px; }
+.listing.listing :global(.blog-card-bottom p) { gap: 8px 16px; color: #000; font: 500 11px/1.5 var(--vv-font-mono); }
+.listing.listing :global(.blog-read) { min-height: 48px; padding-block: 12px; font-size: 15px; }
+.listing.listing :global(.blog-section-heading) { margin: 48px 0 20px; font: 500 12px/1.5 var(--vv-font-mono); }
+.listing.listing :global(.blog-grid) { gap: 28px; }
+.listing.listing :global(.blog-grid .blog-card) { padding-left: 0; }
+.listing.listing :global(.blog-grid .blog-card:nth-child(3n + 2)) { background: var(--vv-color-coral); }
+.listing.listing :global(.blog-pagination) { flex-wrap: wrap; margin: 40px 0; font: 500 12px/1.5 var(--vv-font-mono); }
+.listing.listing :global(.blog-arrow-previous), .listing.listing :global(.blog-arrow-next) { display: inline-flex; }
+.listing.listing :global(.blog-arrow-previous) { transform: rotate(-135deg); }
+.listing.listing :global(.blog-arrow-next) { transform: rotate(45deg); }
+.listing.listing :global(.blog-contribution) { gap: 32px; margin-top: 64px; padding: 40px; border: 3px solid #000; border-radius: var(--vv-radius-card); background: var(--vv-color-coral); color: #000; box-shadow: var(--vv-shadow-hard); }
+.listing.listing :global(.blog-contribution-copy) { display: block; }
+.listing.listing :global(.blog-contribution h2) { font-size: 52px; font-weight: 700; line-height: 1.05; }
+.listing.listing :global(.blog-contribution p) { margin: 16px 0 0; font-size: 16px; line-height: 1.5; }
+.listing.listing :global(.blog-status) { margin: 32px 0; padding: 32px; border: 3px solid #000; border-radius: var(--vv-radius-card); box-shadow: var(--vv-shadow-hard); background: #fff; color: #000; }
+.listing.listing :global(.blog-status h1), .listing.listing :global(.blog-status h2) { font-size: 40px; line-height: 1.1; }
+.listing.listing :global(.blog-status p) { font-size: 18px; line-height: 1.5; }
+.listing.listing :global(.blog-intro-mobile), .listing.listing :global(.blog-featured-label) { display: none; }
+.listing.listing :global(.blog-intro-desktop) { display: block; }
+.listing.listing :global(.blog-featured-label-desktop) { display: inline-block; margin-bottom: 20px; }
+@media (max-width: 1200px) {
+  .listing.listing :global(.blog-content) { padding-inline: 40px; }
+  .listing.listing :global(.blog-hero) { grid-template-columns: minmax(0, 1fr) 320px; gap: 32px; }
+  .listing.listing :global(.blog-art) { padding: 16px; }
+  .listing.listing :global(.blog-art-frame) { padding: 12px; }
+  .listing.listing :global(.blog-art-inner) { padding: 8px; gap: 12px; }
+  .listing.listing :global(.blog-source-bar) { flex-wrap: wrap; }
+  .listing.listing :global(.blog-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 1024px) {
+  .listing.listing :global(.site-header) { min-height: 72px; padding: 0 22px; }
+  .listing.listing :global(.site-header-brand) { font-size: 28px; }
+  .listing.listing :global(.site-header-brand img) { width: 28px; height: 28px; }
+  .listing.listing :global(.site-nav) { gap: 0; }
+  .listing.listing :global(.site-nav .site-nav-cta) { margin-top: 16px; }
+  .listing.listing :global(.site-nav-toggle) { border-color: var(--vv-color-blue); color: var(--vv-color-blue); }
+  .listing.listing :global(.blog-hero) { grid-template-columns: minmax(0, 1fr); }
+  .listing.listing :global(.blog-art) { display: none; }
+  .listing.listing :global(.blog-card-featured h2) { font-size: 44px; }
+  .listing.listing :global(.blog-card-featured .blog-card-copy) { padding: 28px; }
+  .listing.listing :global(.blog-contribution) { flex-wrap: wrap; padding: 32px; }
+  .listing.listing :global(.blog-contribution h2) { font-size: 44px; }
+}
+@media (max-width: 600px) {
+  .listing.listing :global(.blog-content) { padding: 40px 22px 56px; }
+  .listing.listing :global(.blog-hero h1) { font-size: 52px; }
+  .listing.listing :global(.blog-intro) { font-size: 18px; }
+  .listing.listing :global(.blog-source-bar) { display: flex; flex-direction: column; align-items: start; gap: 20px; margin: 32px 0; padding: 22px; }
+  .listing.listing :global(.blog-source-bar p) { margin: 0; }
+  .listing.listing :global(.home-button) { gap: 16px; font-size: 15px; }
+  .listing.listing :global(.blog-source-bar .home-button) { width: 100%; padding-inline: 12px; }
+  .listing.listing :global(.blog-grid) { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .listing.listing :global(.blog-card-featured) { display: flex; }
+  .listing.listing :global(.blog-card-featured .blog-card-cover) { height: auto; min-height: 0; aspect-ratio: 16 / 9; border-right: 0; border-bottom: 3px solid #000; }
+  .listing.listing :global(.blog-card-copy), .listing.listing :global(.blog-card-featured .blog-card-copy) { padding: 22px; }
+  .listing.listing :global(.blog-card h2), .listing.listing :global(.blog-card-featured h2) { font-size: 32px; line-height: 1.1; }
+  .listing.listing :global(.blog-card-featured .blog-card-description) { font-size: 16px; }
+  .listing.listing :global(.blog-section-heading) { margin-top: 32px; }
+  .listing.listing :global(.blog-pagination) { justify-content: center; gap: 24px; }
+  .listing.listing :global(.blog-pagination > span[aria-current]) { order: -1; width: 100%; text-align: center; }
+  .listing.listing :global(.blog-pagination > span:empty) { display: none; }
+  .listing.listing :global(.blog-pagination .home-button) { min-height: 48px; padding: 12px; }
+  .listing.listing :global(.blog-contribution) { margin-top: 40px; padding: 24px; gap: 24px; }
+  .listing.listing :global(.blog-contribution h2) { font-size: 40px; }
+  .listing.listing :global(.blog-status) { padding: 24px; }
+  .listing.listing :global(.blog-status h1), .listing.listing :global(.blog-status h2) { font-size: 32px; }
+}
+/* A 390px screen at 200% browser zoom has only 195 CSS pixels.
+   Keep the named menu and full-size arrows reachable without page scrolling. */
+@media (max-width: 320px) {
+  .listing.listing :global(.site-header) { flex-wrap: wrap; gap: 16px; padding: 16px; }
+  .listing.listing :global(.site-nav .site-nav-cta) { height: auto; min-height: 58px; gap: 8px; padding: 12px 10px; font-size: 14px; }
+  .listing.listing :global(.blog-source-bar), .listing.listing :global(.blog-contribution), .listing.listing :global(.blog-status) { padding: 16px; }
+  .listing.listing :global(.blog-card-copy), .listing.listing :global(.blog-card-featured .blog-card-copy) { padding: 16px; }
+  .listing.listing :global(.home-button) { gap: 8px; padding-inline: 10px; font-size: 14px; }
+  .listing.listing :global(.blog-source-bar .home-button) { padding-inline: 10px; }
+  .listing.listing :global(.blog-status h1), .listing.listing :global(.blog-status h2) { overflow-wrap: anywhere; }
+  .listing.listing :global(.blog-status .home-button) { white-space: normal; overflow-wrap: anywhere; text-align: left; }
+}
