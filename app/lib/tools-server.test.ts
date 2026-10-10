@@ -26,10 +26,10 @@ it("requests only approved public fields with stable ordering and a pagination l
   expect(result.hasMore).toBe(true);
   const query = new URL(fetch.mock.calls[0][0]).searchParams;
   expect(query.get("status")).toBe("eq.approved");
-  expect(query.get("select")).toBe("id,slug,title,description,category,credit,url");
+  expect(query.get("select")).toBe("id,slug,title,description,category,credit,url,priority");
   expect(query.get("offset")).toBe("20");
   expect(query.get("limit")).toBe("11");
-  expect(query.get("order")).toBe("created_at.desc,id.desc");
+  expect(query.get("order")).toBe("priority.desc,created_at.desc,id.desc");
 });
 
 it("uses the internal Supabase URL for server-side tool queries when configured", async () => {

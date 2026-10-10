@@ -16,6 +16,7 @@ export type ContentItem = {
   title: string;
   description: string;
   credit: string;
+  priority: number;
   media_path: string | null;
   mediaUrl: string | null;
   video_url: string | null;
@@ -64,7 +65,7 @@ export function ContentFeed({ limit, variant = "default" }: { limit?: number; va
       setItems((current) => {
         const unique = new Map<string, ContentItem>();
         for (const item of nextPage === 0 ? result.items : [...current, ...result.items]) unique.set(item.id, item);
-        return [...unique.values()];
+        return [...unique.values()].sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
       });
       setPage(nextPage);
       setHasMore(result.hasMore);

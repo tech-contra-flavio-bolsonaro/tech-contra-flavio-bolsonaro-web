@@ -9,6 +9,7 @@ type Submission = {
   title: string;
   description: string;
   credit: string;
+  priority: number;
   media_path: string | null;
   video_url: string | null;
 };
@@ -27,9 +28,11 @@ export async function GET(request: NextRequest) {
     const client = supabase();
     const { data, error } = await client
       .from("submissions")
-      .select("id,title,description,credit,media_path,video_url")
+      .select("id,title,description,credit,priority,media_path,video_url")
       .eq("status", "approved")
+      .order("priority", { ascending: false })
       .order("created_at", { ascending: false })
+      .order("id", { ascending: false })
       .range(page * pageSize, page * pageSize + pageSize);
     if (error) throw error;
 

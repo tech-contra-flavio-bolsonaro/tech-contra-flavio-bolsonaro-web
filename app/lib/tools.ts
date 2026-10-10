@@ -6,6 +6,7 @@ export type PublishedTool = {
   category: string;
   credit: string;
   url: string;
+  priority: number;
 };
 
 export type ToolCategory = { name: string; count: number };

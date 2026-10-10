@@ -7,6 +7,7 @@ export type PublishedContent = {
   title: string;
   description: string;
   credit: string;
+  priority: number;
   media_path: string | null;
   mediaUrl: string | null;
   video_url: string | null;
@@ -26,7 +27,9 @@ export async function listPublishedContentIds(): Promise<string[]> {
     .from("submissions")
     .select("id")
     .eq("status", "approved")
-    .order("created_at", { ascending: false });
+    .order("priority", { ascending: false })
+    .order("created_at", { ascending: false })
+    .order("id", { ascending: false });
   if (error) throw error;
   return ((data ?? []) as { id: string }[]).map(({ id }) => id);
 }
@@ -37,7 +40,7 @@ export const findPublishedContent = cache(async (id: string): Promise<PublishedC
   const client = database();
   const { data, error } = await client
     .from("submissions")
-    .select("id,title,description,credit,media_path,video_url")
+    .select("id,title,description,credit,priority,media_path,video_url")
     .eq("id", id)
     .eq("status", "approved")
     .maybeSingle();

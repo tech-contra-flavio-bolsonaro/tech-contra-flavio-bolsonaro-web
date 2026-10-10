@@ -3,7 +3,7 @@ import { afterEach, expect, it } from "vitest";
 import { ToolCard } from "./tool-card";
 
 afterEach(cleanup);
-const tool = { id: "real", slug: "mapa-de-iniciativas-locais", title: "Mapa de iniciativas locais", category: "Participação", description: "Projetos reais da comunidade", credit: "Rede Aberta", url: "https://example.com/mapa" };
+const tool = { id: "real", slug: "mapa-de-iniciativas-locais", title: "Mapa de iniciativas locais", category: "Participação", description: "Projetos reais da comunidade", credit: "Rede Aberta", url: "https://example.com/mapa", priority: 0 };
 it("labels the Home action for the real destination while keeping the catalog action", () => {
   const { rerender } = render(<ToolCard tool={tool} variant="home" index={1} />);
   expect(screen.getByRole("link", { name: "Explorar o mapa" })).toHaveAttribute("href", "/ferramentas/mapa-de-iniciativas-locais");

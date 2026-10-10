@@ -7,7 +7,7 @@ vi.mock("@/app/lib/published-content", () => ({ findPublishedContent: vi.fn() })
 afterEach(() => { cleanup(); vi.clearAllMocks(); });
 
 const id = "123e4567-e89b-42d3-a456-426614174000";
-const item = { id, title: "Conteúdo aprovado", description: "Descrição integral", credit: "Comunidade", media_path: null, mediaUrl: null, video_url: null };
+const item = { id, title: "Conteúdo aprovado", description: "Descrição integral", credit: "Comunidade", priority: 0, media_path: null, mediaUrl: null, video_url: null };
 const params = Promise.resolve({ id });
 
 it.each(["data:text/html,<p>unsafe</p>", "javascript:alert(1)", "http://example.com/video", "not a URL"])(
